@@ -18,7 +18,7 @@
 		static function setup()
 		{
 			self::$dir = __DIR__;
-			date_default_timezone_set('Europe/Dublin');
+			date_default_timezone_set('Europe/Paris');
 		}
 		
 		static function debug()
@@ -40,11 +40,6 @@
 		static function illi()
 		{
 			require_once static::file(['config', 'bootstrap.php']);
-			
-			//var_dump(new \ILLI\Core\Test);
-			//var_dump(new \Doctrine\Test);
-			//var_dump(new \ILLI\Core\Lib);
-			//var_dump(new \App\foo\Test);
 		}
 		
 		static function file(array $__path)
