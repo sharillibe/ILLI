@@ -18,7 +18,7 @@
 		static function setup()
 		{
 			self::$dir = __DIR__;
-			date_default_timezone_set('Europe/Dublin');
+			date_default_timezone_set('Europe/Paris');
 		}
 		
 		static function debug()
