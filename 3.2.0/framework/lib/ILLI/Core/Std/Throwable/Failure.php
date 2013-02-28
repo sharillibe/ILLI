@@ -1,5 +1,6 @@
 <?PHP
 	NAMESPACE ILLI\Core\Std\Throwable;
+	USE Exception;
 	
 	CLASS Failure Extends \ILLI\Core\Std\Throwable\External
 	{

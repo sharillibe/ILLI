@@ -3,16 +3,16 @@
 	USE ILLI\Core\Std\Throwable;
 	USE ILLI\Core\Std\Throwable\External\NotExternalException;
 	USE ILLI\Core\Std\Throwable\External\NotThrowableException;
-	USE Exception AS PHPException;
+	USE Exception;
 	
 	CLASS External Extends \ILLI\Core\Std\Throwable
 	{
 		CONST ERROR_CONSTRUCT				= 500;
 		CONST CONSTRUCT					= 'An external error occurred.';
 		
-		private $__Exception 	= NULL;
+		protected $__Exception 	= NULL;
 		
-		public function __construct()
+		final public function __construct()
 		{
 			$trace = debug_backtrace(0, 2);
 			if(FALSE === (isset($trace[1])
@@ -23,7 +23,7 @@
 					]);
 		}
 		
-		private function staticConstruct(PHPException $__Exception)
+		protected function staticConstruct(Exception $__Exception)
 		{
 			if(NULL !== $this->__Exception)
 				return $this;
@@ -36,7 +36,7 @@
 			return $this;
 		}
 		
-		public static function import(PHPException $__Exception)
+		public static function import(Exception $__Exception)
 		{
 			if($__Exception instanceOf Throwable)
 				throw new NotExternalException([
