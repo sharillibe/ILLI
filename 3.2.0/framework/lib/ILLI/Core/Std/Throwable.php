@@ -3,6 +3,7 @@
 	USE ILLI\Core\Shell\Lib;
 	USE ILLI\Core\Std\Throwable\External;
 	USE ILLI\Core\Std\Throwable\Failure;
+	USE ILLI\Core\Std\Throwable\Trapped;
 	USE ILLI\Core\Std\Throwable\Log;
 	USE ILLI\Core\Std\Throwable\Export;
 	USE ILLI\Core\Std\IThrowable;
@@ -15,14 +16,16 @@
 	
 	CLASS Throwable EXTENDS \Exception IMPLEMENTS \ILLI\Core\Std\IThrowable
 	{
-		CONST ERROR_CONSTRUCT	= 500;
-		CONST CONSTRUCT		= 'Unknown Error.';
+		CONST ERROR_CONSTRUCT		= 500;
+		CONST CONSTRUCT			= 'Unknown Error.';
 		
-		private $__hash		= NULL;
-		private $__addr		= NULL;
-		private $__solved	= FALSE;
-		private $__solvedBy	= [];
-		private $__Next		= NULL;
+		CONST TRAP			= FALSE;
+		
+		private $__hash			= NULL;
+		private $__addr			= NULL;
+		private $__solved		= FALSE;
+		private $__solvedBy		= [];
+		private $__Next			= NULL;
 		
 		public function __construct()
 		{
@@ -122,85 +125,6 @@
 				$_->__messageCode,
 				$_->__previousException
 			);
-		}
-		
-		public function getFireArgs()
-		{
-			return $this->getFire()['args'];
-		}
-		
-		public function getFireClass()
-		{
-			return $this->getFire()['class'];
-		}
-		
-		public function getFireFunction()
-		{
-			return $this->getFire()['function'];
-		}
-		
-		public function getFireType()
-		{
-			return $this->getFire()['type'];
-		}
-		
-		public function getFireLine()
-		{
-			return $this->getFire()['line'];
-		}
-		
-		public function getFireFile()
-		{
-			return $this->getFire()['file'];
-		}
-		
-		public function getFireSource()
-		{
-			if(FALSE === file_exists($f = $this->getFire()['file']))
-				return '';
-				
-			$f = explode(PHP_EOL, file_get_contents($f));
-			$c = $this->getFire()['line'] - 1;
-			$r = [];
-			
-			foreach(range($c - 3, $c + 3) as $i)
-			{
-				if(FALSE === isset($f[$i]))
-					continue;
-				
-				$r[$i + 1] = string::insert('{:line}{:sep}{:source}',
-				[
-					'line'		=> str_pad($i + 1, 8, '0', STR_PAD_LEFT),
-					'sep'		=> $i === $c ? "*\t" : "\t",
-					'source'	=> $f[$i]
-				]);
-			}
-			
-			return $r;
-		}
-		
-		public function getFireMethod()
-		{
-			return $this->getFire()['class'].$this->getFire()['type'].$this->getFire()['function'];
-		}
-		
-		public function getFire()
-		{
-			$t = [];
-			$t = TRUE === $this->isExternal() ? $this->getExternal()->getTrace() : $this->getTrace();
-			
-			if(FALSE === isset($t[0]))
-				return [];
-			
-			return $t[0] + 
-			[
-				'class'		=> '[internal]',
-				'line'		=> '[internal]',
-				'file'		=> '[internal]',
-				'type'		=> '::',
-				'function'	=> '',
-				'args'		=> []
-			];
 		}
 		
 		public function setNext(IThrowable $__Exception)
@@ -306,11 +230,6 @@
     			return array_reverse($classes);
 		}
 		
-		public static function reset()
-		{
-			return Log::reset();
-		}
-		
 		public static function hasCatched($__exceptionClass)
 		{
 			return Log::hasCatched($__exceptionClass);
@@ -321,23 +240,274 @@
 			return Log::isEmpty();
 		}
 		
-		public function toMessage()
-		{
-			return Export::message($this);
-		}
-		
-		public function toTrack()
-		{
-			return Export::track($this);
-		}
-		
-		
-		
-		
+		#:export:
+			public function toMessage()
+			{
+				return Export::message($this);
+			}
+			
+			public function toTrack()
+			{
+				return Export::track($this);
+			}
+		#::
 		
 		
+		#:originator:
+			public function getFireArgs()
+			{
+				return $this->getFire()['args'];
+			}
+			
+			public function getFireClass()
+			{
+				return $this->getFire()['class'];
+			}
+			
+			public function getFireFunction()
+			{
+				return $this->getFire()['function'];
+			}
+			
+			public function getFireType()
+			{
+				return $this->getFire()['type'];
+			}
+			
+			public function getFireLine()
+			{
+				return $this->getFire()['line'];
+			}
+			
+			public function getFireFile()
+			{
+				return $this->getFire()['file'];
+			}
+			
+			public function getFireSource()
+			{
+				if(FALSE === file_exists($f = $this->getFire()['file']))
+					return '';
+					
+				$f = explode(PHP_EOL, file_get_contents($f));
+				$c = $this->getFire()['line'] - 1;
+				$r = [];
+				
+				foreach(range($c - 3, $c + 3) as $i)
+				{
+					if(FALSE === isset($f[$i]))
+						continue;
+					
+					$r[$i + 1] = string::insert('{:line}{:sep}{:source}',
+					[
+						'line'		=> str_pad($i + 1, 8, '0', STR_PAD_LEFT),
+						'sep'		=> $i === $c ? "*\t" : "\t",
+						'source'	=> $f[$i]
+					]);
+				}
+				
+				return $r;
+			}
+			
+			public function getFireMethod()
+			{
+				return $this->getFire()['class'].$this->getFire()['type'].$this->getFire()['function'];
+			}
+			
+			public function getFire()
+			{
+				$t = [];
+				$t = TRUE === $this->isExternal() ? $this->getExternal()->getTrace() : $this->getTrace();
+				
+				if(FALSE === isset($t[0]))
+					return [];
+				
+				return $t[0] + 
+				[
+					'class'		=> '[internal]',
+					'line'		=> '[internal]',
+					'file'		=> '[internal]',
+					'type'		=> '::',
+					'function'	=> '',
+					'args'		=> []
+				];
+			}
+		#::
+		
+		#:handle:
+			protected static $__config	= [];
+			protected static $__parse	= [];
+			protected static $__handle	= [];
+			protected static $__prepare	= [];
+			
+			private static $__isRunning	= FALSE;
+			
+			static function config(array $__config = [])
+			{
+				return static::$__config = array_merge($__config, static::$__config);
+			}
+			
+			static function run()
+			{
+				if(self::$__isRunning)
+					return;
+					
+				self::$__isRunning = TRUE;
+				
+				$c = get_called_class();
+				
+				static::$__parse +=
+				[
+					'type' => function($c, $i)
+					{
+						return (boolean) array_filter((array) $c['type'], function($t) use ($i)
+						{
+							return $t === $i['type'] || is_subclass_of($i['type'], $t);
+						});
+					},
+					'code' => function($c, $i)
+					{
+						return (boolean) ($c['code'] & $i['code']);
+					},
+					'stack' => function($c, $i)
+					{
+						return (boolean) array_intersect((array) $c['stack'], $i['stack']);
+					},
+					'message' => function($c, $i)
+					{
+						return (boolean) preg_match($c['message'], $i['message']);
+					}
+				];
+				
+				static::$__prepare +=
+				[
+					'origin' => function(array $__stack)
+					{
+						foreach($__stack as $frame)
+							if(isset($frame['class']))
+								return trim($frame['class'], '\\');
+					},
+					'trace' => function(array $__stack)
+					{
+						$r = [];
+					
+						foreach($__stack as $v)
+							if(isset($v['function']))
+								$r[] = TRUE === isset($v['class'])
+									? implode('::', [trim($v['class'], '\\'), $v['function']])
+									: $v['function'];
+						
+						return $r;
+					}
+				];
+				
+				static::$__handle +=
+				[
+					'trap' => function($code, $message, $file, $line = 0) use ($c)
+					{
+						$c::handle(Trapped::import(new ErrorException($message, $code, 1, $file, $line)));
+					},
+					'raise' => function($code, $message, $file, $line = 0)
+					{
+						$E = Failure::import(new ErrorException($message, $code, 1, $file, $line));
+						throw $E;
+					},
+					'fire' => function($Exception, $return = false) use ($c)
+					{
+						if(ob_get_length())
+							ob_end_clean();
+					
+						$t = $c::$__prepare['trace'];
+						
+						$i = compact('Exception') +
+						[
+							'type'	=> get_class($Exception),
+							'stack'	=> $t($Exception->getTrace())
+						];
+					
+						foreach(['message', 'file', 'line', 'trace', 'code'] as $k)
+							$i[$k] = $Exception->{'get'.ucfirst($k)}();
+						
+						return $return ? $i : $c::handle($i);
+					}
+				];
+					
+				TRUE === static::TRAP
+					? set_error_handler(static::$__handle['trap'])
+					: set_error_handler(static::$__handle['raise']);
+					
+				set_exception_handler(static::$__handle['fire']);
+			}
+			
+			public static function stop()
+			{
+				restore_error_handler();
+				restore_exception_handler();
+				self::$__isRunning = FALSE;
+			}
+			
+			static function isRunning()
+			{
+				return self::$__isRunning;
+			}
+			
+			public static function handle($__info)
+			{
+				$p = static::$__parse;
+				$f = &static::$__handle['fire'];
+				$c = &static::$__config;
+				$i = (array) (is_object($__info) ? $f($__info, TRUE) : $__info) +
+				[
+					'type'		=> NULL,
+					'message'	=> NULL,
+					'code'		=> 0,
+					'file'		=> NULL,
+					'line'		=> 0,
+					'trace'		=> [],
+					'context'	=> NULL,
+					'Exception'	=> NULL
+				];
+				
+				foreach(['origin', 'trace'] as $p)
+				{
+					$f 	= static::$__prepare[$p];
+					$i[$p]	= $f($i['trace']);
+				}
+				
+				foreach($c as $k => $_)
+				{
+					foreach(array_keys($c) as $k)
+					{
+						if($k === 'fire')
+							continue;
+							
+						if(FALSE === isset($i[$k])
+						|| FALSE === isset($p[$k]))
+							continue 2;
+							
+						if(($_ = $p[$k]) && FALSE === $_($c, $i))
+							continue 2;
+					}
+					
+					if(FALSE === isset($c['fire']))
+						return FALSE;
+						
+					if($k === 'fire')
+					{
+						$f = $c[$k];
+						return FALSE !== $f($i);
+					}
+				}
+				
+				return TRUE;
+			}
+		#::
 		
 		
+		
+		
+		
+		/*
 		
 		public function toSet($__addressString = NULL)
 		{
@@ -435,4 +605,6 @@
 			$result = Set::flatten(array_change_key_case($result, CASE_UPPER));
 			return $result;
 		}
+		
+		*/
 	}
