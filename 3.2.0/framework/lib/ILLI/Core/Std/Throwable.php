@@ -342,12 +342,12 @@
 			
 			private static $__isRunning	= FALSE;
 			
-			static function config(array $__config = [])
+			public static function config(array $__config = [])
 			{
 				return static::$__config = array_merge($__config, static::$__config);
 			}
 			
-			static function run()
+			public static function run()
 			{
 				if(self::$__isRunning)
 					return;
@@ -446,7 +446,7 @@
 				self::$__isRunning = FALSE;
 			}
 			
-			static function isRunning()
+			public static function isRunning()
 			{
 				return self::$__isRunning;
 			}

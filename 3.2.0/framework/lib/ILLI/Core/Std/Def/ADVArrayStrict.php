@@ -7,41 +7,42 @@
 	USE ILLI\Core\Std\Exception\ArgumentExpectedException;
 	USE ILLI\Core\Std\Spl\Fsb;
 	USE ILLI\Core\Std\Spl\FsbCollection;
-	USE ILLI\Core\Util\Spl;
+	USE Exception;
 	
 	CLASS ADVArrayStrict EXTENDS \ILLI\Core\Std\Def\ADV
 	{
-		CONST __GC = __CLASS__;
-		/**
-		 * cache ADT for key and value
-		 *
-		 * :index<long>
-		 *	0	key
-		 *	1	value
-		 *
-		 * :hashAddr<string>
-		 * 	instance of get_called_class(): ILLI\Core\Std\Def\ADV*
-		 *	instance of __CLASS__:		ILLI\Core\Std\Def\ADVArrayStrict<hash>
-		 *
-		 * :ADT<ILLI\Core\Std\Def\ADT>
-		 *	the ADT for {:index}
-		 *
-		 * @var		array [{:hashAddr} => ILLI\Core\Std\Spl\FsbCollection[{:index} => ILLI\Core\Std\Spl\FsbCollection[long offset => {:ADT}]]]
-		 */
-		private static $__gc = NULL;
-		
 		#:ILLI\Core\Std\Def\ADV:
 			/**
-			 * Instantiate a new ADVArrayStrict with ADT for key and value.
+			 * gc-stop: late-state comparison to differentiate anonymous/concrete instances
 			 *
-			 * The base-type for this ADV is an array. The difference to ADVArray is the optional type-definition for offset-key and offset-value.
-			 * The key must be of type scalar (long, double or string).
+			 * @const	string __CLASS__
+			 * @see		::createHashAddr()
+			 * @see		::__destruct()
+			 * @testing
+			 */
+			CONST __GC	= __CLASS__;
+			
+			/**
+			 * Instantiate a new ADT-Value-Pair for value of type strict array.
 			 *
-			 * @param	string	$__defineKeyType	{:gcType}
-			 * @param	array	$__defineKeyType	[{:offset} => {:gcType}]
-			 * @param	string	$__defineValType	{:gcType}
-			 * @param	array	$__defineValType	[{:offset} => {:gcType}]
-			 * @param	array	$__data			initial-array
+			 * A strictArray is an object capable to hold a collection of elements.
+			 * The base-type for this ADV is a regular array. The difference to ADVArray is the optional type-definition for offset-key and offset-value.
+			 * The key must be of type long, double or string.
+			 *
+			 * :offset<long>
+			 *	zero-based index
+			 *
+			 * :gcTypeK<string>
+			 *	__const_Type::SPL_STRING|__const_Type::SPL_LONG|__const_Type::SPL_DOUBLE
+			 *
+			 * :gcTypeV<string>
+			 *	a valid __const_Type
+			 *
+			 * @param	string	$__defineKeyType	{:gcTypeK}
+			 * @param	array	$__defineKeyType	[{:offset} => {:gcTypeK}]
+			 * @param	string	$__defineValType	{:gcTypeV}
+			 * @param	array	$__defineValType	[{:offset} => {:gcTypeV}]
+			 * @param	array	$__data			the initial data
 			 * @catchable	ILLI\Core\Std\Def\ADVArrayStrict\ComponentInitializationException
 			 * @see		ILLI\Core\Std\Def\ADV::__construct()
 			 * @see		ILLI\Core\Std\Def\ADT::define()
@@ -72,7 +73,7 @@
 				{
 					throw $E;
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentInitializationException';
@@ -84,41 +85,15 @@
 			}
 			
 			/**
-			 * Destroy anonymous ATV definitions
+			 * value validation
 			 *
-			 * @catchable	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException ComponentMethodCallException::ERROR_DTOR
-			 * @void
-			 */
-			public function __destruct()
-			{
-				try
-				{
-					if(($c = get_called_class()) === __CLASS__)
-						unset(self::$__gc[$this->getName()]);
-					
-					parent::__destruct();
-				}
-				catch(\Exception $E)
-				{
-					$c = get_called_class();
-					$e = $c.'\ComponentMethodCallException';
-					$a = ['method' => __METHOD__];
-					throw ($c === __CLASS__ || FALSE === class_exists($e))
-						? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_DTOR)
-						: new $e($E, $a, $e::ERROR_DTOR);
-				}
-			}
-			
-			/**
-			 * value-validation, offset-validation
-			 *
-			 * use gc-ADT to validate the value; use gc-ADT to validate the offset-name and the offset-value
+			 * use ADT to validate the value, the offset-name and the offset-value
 			 *
 			 * @param	mixed $__value
 			 * @return	boolean
-			 * @catchable	ILLI\Core\Std\Exception\ADVArrayStrict\ComponentMethodCallException
+			 * @catchable	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException
+			 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M_VALIDATE
 			 * @see		ILLI\Core\Std\Def\ADT::validate()
-			 * @see		ILLI\Core\Std\Def\ADV::validate()
 			 */
 			public function validate($__value)
 			{
@@ -138,7 +113,7 @@
 				
 					return TRUE;
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentMethodCallException';
@@ -150,12 +125,18 @@
 			}
 			
 			/**
-			 * store data when value-type equals with gc-ADT, when offset-type equals with gc-ADT and when offset-value equals with gc-ADT
+			 * store data when type equals with ADT
 			 *
 			 * @param	mixed $__value
 			 * @return	this
-			 * @throws	ILLI\Core\Std\Exception\ArgumentExpectedException on validation-fail
-			 * @catchable	ILLI\Core\Std\Exception\ADV\ComponentMethodCallException
+			 * @fires	ILLI\Core\Std\Exception\ArgumentExpectedException on validation-fail
+			 * @fires	ILLI\Core\Std\Exception\ArgumentExpectedException on offset-name validation-fail
+			 * @fires	ILLI\Core\Std\Exception\ArgumentExpectedException on offset-value validation-fail
+			 * @catchable	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException
+			 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M_SET
+			 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M_SET_E_P0_EXPECTED
+			 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M_SET_E_P0_K_EXPECTED
+			 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M_SET_E_P0_V_EXPECTED
 			 * @see		::validate()
 			 */
 			public function set($__value)
@@ -177,8 +158,8 @@
 						]);
 						
 						throw ($c === __CLASS__ || FALSE === class_exists($e))
-							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_SET_E_TYPE_EXPECTED)
-							: new $e($E, $a, $e::ERROR_M_SET_E_TYPE_EXPECTED);
+							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_SET_E_P0_EXPECTED)
+							: new $e($E, $a, $e::ERROR_M_SET_E_P0_EXPECTED);
 					}
 					
 					$i = 0;
@@ -200,8 +181,8 @@
 							];
 							
 							throw ($c === __CLASS__ || FALSE === class_exists($e))
-								? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_SET_E_OFFSET_KEY_TYPE_EXPECTED)
-								: new $e($E, $a, $e::ERROR_M_SET_E_OFFSET_KEY_TYPE_EXPECTED);
+								? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_SET_E_P0_K_EXPECTED)
+								: new $e($E, $a, $e::ERROR_M_SET_E_P0_K_EXPECTED);
 						}
 							
 						if(FALSE === $this->validateVal($v))
@@ -220,8 +201,8 @@
 							];
 							
 							throw ($c === __CLASS__ || FALSE === class_exists($e))
-								? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_SET_E_OFFSET_VAL_TYPE_EXPECTED)
-								: new $e($E, $a, $e::ERROR_M_SET_E_OFFSET_VAL_TYPE_EXPECTED);
+								? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_SET_E_P0_V_EXPECTED)
+								: new $e($E, $a, $e::ERROR_M_SET_E_P0_V_EXPECTED);
 						}
 						
 						$i++;
@@ -235,33 +216,41 @@
 				{
 					throw $E;
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					throw ($c === __CLASS__ || FALSE === class_exists($e))
 						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_SET)
 						: new $e($E, $a, $e::ERROR_M_SET);
 				}
 			}
-			/*
-			protected function createHashAddr(array $__defineTypes = [])
-			{
-				$c = get_called_class();
-				
-				try
+			
+			#:gc:
+				/**
+				 * Destroy anonymous ATV definitions
+				 *
+				 * @catchable	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException
+				 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M_DTOR
+				 */
+				public function __destruct()
 				{
-					#~ performanced ADT: cache request by called-class; otherwise by hash
-					return $c === __CLASS__ ? Spl::nameWithHash($c, $this) : $c;
+					try
+					{
+						if(($c = get_called_class()) === __CLASS__)
+							unset(self::$__gc[$this->getName()]);
+						
+						parent::__destruct();
+					}
+					catch(Exception $E)
+					{
+						$c = get_called_class();
+						$e = $c.'\ComponentMethodCallException';
+						$a = ['method' => __METHOD__];
+						throw ($c === __CLASS__ || FALSE === class_exists($e))
+							? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_DTOR)
+							: new $e($E, $a, $e::ERROR_DTOR);
+					}
 				}
-				catch(\Exception $E)
-				{
-					$e = $c.'\ComponentMethodCallException';
-					$a = ['method' => __METHOD__];
-					throw ($c === __CLASS__ || FALSE === class_exists($e))
-						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_CREATE_HASH_ADDR)
-						: new $e($E, $a, $e::ERROR_M_CREATE_HASH_ADDR);
-				}
-			}
-			*/
+			#::
 		#::
 		
 		/**
@@ -271,7 +260,8 @@
 		 *
 		 * @param	mixed $__value
 		 * @return	boolean
-		 * @catchable	ILLI\Core\Std\Exception\ADVArrayStrict\ComponentMethodCallException
+		 * @catchable	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException
+		 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M_VALIDATE_KEY
 		 * @see		ILLI\Core\Std\Def\ADT::validate()
 		 */
 		public function validateKey($__value)
@@ -280,7 +270,7 @@
 			{
 				return $this->getKeyGC()->evaluate('validate', [$__value]);
 			}
-			catch(\Exception $E)
+			catch(Exception $E)
 			{
 				$c = get_called_class();
 				$e = $c.'\ComponentMethodCallException';
@@ -298,7 +288,8 @@
 		 *
 		 * @param	mixed $__value
 		 * @return	boolean
-		 * @catchable	ILLI\Core\Std\Exception\ADVArrayStrict\ComponentMethodCallException
+		 * @catchable	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException
+		 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M_VALIDATE_VAL
 		 * @see		ILLI\Core\Std\Def\ADT::validate()
 		 */
 		public function validateVal($__value)
@@ -307,7 +298,7 @@
 			{
 				return $this->getValGC()->evaluate('validate', [$__value]);
 			}
-			catch(\Exception $E)
+			catch(Exception $E)
 			{
 				$c = get_called_class();
 				$e = $c.'\ComponentMethodCallException';
@@ -320,10 +311,29 @@
 		
 		#:gc:
 			/**
+			 * cache ADT for key and value
+			 *
+			 * :index<long>
+			 *	0	key
+			 *	1	value
+			 *
+			 * :hashAddr<string>
+			 * 	instance of get_called_class(): ILLI\Core\Std\Def\ADV*
+			 *	instance of __CLASS__:		ILLI\Core\Std\Def\ADVArrayStrict<hash>
+			 *
+			 * :ADT<ILLI\Core\Std\Def\ADT>
+			 *	the ADT for {:index}
+			 *
+			 * @var		array [{:hashAddr} => ILLI\Core\Std\Spl\FsbCollection[{:index} => ILLI\Core\Std\Spl\FsbCollection[long offset => {:ADT}]]]
+			 */
+			private static $__gc = NULL;
+			
+			/**
 			 * get ADT definition for offset-key
 			 *
 			 * @return 	ILLI\Core\Std\Spl\FsbCollection
-			 * @catchable	ILLI\Core\Std\Exception\ADV\ComponentMethodCallException
+			 * @catchable	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException
+			 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M_GET_KEY_GC
 			 */
 			public function getKeyGC()
 			{
@@ -331,7 +341,7 @@
 				{
 					return self::$__gc[$this->getName()]->offsetGet(0);
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentMethodCallException';
@@ -346,7 +356,8 @@
 			 * get ADT definition for offset-value
 			 *
 			 * @return 	ILLI\Core\Std\Spl\FsbCollection
-			 * @catchable	ILLI\Core\Std\Exception\ADV\ComponentMethodCallException
+			 * @catchable	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException
+			 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M_GET_VAL_GC
 			 */
 			public function getValGC()
 			{
@@ -354,7 +365,7 @@
 				{
 					return self::$__gc[$this->getName()]->offsetGet(1);
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentMethodCallException';

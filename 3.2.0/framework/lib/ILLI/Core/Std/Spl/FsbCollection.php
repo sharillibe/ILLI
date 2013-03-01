@@ -1,131 +1,188 @@
 <?PHP
 	NAMESPACE ILLI\Core\Std\Spl;
-	USE ILLI\Core\Std\Exception;
 	USE ILLI\Core\Std\Invoke;
+	USE ILLI\Core\Std\Spl\Fsb\ComponentInitializationException;
+	USE ILLI\Core\Std\Spl\Fsb\ComponentMethodCallException;
+	USE Exception;
 	
 	CLASS FsbCollection EXTENDS \ILLI\Core\Std\Spl\Fsb
 	{	
 		public function evaluate($__method, array $__parameters, callable $__Condition = NULL)
 		{
-			if(0 === $this->count())
-				return TRUE;
-				
-			$this->rewind();
-			
-			if(NULL === $__Condition)
+			try
 			{
-				while($this->valid())
-				{
-					if(TRUE === Invoke::emitMethod($this->current(), $__method, $__parameters))
-						return TRUE;
+				if(0 === $this->count())
+					return TRUE;
 					
-					$this->next();
-				}
-			}
-			else
-			{
-				while($this->valid())
+				$this->rewind();
+				
+				if(NULL === $__Condition)
 				{
-					if(TRUE === $__Condition(Invoke::emitMethod($I, $__method, $__parameters), $this->key()))
-						return TRUE;
+					while($this->valid())
+					{
+						if(TRUE === Invoke::emitMethod($this->current(), $__method, $__parameters))
+							return TRUE;
 						
-					$this->next();
+						$this->next();
+					}
 				}
+				else
+				{
+					while($this->valid())
+					{
+						if(TRUE === $__Condition(Invoke::emitMethod($I, $__method, $__parameters), $this->key()))
+							return TRUE;
+							
+						$this->next();
+					}
+				}
+				
+				return FALSE;
 			}
-			
-			return FALSE;
+			catch(Exception $E)
+			{
+				$c = get_called_class();
+				$e = $c.'\ComponentMethodCallException';
+				throw ($c === __CLASS__ || FALSE === class_exists($e))
+					? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_EVALUATE, ['method' => __METHOD__])
+					: new $e($E, $e::ERROR_EVALUATE, ['method' => __METHOD__]);
+			}
 		}
 		
 		public function invoke($__method, array $__parameters = [], array $__options = [])
 		{
-			$__options +=
-			[
-				'merge'		=> FALSE,
-				'collect'	=> FALSE
-			];
-			
-			$r = [];
-			
-			$this->rewind();
-			
-			while($this->valid())
+			try
 			{
-				$v = Invoke::emitMethod($this->current(), $__method, $__parameters);
+				$__options +=
+				[
+					'merge'		=> FALSE,
+					'collect'	=> FALSE
+				];
 				
-				TRUE === $__options['merge']
-					? $r = array_merge($r, $v)
-					: $r[$this->key()] = $v;
+				$r = [];
 				
-				$this->next();
+				$this->rewind();
+				
+				while($this->valid())
+				{
+					$v = Invoke::emitMethod($this->current(), $__method, $__parameters);
+					
+					TRUE === $__options['merge']
+						? $r = array_merge($r, $v)
+						: $r[$this->key()] = $v;
+					
+					$this->next();
+				}
+				
+				if(FALSE === $__options['collect'])
+					return $r;
+					
+				$c = get_called_class();
+				return $c::fromArray($r);
 			}
-			
-			if(FALSE === $__options['collect'])
-				return $r;
-				
-			$c = get_called_class();
-			return $c::fromArray($r);
+			catch(Exception $E)
+			{
+				$c = get_called_class();
+				$e = $c.'\ComponentMethodCallException';
+				throw ($c === __CLASS__ || FALSE === class_exists($e))
+					? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_INVOKE, ['method' => __METHOD__])
+					: new $e($E, $e::ERROR_INVOKE, ['method' => __METHOD__]);
+			}
 		}
 		
 		public function find(callable $__Condition, array $__options = [])
 		{
-			$__options +=
-			[
-				'collect'	=> TRUE
-			];
-			
-			$r = [];
-			
-			$this->rewind();
-			
-			while($this->valid())
+			try
 			{
-				if(TRUE === $__Condition($this->current(), $this->key()))
-					$r[] = $this->current();
+				$__options +=
+				[
+					'collect'	=> TRUE
+				];
 				
-				$this->next();
+				$r = [];
+				
+				$this->rewind();
+				
+				while($this->valid())
+				{
+					if(TRUE === $__Condition($this->current(), $this->key()))
+						$r[] = $this->current();
+					
+					$this->next();
+				}
+				
+				if(FALSE === $__options['collect'])
+					return $r;
+					
+				$c = get_called_class();
+				return $c::fromArray($r);
 			}
-			
-			if(FALSE === $__options['collect'])
-				return $r;
-				
-			$c = get_called_class();
-			return $c::fromArray($r);
+			catch(Exception $E)
+			{
+				$c = get_called_class();
+				$e = $c.'\ComponentMethodCallException';
+				throw ($c === __CLASS__ || FALSE === class_exists($e))
+					? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_FIND, ['method' => __METHOD__])
+					: new $e($E, $e::ERROR_FIND, ['method' => __METHOD__]);
+			}
 		}
 		
 		public function map(callable $__Action, array $__options = [])
 		{
-			$__options +=
-			[
-				'collect'	=> FALSE
-			];
-			
-			$r = [];
-			
-			$this->rewind();
-			
-			while($this->valid())
+			try
 			{
-				$r[] = $__Action($this->current(), $this->key());
-				$this->next();
-			}
-			
-			if(FALSE === $__options['collect'])
-				return $r;
+				$__options +=
+				[
+					'collect'	=> FALSE
+				];
 				
-			$c = get_called_class();
-			return $c::fromArray($r);
+				$r = [];
+				
+				$this->rewind();
+				
+				while($this->valid())
+				{
+					$r[] = $__Action($this->current(), $this->key());
+					$this->next();
+				}
+				
+				if(FALSE === $__options['collect'])
+					return $r;
+					
+				$c = get_called_class();
+				return $c::fromArray($r);
+			}
+			catch(Exception $E)
+			{
+				$c = get_called_class();
+				$e = $c.'\ComponentMethodCallException';
+				throw ($c === __CLASS__ || FALSE === class_exists($e))
+					? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_MAP, ['method' => __METHOD__])
+					: new $e($E, $e::ERROR_MAP, ['method' => __METHOD__]);
+			}
 		}
 		
 		public function each(callable $__Action)
 		{
-			$this->rewind();
-			
-			while($this->valid())
+			try
 			{
-				$this[$this->key()] = $__Action($this->current(), $this->key());
-				$this->next();
+				$this->rewind();
+				
+				while($this->valid())
+				{
+					$this[$this->key()] = $__Action($this->current(), $this->key());
+					$this->next();
+				}
+				
+				return $this;
 			}
-			
-			return $this;
+			catch(Exception $E)
+			{
+				$c = get_called_class();
+				$e = $c.'\ComponentMethodCallException';
+				throw ($c === __CLASS__ || FALSE === class_exists($e))
+					? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_EACH, ['method' => __METHOD__])
+					: new $e($E, $e::ERROR_EACH, ['method' => __METHOD__]);
+			}
 		}
 	}
