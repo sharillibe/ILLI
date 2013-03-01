@@ -1,23 +1,43 @@
 <?PHP
 	NAMESPACE ILLI\Core\Std\Spl;
+	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Std\Exception\ArgumentExpectedException;
+	USE ILLI\Core\Std\Invoke;
 	USE ILLI\Core\Std\Spl\Fsb\ComponentInitializationException;
 	USE ILLI\Core\Std\Spl\Fsb\ComponentMethodCallException;
-	USE ILLI\Core\Std\Exception;
-	USE ILLI\Core\Std\Invoke;
+	USE Exception;
 	
 	CLASS Fsb EXTENDS \SplFixedArray
 	{
 		#:SplFixedArray:
-		
 			public function __construct($__size)
 			{
+				$c = get_called_class();
+				
 				try
 				{
+					if(FALSE === is_integer($__size))
+					{
+						$e = $c.'\ComponentMethodCallException';
+						$a = ['method' => __METHOD__];
+						$E = new ArgumentExpectedException
+						([
+							'target'	=> $c,
+							'expected'	=> __const_Type::SPL_LONG,
+							'detected'	=> $t = getType($v = $__value),
+							'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
+						]);
+						
+						throw ($c === __CLASS__ || FALSE === class_exists($e))
+							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_CTOR_E_P0_EXPECTED)
+							: new $e($E, $a, $e::ERROR_M_CTOR_E_P0_EXPECTED);
+					}
+						
 					parent::__construct($__size);
+					
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
-					$c = get_called_class();
 					$e = $c.'\ComponentInitializationException';
 					throw ($c === __CLASS__ || FALSE === class_exists($e))
 						? new ComponentInitializationException($E, ['class' => get_called_class()])
@@ -25,10 +45,30 @@
 				}
 			}
 			
-			public static function fromArray($__array, $__saveIndexes = TRUE)
+			public static function fromArray($__array, $_ = TRUE)
 			{
+				$c = get_called_class();
+				
 				try
 				{
+					if(FALSE === is_array($__array)
+					&& FALSE === ($__array instanceOf $c))
+					{
+						$e = $c.'\ComponentMethodCallException';
+						$a = ['method' => __METHOD__];
+						$E = new ArgumentExpectedException
+						([
+							'target'	=> $c,
+							'expected'	=> implode('|', [__const_Type::SPL_ARRAY, $c]),
+							'detected'	=> $t = getType($v = $__value),
+							'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
+						]);
+						
+						throw ($c === __CLASS__ || FALSE === class_exists($e))
+							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_CTOR_E_P0_EXPECTED)
+							: new $e($E, $a, $e::ERROR_M_CTOR_E_P0_EXPECTED);
+					}
+					
 					$c = get_called_class();
 					$A = new $c(count($__array));
 					
@@ -37,9 +77,12 @@
 						
 					return $A;
 				}
-				catch(\Exception $E)
+				catch(ComponentMethodCallException $E)
 				{
-					$c = get_called_class();
+					throw $E;
+				}
+				catch(Exception $E)
+				{
 					$e = $c.'\ComponentMethodCallException';
 					throw ($c === __CLASS__ || FALSE === class_exists($e))
 						? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_FROM_ARRAY, ['method' => __METHOD__])
@@ -53,7 +96,7 @@
 				{
 					return parent::toArray();
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentMethodCallException';
@@ -69,7 +112,7 @@
 				{
 					return parent::getSize();
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentMethodCallException';
@@ -81,13 +124,36 @@
 			
 			public function setSize($__size)
 			{
+				$c = get_called_class();
+				
 				try
 				{
-					return parent::setSize($__size);
+					if(FALSE === is_integer($__size))
+					{
+						$e = $c.'\ComponentMethodCallException';
+						$a = ['method' => __METHOD__];
+						$E = new ArgumentExpectedException
+						([
+							'target'	=> $c,
+							'expected'	=> __const_Type::SPL_LONG,
+							'detected'	=> $t = getType($v = $__size),
+							'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
+						]);
+						
+						throw ($c === __CLASS__ || FALSE === class_exists($e))
+							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_SET_SIZE_E_P0_EXPECTED)
+							: new $e($E, $a, $e::ERROR_SET_SIZE_E_P0_EXPECTED);
+					}
+					
+					parent::setSize($__size);
+					return $this;
 				}
-				catch(\Exception $E)
+				catch(ComponentMethodCallException $E)
 				{
-					$c = get_called_class();
+					throw $E;
+				}
+				catch(Exception $E)
+				{
 					$e = $c.'\ComponentMethodCallException';
 					throw ($c === __CLASS__ || FALSE === class_exists($e))
 						? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_SET_SIZE, ['method' => __METHOD__])
@@ -101,7 +167,7 @@
 				{
 					return parent::__wakeup();
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentMethodCallException';
@@ -112,16 +178,37 @@
 			}
 			
 			#:ArrayAccess:
-				
 				public function offsetExists($__offset)
 				{
+					$c = get_called_class();
+				
 					try
 					{
+						if(FALSE === is_integer($__offset))
+						{
+							$e = $c.'\ComponentMethodCallException';
+							$a = ['method' => __METHOD__];
+							$E = new ArgumentExpectedException
+							([
+								'target'	=> $c,
+								'expected'	=> __const_Type::SPL_LONG,
+								'detected'	=> $t = getType($v = $__offset),
+								'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
+							]);
+							
+							throw ($c === __CLASS__ || FALSE === class_exists($e))
+								? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_OFFSET_EXISTS_E_P0_EXPECTED)
+								: new $e($E, $a, $e::ERROR_OFFSET_EXISTS_E_P0_EXPECTED);
+						}
+						
 						return parent::offsetExists($__offset);
 					}
-					catch(\Exception $E)
+					catch(ComponentMethodCallException $E)
 					{
-						$c = get_called_class();
+						throw $E;
+					}
+					catch(Exception $E)
+					{
 						$e = $c.'\ComponentMethodCallException';
 						throw ($c === __CLASS__ || FALSE === class_exists($e))
 							? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_OFFSET_EXISTS, ['method' => __METHOD__])
@@ -131,13 +218,35 @@
 				
 				public function offsetGet($__offset)
 				{
+					$c = get_called_class();
+					
 					try
 					{
+						if(FALSE === is_integer($__offset))
+						{
+							$e = $c.'\ComponentMethodCallException';
+							$a = ['method' => __METHOD__];
+							$E = new ArgumentExpectedException
+							([
+								'target'	=> $c,
+								'expected'	=> __const_Type::SPL_LONG,
+								'detected'	=> $t = getType($v = $__offset),
+								'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
+							]);
+							
+							throw ($c === __CLASS__ || FALSE === class_exists($e))
+								? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_OFFSET_GET_E_P0_EXPECTED)
+								: new $e($E, $a, $e::ERROR_OFFSET_GET_E_P0_EXPECTED);
+						}
+						
 						return parent::offsetGet($__offset);
 					}
-					catch(\Exception $E)
+					catch(ComponentMethodCallException $E)
 					{
-						$c = get_called_class();
+						throw $E;
+					}
+					catch(Exception $E)
+					{
 						$e = $c.'\ComponentMethodCallException';
 						throw ($c === __CLASS__ || FALSE === class_exists($e))
 							? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_OFFSET_GET, ['method' => __METHOD__])
@@ -147,14 +256,36 @@
 			
 				public function offsetSet($__offset, $__value)
 				{
+					$c = get_called_class();
+					
 					try
 					{
+						if(FALSE === is_integer($__offset))
+						{
+							$e = $c.'\ComponentMethodCallException';
+							$a = ['method' => __METHOD__];
+							$E = new ArgumentExpectedException
+							([
+								'target'	=> $c,
+								'expected'	=> __const_Type::SPL_LONG,
+								'detected'	=> $t = getType($v = $__offset),
+								'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
+							]);
+							
+							throw ($c === __CLASS__ || FALSE === class_exists($e))
+								? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_OFFSET_SET_E_P0_EXPECTED)
+								: new $e($E, $a, $e::ERROR_OFFSET_SET_E_P0_EXPECTED);
+						}
+						
 						parent::offsetSet($__offset, $__value);
 						return $this;
 					}
-					catch(\Exception $E)
+					catch(ComponentMethodCallException $E)
 					{
-						$c = get_called_class();
+						throw $E;
+					}
+					catch(Exception $E)
+					{
 						$e = $c.'\ComponentMethodCallException';
 						throw ($c === __CLASS__ || FALSE === class_exists($e))
 							? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_OFFSET_SET, ['method' => __METHOD__])
@@ -164,24 +295,44 @@
 				
 				public function offsetUnset($__offset)
 				{
+					$c = get_called_class();
+					
 					try
 					{
+						if(FALSE === is_integer($__offset))
+						{
+							$e = $c.'\ComponentMethodCallException';
+							$a = ['method' => __METHOD__];
+							$E = new ArgumentExpectedException
+							([
+								'target'	=> $c,
+								'expected'	=> __const_Type::SPL_LONG,
+								'detected'	=> $t = getType($v = $__offset),
+								'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
+							]);
+							
+							throw ($c === __CLASS__ || FALSE === class_exists($e))
+								? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_OFFSET_UNSET_E_P0_EXPECTED)
+								: new $e($E, $a, $e::ERROR_OFFSET_UNSET_E_P0_EXPECTED);
+						}
+						
 						return parent::offsetUnset($__offset);
 					}
-					catch(\Exception $E)
+					catch(ComponentMethodCallException $E)
 					{
-						$c = get_called_class();
+						throw $E;
+					}
+					catch(Exception $E)
+					{
 						$e = $c.'\ComponentMethodCallException';
 						throw ($c === __CLASS__ || FALSE === class_exists($e))
 							? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_OFFSET_UNSET, ['method' => __METHOD__])
 							: new $e($E, $e::ERROR_OFFSET_UNSET, ['method' => __METHOD__]);
 					}
 				}
-			
 			#::
 			
 			#:Countable:
-			
 				public function count()
 				{
 					try
@@ -190,7 +341,7 @@
 						$this->rewind();
 						return $count;
 					}
-					catch(\Exception $E)
+					catch(Exception $E)
 					{
 						$c = get_called_class();
 						$e = $c.'\ComponentMethodCallException';
@@ -199,18 +350,16 @@
 							: new $e($E, $e::ERROR_COUNT, ['method' => __METHOD__]);
 					}
 				}
-			
 			#::
 			
 			#:Iterator:
-			
 				public function current()
 				{
 					try
 					{
 						return parent::current();
 					}
-					catch(\Exception $E)
+					catch(Exception $E)
 					{
 						$c = get_called_class();
 						$e = $c.'\ComponentMethodCallException';
@@ -226,7 +375,7 @@
 					{
 						return parent::key();
 					}
-					catch(\Exception $E)
+					catch(Exception $E)
 					{
 						$c = get_called_class();
 						$e = $c.'\ComponentMethodCallException';
@@ -242,7 +391,7 @@
 					{
 						return parent::next();
 					}
-					catch(\Exception $E)
+					catch(Exception $E)
 					{
 						$c = get_called_class();
 						$e = $c.'\ComponentMethodCallException';
@@ -258,7 +407,7 @@
 					{
 						return parent::rewind();
 					}
-					catch(\Exception $E)
+					catch(Exception $E)
 					{
 						$c = get_called_class();
 						$e = $c.'\ComponentMethodCallException';
@@ -274,7 +423,7 @@
 					{
 						return parent::valid();
 					}
-					catch(\Exception $E)
+					catch(Exception $E)
 					{
 						$c = get_called_class();
 						$e = $c.'\ComponentMethodCallException';
@@ -283,9 +432,7 @@
 							: new $e($E, $e::ERROR_VALID, ['method' => __METHOD__]);
 					}
 				}
-			
 			#::
-		
 		#::
 		
 		public function end()
@@ -295,7 +442,7 @@
 				end($this);
 				return current($this);
 			}
-			catch(\Exception $E)
+			catch(Exception $E)
 			{
 				$c = get_called_class();
 				$e = $c.'\ComponentMethodCallException';
@@ -321,7 +468,7 @@
 				
 				return $r;
 			}
-			catch(\Exception $E)
+			catch(Exception $E)
 			{
 				$c = get_called_class();
 				$e = $c.'\ComponentMethodCallException';
@@ -340,7 +487,7 @@
 				
 				return current($this);
 			}
-			catch(\Exception $E)
+			catch(Exception $E)
 			{
 				$c = get_called_class();
 				$e = $c.'\ComponentMethodCallException';
@@ -366,7 +513,7 @@
 				
 				return $r;
 			}
-			catch(\Exception $E)
+			catch(Exception $E)
 			{
 				$c = get_called_class();
 				$e = $c.'\ComponentMethodCallException';

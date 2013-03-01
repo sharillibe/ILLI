@@ -22,6 +22,7 @@
 		CONST SPL_METHOD	= 'ILLI\Core\Std\Def\ADVMethod';
 		#!+ CONST SPL_NULL	= 'ILLI\Core\Std\Def\ADTNull';
 		CONST SPL_OBJECT	= 'ILLI\Core\Std\Def\ADVObject';
+		CONST SPL_PAIR		= 'ILLI\Core\Std\Def\ADVPair';
 		CONST SPL_RESOURCE	= 'ILLI\Core\Std\Def\ADVResource';
 		CONST SPL_STRING	= 'ILLI\Core\Std\Def\ADVString';
 		CONST SPL_TRAIT		= 'ILLI\Core\Std\Def\ADVTrait';

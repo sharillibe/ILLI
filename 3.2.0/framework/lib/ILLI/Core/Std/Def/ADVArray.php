@@ -5,11 +5,18 @@
 	USE ILLI\Core\Std\Def\ADVArray\ComponentInitializationException;
 	USE ArrayAccess;
 	USE Countable;
+	USE Exception;
 	USE Iterator;
 	
 	CLASS ADVArray EXTENDS \ILLI\Core\Std\Def\ADV /* IMPLEMENTS ArrayAccess, ITERATOR, COUNTABLE */
 	{
 		#:ILLI\Core\Std\Def\ADV:
+			/**
+			 * Instantiate a new ADT-Value-Pair for value of type array.
+			 *
+			 * @param	array		$__data		the initial data
+			 * @catchable	ILLI\Core\Std\Def\ADVArray\ComponentInitializationException
+			 */
 			public function __construct($__data = NULL)
 			{
 				try
@@ -23,7 +30,7 @@
 				{
 					throw $E;
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentInitializationException';

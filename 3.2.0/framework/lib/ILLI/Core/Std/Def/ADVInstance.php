@@ -1,12 +1,19 @@
 <?PHP
 	NAMESPACE ILLI\Core\Std\Def;
-	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Std\Def\ADVInstance\ComponentMethodCallException;
 	USE ILLI\Core\Std\Def\ADVInstance\ComponentInitializationException;
+	USE Exception;
 	
 	CLASS ADVInstance EXTENDS \ILLI\Core\Std\Def\ADV
 	{
 		#:ILLI\Core\Std\Def\ADV:
+			/**
+			 * Instantiate a new ADT-Value-Pair for value of type instance.
+			 *
+			 * @param	string		$__className	the class- or interface-name
+			 * @param	object		$__data		the initial data
+			 * @catchable	ILLI\Core\Std\Def\ADVInstance\ComponentInitializationException
+			 */
 			public function __construct($__className, $__data = NULL)
 			{
 				try
@@ -20,7 +27,7 @@
 				{
 					throw $E;
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentInitializationException';

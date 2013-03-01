@@ -3,10 +3,16 @@
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Std\Def\ADTTrait\ComponentMethodCallException;
 	USE ILLI\Core\Std\Def\ADTTrait\ComponentInitializationException;
+	USE Exception;
 	
 	FINAL CLASS ADTTrait EXTENDS \ILLI\Core\Std\Def\ADT
 	{
 		#:ILLI\Core\Std\Def\ADT:
+			/**
+			 * Instantiate a new Abstract Data Type Definition of trait.
+			 *
+			 * @catchable	ILLI\Core\Std\Def\ADTTrait\ComponentInitializationException
+			 */
 			public function __construct()
 			{
 				try
@@ -17,7 +23,7 @@
 				{
 					throw $E;
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentInitializationException';
@@ -28,13 +34,24 @@
 				}
 			}
 			
+			/**
+			 * value validation
+			 *
+			 * The value is an existing trait.
+			 *
+			 * @param	mixed $__value
+			 * @return	boolean
+			 * @catchable	ILLI\Core\Std\Def\ADTTrait\ComponentInitializationException
+			 * @throws	ILLI\Core\Std\Def\ADTTrait\ComponentInitializationException::ERROR_M_VALIDATE
+			 * @see		ILLI\Core\Std\Def\__const_Type
+			 */
 			public function validate($__value)
 			{
 				try
 				{
 					return __const_Type::SPL_STRING === getType($__value) && TRUE === trait_exists($__value);
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentMethodCallException';

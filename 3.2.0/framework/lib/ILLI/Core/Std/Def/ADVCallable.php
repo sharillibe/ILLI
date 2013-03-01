@@ -3,10 +3,17 @@
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Std\Def\ADVCallable\ComponentMethodCallException;
 	USE ILLI\Core\Std\Def\ADVCallable\ComponentInitializationException;
+	USE Exception;
 	
 	CLASS ADVCallable EXTENDS \ILLI\Core\Std\Def\ADV
 	{
 		#:ILLI\Core\Std\Def\ADV:
+			/**
+			 * Instantiate a new ADT-Value-Pair for value of type callable.
+			 *
+			 * @param	callable	$__data		the initial data
+			 * @catchable	ILLI\Core\Std\Def\ADVCallable\ComponentInitializationException
+			 */
 			public function __construct($__data = NULL)
 			{
 				try
@@ -20,7 +27,7 @@
 				{
 					throw $E;
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentInitializationException';

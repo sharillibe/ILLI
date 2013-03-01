@@ -3,10 +3,16 @@
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Std\Def\ADTDirectory\ComponentMethodCallException;
 	USE ILLI\Core\Std\Def\ADTDirectory\ComponentInitializationException;
+	USE Exception;
 	
 	FINAL CLASS ADTDirectory EXTENDS \ILLI\Core\Std\Def\ADT
 	{
 		#:ILLI\Core\Std\Def\ADT:
+			/**
+			 * Instantiate a new Abstract Data Type Definition of directory.
+			 *
+			 * @catchable	ILLI\Core\Std\Def\ADTDirectory\ComponentInitializationException
+			 */
 			public function __construct()
 			{
 				try
@@ -17,7 +23,7 @@
 				{
 					throw $E;
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentInitializationException';
@@ -28,13 +34,24 @@
 				}
 			}
 			
+			/**
+			 * value validation
+			 *
+			 * The value is of type string and the path of an existing directory.
+			 *
+			 * @param	mixed $__value
+			 * @return	boolean
+			 * @catchable	ILLI\Core\Std\Def\ADTDirectory\ComponentInitializationException
+			 * @throws	ILLI\Core\Std\Def\ADTDirectory\ComponentInitializationException::ERROR_M_VALIDATE
+			 * @see		ILLI\Core\Std\Def\__const_Type
+			 */
 			public function validate($__value)
 			{
 				try
 				{
 					return __const_Type::SPL_STRING === getType($__value) && TRUE === is_dir($__value);
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentMethodCallException';

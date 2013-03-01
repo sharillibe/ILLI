@@ -7,9 +7,11 @@
 	USE ILLI\Core\Std\Def\ADV\ComponentInitializationException;
 	USE ILLI\Core\Std\Def\ADV\ComponentMethodCallException;
 	USE ILLI\Core\Std\Exception\ArgumentExpectedException;
+	USE ILLI\Core\Std\Exception\ArgumentLengthZeroException;
 	USE ILLI\Core\Std\Invoke;
 	USE ILLI\Core\Std\Spl\FsbCollection;
 	USE ILLI\Core\Util\Spl;
+	USE Exception;
 
 	/*
         // anonymous tuple:
@@ -45,7 +47,7 @@
 	CLASS ADV
 	{
 		/**
-		 * late-state comparison to differentiate anonymous/concrete
+		 * gc-stop: late-state comparison to differentiate anonymous/concrete instances
 		 *
 		 * @const	string __CLASS__
 		 * @see		::createHashAddr()
@@ -78,28 +80,57 @@
 		 *
 		 * @param	string	$__defineType	{:gcType}
 		 * @param	array	$__defineType	[{:offset} => {:gcType}]
+		 * @fires	ILLI\Core\Std\Exception\ArgumentExpectedException when $__defineTypes is not of type array or string
+		 * @fires	ILLI\Core\Std\Exception\ArgumentLengthZeroException when $__defineTypes is an empty array or string
 		 * @catchable	ILLI\Core\Std\Def\ADV\ComponentInitializationException
-		 * @throws	ILLI\Core\Std\Def\ADV\ComponentInitializationException::M_CTOR
-		 * @see		ILLI\Core\Std\Def\ADT::__construct()
+		 * @throws	ILLI\Core\Std\Def\ADV\ComponentMethodCallException::ERROR_M_CTOR_E_P0_EXPECTED
+		 * @throws	ILLI\Core\Std\Def\ADV\ComponentMethodCallException::ERROR_M_CTOR_E_P0_LENGTH
+		 * @see		ILLI\Core\Std\Def\ADV::__construct()
 		 * @see		ILLI\Core\Std\Def\ADT::define()
 		 */
 		public function __construct($__defineType)
 		{
+			$c = get_called_class();
+			
 			try
-			{
+			{	
+				if(FALSE === is_array($__defineTypes)
+				&& FALSE === is_string($__defineTypes))
+				{
+					$e = $c.'\ComponentMethodCallException';
+					$a = ['method' => __METHOD__];
+					$E = new ArgumentExpectedException
+					([
+						'target'	=> $c,
+						'expected'	=> implode('|', [__const_Type::SPL_ARRAY, __const_Type::SPL_STRING]),
+						'detected'	=> $t = getType($v = $__defineTypes),
+						'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
+					]);
+					
+					throw ($c === __CLASS__ || FALSE === class_exists($e))
+						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_CTOR_E_P0_EXPECTED)
+						: new $e($E, $a, $e::ERROR_M_CTOR_E_P0_EXPECTED);
+				}
+				
+				if(!$__defineTypes)
+				{
+					$e = $c.'\ComponentMethodCallException';
+					$E = new ArgumentLengthZeroException;
+					$a = ['method' => __METHOD__];
+					throw ($c === __CLASS__ || FALSE === class_exists($e))
+						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_CTOR_E_P0_LENGTH)
+						: new $e($E, $a, $e::ERROR_M_CTOR_E_P0_LENGTH);
+				}
+				
 				$t = &self::$__gc[$this->__name = $this->createHashAddr($d = (array) $__defineType)];
 				
 				if(TRUE === isset($t))
 					return;
 				
 				$t = FsbCollection::fromArray(ADT::define($d));
-				
-				
-				//var_dump([static::__GC => self::$__gc]);
 			}
-			catch(\Exception $E)
+			catch(Exception $E)
 			{
-				$c = get_called_class();
 				$e = $c.'\ComponentInitializationException';
 				$a = ['class' => $c];
 				throw ($c === __CLASS__ || FALSE === class_exists($e))
@@ -125,7 +156,7 @@
 			{
 				return $this->getGC()->evaluate('validate', [$__value]);
 			}
-			catch(\Exception $E)
+			catch(Exception $E)
 			{
 				$c = get_called_class();
 				$e = $c.'\ComponentMethodCallException';
@@ -141,10 +172,10 @@
 		 *
 		 * @param	mixed $__value
 		 * @return	this
-		 * @catchable	ILLI\Core\Std\Def\ADV\ComponentMethodCallException
 		 * @fires	ILLI\Core\Std\Exception\ArgumentExpectedException on validation-fail
-		 * @throws	ILLI\Core\Std\Def\ADV\ComponentMethodCallException::ERROR_M_SET_E_TYPE_EXPECTED
+		 * @catchable	ILLI\Core\Std\Def\ADV\ComponentMethodCallException
 		 * @throws	ILLI\Core\Std\Def\ADV\ComponentMethodCallException::ERROR_M_SET
+		 * @throws	ILLI\Core\Std\Def\ADV\ComponentMethodCallException::ERROR_M_SET_E_P0_EXPECTED
 		 * @see		::validate()
 		 */
 		public function set($__value)
@@ -178,7 +209,7 @@
 			{
 				throw $E;
 			}
-			catch(\Exception $E)
+			catch(Exception $E)
 			{
 				throw ($c === __CLASS__ || FALSE === class_exists($e))
 					? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_SET)
@@ -199,7 +230,7 @@
 			{
 				return $this->__data;
 			}
-			catch(\Exception $E)
+			catch(Exception $E)
 			{
 				$c = get_called_class();
 				$e = $c.'\ComponentMethodCallException';
@@ -245,6 +276,7 @@
 				__const_Type::SPL_LONG			=> __const_ADVClass::SPL_LONG,
 				__const_Type::SPL_METHOD		=> __const_ADVClass::SPL_METHOD,
 				__const_Type::SPL_OBJECT		=> __const_ADVClass::SPL_OBJECT,
+				__const_Type::SPL_PAIR			=> __const_ADVClass::SPL_PAIR,
 				__const_Type::SPL_RESOURCE		=> __const_ADVClass::SPL_RESOURCE,
 				__const_Type::SPL_STRING		=> __const_ADVClass::SPL_STRING,
 				__const_Type::SPL_TRAIT			=> __const_ADVClass::SPL_TRAIT,
@@ -252,39 +284,68 @@
 			];
 			
 			/**
-			 * create ADV
+			 * create ADV from __const_Type
 			 *
 			 * :gcType<string>
 			 *	 a valid __const_Type or class-/interface-name
 			 *
 			 * @param	string $__type {:gcType}
 			 * @return	ILLI\Core\Std\Def\ADV
+			 * @fires	ILLI\Core\Std\Exception\ArgumentExpectedException when $__type is not of type string
+			 * @catchable	ILLI\Core\Std\Def\ADV\ComponentMethodCallException
+			 * @throws	ILLI\Core\Std\Def\ADV\ComponentMethodCallException::ERROR_M_DEFINE
+			 * @throws	ILLI\Core\Std\Def\ADV\ComponentMethodCallException::ERROR_M_DEFINE_E_P0_EXPECTED
 			 * @see		::$__adv
 			 * @see		ILLI\Core\Std\Def\ADVInstance
 			 * @note	unlisted types: interpreting {:gcType} as class/interface and define the type-value-pair as ADVInstance
 			 */
 			final public static function define($__type)
 			{
-				if(!is_string($__type))
-					throw new ArgumentExpectedException([
-						'target'	=> __METHOD__,
-						'expected'	=> 'string ILLI\Core\Std\Def\__const_Type::SPL*',
-						'detected'	=> getType($v = $__type),
-						'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
-					]);
+				$c = get_called_class();
 				
-				$n = &self::$__def[$__type];
-				
-				if(FALSE === isset($n))
-					#+ instance-based ADV: ADTInstance<instanceOf myClass>
-					#+ allow definition of ADV as subADT: ADVInstance<instanceOf ADV*>
-					return Invoke::emitClass('ILLI\Core\Std\Def\ADVInstance', func_get_args());
-				
-				$a = func_get_args();
-				array_shift($a);
-				
-				#+ default ADV: ADVArray, ADVBoolean, ..., ADV*
-				return Invoke::emitClass($n, $a);
+				try
+				{
+					if(FALSE === is_string($__type))
+					{
+						$e = $c.'\ComponentMethodCallException';
+						$a = ['method' => __METHOD__];
+						$E = new ArgumentExpectedException([
+							'target'	=> __METHOD__,
+							'expected'	=> __const_Type::SPL_STRING.' ILLI\Core\Std\Def\__const_Type::SPL*',
+							'detected'	=> getType($v = $__type),
+							'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
+						]);
+						
+						throw ($c === __CLASS__ || FALSE === class_exists($e))
+							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_DEFINE_E_P0_EXPECTED)
+							: new $e($E, $a, $e::ERROR_M_DEFINE_E_P0_EXPECTED);
+					}
+					
+					$n = &self::$__def[$__type];
+					
+					if(FALSE === isset($n))
+						#+ instance-based ADV: ADTInstance<instanceOf myClass>
+						#+ allow definition of ADV as subADT: ADVInstance<instanceOf ADV*>
+						return Invoke::emitClass('ILLI\Core\Std\Def\ADVInstance', func_get_args());
+					
+					$a = func_get_args();
+					array_shift($a);
+					
+					#+ default ADV: ADVArray, ADVBoolean, ..., ADV*
+					return Invoke::emitClass($n, $a);
+				}
+				catch(ComponentMethodCallException $E)
+				{
+					throw $E;
+				}
+				catch(Exception $E)
+				{
+					$e = $c.'\ComponentMethodCallException';
+					$a = ['method' => __METHOD__];
+					throw ($c === __CLASS__ || FALSE === class_exists($e))
+						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_DEFINE)
+						: new $e($E, $a, $e::ERROR_M_DEFINE);
+				}
 			}
 		#::
 		
@@ -324,7 +385,7 @@
 				{
 					return self::$__gc[$this->getName()];
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentMethodCallException';
@@ -349,7 +410,7 @@
 				{
 					return $this->__name;
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentMethodCallException';
@@ -371,20 +432,43 @@
 			 *
 			 * @param	array $__defineTypes [{:offset} => {:gcType}]
 			 * @return	string
+			 * @fires	ILLI\Core\Std\Exception\ArgumentExpectedException when $__defineTypes is not of type array
 			 * @catchable	ILLI\Core\Std\Def\ADV\ComponentMethodCallException
 			 * @throws	ILLI\Core\Std\Def\ADV\ComponentMethodCallException::ERROR_CREATE_HASH_ADDR
+			 * @throws	ILLI\Core\Std\Def\ADV\ComponentMethodCallException::ERROR_M_CREATE_HASH_ADDR_E_P0_EXPECTED
 			 * @see		::$__gc
 			 */
-			protected function createHashAddr(array $__defineTypes = [])
+			protected function createHashAddr($__defineTypes = [])
 			{
 				$c = get_called_class();
 				
 				try
 				{
+					if(FALSE === is_array($__defineTypes))
+					{
+						$e = $c.'\ComponentMethodCallException';
+						$a = ['method' => __METHOD__];
+						$E = new ArgumentExpectedException
+						([
+							'target'	=> $c,
+							'expected'	=> __const_Type::SPL_ARRAY,
+							'detected'	=> $t = getType($v = $__defineTypes),
+							'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
+						]);
+						
+						throw ($c === __CLASS__ || FALSE === class_exists($e))
+							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_CREATE_HASH_ADDR_E_P0_EXPECTED)
+							: new $e($E, $a, $e::ERROR_M_CREATE_HASH_ADDR_E_P0_EXPECTED);
+					}
+					
 					#~ performanced ADV: cache request by called-class; otherwise by hash
 					return $c === static::__GC ? Spl::nameWithHash(static::__GC, $this) : $c;
 				}
-				catch(\Exception $E)
+				catch(ComponentMethodCallException $E)
+				{
+					throw $E;
+				}
+				catch(Exception $E)
 				{
 					$e = $c.'\ComponentMethodCallException';
 					$a = ['method' => __METHOD__];
@@ -398,8 +482,7 @@
 			 * Destroy anonymous ATV definitions
 			 *
 			 * @catchable	ILLI\Core\Std\Def\ADV\ComponentMethodCallException
-			 * @throws	ILLI\Core\Std\Def\ADV\ComponentMethodCallException::ERROR_DTOR
-			 * @void
+			 * @throws	ILLI\Core\Std\Def\ADV\ComponentMethodCallException::ERROR_M_DTOR
 			 */
 			public function __destruct()
 			{
@@ -410,7 +493,7 @@
 					if($c === static::__GC)
 						unset(self::$__gc[$this->getName()]);
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					$e = $c.'\ComponentMethodCallException';
 					$a = ['method' => __METHOD__];
