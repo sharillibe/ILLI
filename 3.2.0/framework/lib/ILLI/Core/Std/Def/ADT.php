@@ -12,6 +12,7 @@
 	USE ILLI\Core\Std\Invoke;
 	USE ILLI\Core\Std\Spl\Fsb;
 	USE ILLI\Core\Util\Spl;
+	USE Exception;
 	
 	CLASS ADT EXTENDS \ILLI\Core\Std\Spl\Fsb
 	{
@@ -33,28 +34,47 @@
 		 *	a valid __const_Type
 		 *
 		 * @param	array $__defineTypes [{:offset} => {:gcType}]
+		 * @fires	ILLI\Core\Std\Exception\ArgumentExpectedException when $__defineTypes is not of type array
+		 * @fires	ILLI\Core\Std\Exception\ArgumentLengthZeroException when $__defineTypes is an empty array
 		 * @catchable	ILLI\Core\Std\Def\ADT\ComponentInitializationException
-		 * @fires	ILLI\Core\Std\Exception\ArgumentLengthZeroException when definition is an empty array
-		 * @throws	ILLI\Core\Std\Def\ADT\ComponentMethodCallException::ERROR_M_CTOR_E_DEFINITION_LENGTH_ZERO
+		 * @throws	ILLI\Core\Std\Def\ADT\ComponentMethodCallException::ERROR_M_CTOR_E_P0_EXPECTED
+		 * @throws	ILLI\Core\Std\Def\ADT\ComponentMethodCallException::ERROR_M_CTOR_E_P0_LENGTH
 		 * @see		::validate()
 		 * @see		::__destruct()
 		 * @see		ILLI\Core\Std\Def\__const_Type
 		 * @see		ILLI\Core\Std\Def\ADTInstance
 		 */
-		public function __construct(array $__defineTypes = [])
+		public function __construct($__defineTypes = [])
 		{
 			$c = get_called_class();
 			
 			try
 			{
+				if(FALSE === is_array($__defineTypes))
+				{
+					$e = $c.'\ComponentMethodCallException';
+					$a = ['method' => __METHOD__];
+					$E = new ArgumentExpectedException
+					([
+						'target'	=> $c,
+						'expected'	=> __const_Type::SPL_ARRAY,
+						'detected'	=> $t = getType($v = $__defineTypes),
+						'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
+					]);
+					
+					throw ($c === __CLASS__ || FALSE === class_exists($e))
+						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_CTOR_E_P0_EXPECTED)
+						: new $e($E, $a, $e::ERROR_M_CTOR_E_P0_EXPECTED);
+				}
+					
 				if([] === $__defineTypes)
 				{
 					$e = $c.'\ComponentMethodCallException';
 					$E = new ArgumentLengthZeroException;
 					$a = ['method' => __METHOD__];
 					throw ($c === __CLASS__ || FALSE === class_exists($e))
-						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_CTOR_E_DEFINITION_LENGTH_ZERO)
-						: new $e($E, $a, $e::ERROR_M_CTOR_E_DEFINITION_LENGTH_ZERO);
+						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_CTOR_E_P0_LENGTH)
+						: new $e($E, $a, $e::ERROR_M_CTOR_E_P0_LENGTH);
 				}
 				
 				$n = $this->createHashAddr($__defineTypes);
@@ -66,7 +86,7 @@
 				if(FALSE === isset($t))
 					$t = Fsb::fromArray($this->parseDef($__defineTypes));
 			}
-			catch(\Exception $E)
+			catch(Exception $E)
 			{
 				$e = $c.'\ComponentInitializationException';
 				$a = ['class' => $c];
@@ -103,7 +123,7 @@
 				
 				return FALSE;
 			}
-			catch(\Exception $E)
+			catch(Exception $E)
 			{
 				$c = get_called_class();
 				$e = $c.'\ComponentMethodCallException';
@@ -168,49 +188,98 @@
 			 * @param	string	$__type 	{:gcType}
 			 * @param	array 	$__type 	[{:rOffset} => {:gcType}]
 			 * @param	array 	$__type 	[{:rOffset} => [{:gcOffset} => {:gcType}]]
-			 * @return	ILLI\Core\Std\Def\Type
+			 * @return	ILLI\Core\Std\Def\ADT
+			 * @fires	ILLI\Core\Std\Exception\ArgumentExpectedException when {:gcType} is not of type string
+			 * @fires	ILLI\Core\Std\Exception\ArgumentLengthZeroException when $__type is an empty array
+			 * @catchable	ILLI\Core\Std\Def\ADT\ComponentMethodCallException
+			 * @throws	ILLI\Core\Std\Def\ADT\ComponentMethodCallException::ERROR_M_DEFINE
+			 * @throws	ILLI\Core\Std\Def\ADT\ComponentMethodCallException::ERROR_M_DEFINE_E_P0_EXPECTED
+			 * @throws	ILLI\Core\Std\Def\ADT\ComponentMethodCallException::ERROR_M_DEFINE_E_P0_LENGTH
 			 * @see		::$__def
-			 * @see		ILLI\Core\Std\Def\ADT
 			 * @see		ILLI\Core\Std\Def\ADTInstance
 			 * @note	unlisted types: interpreting {:gcType} as class/interface and define the abstract-data-type as ADTInstance
 			 */
 			final public static function define($__type)
 			{
-				if(!is_string($__type))
+				$c = get_called_class();
+				
+				try
 				{
-					if(is_array($__type))
+					if(FALSE === is_string($__type))
 					{
-						$r = [];
+						if(TRUE === is_array($__type))
+						{
+							if([] === $__type)
+							{
+								$e = $c.'\ComponentMethodCallException';
+								$E = new ArgumentLengthZeroException;
+								$a = ['method' => __METHOD__];
+								throw ($c === __CLASS__ || FALSE === class_exists($e))
+									? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_DEFINE_E_P0_LENGTH)
+									: new $e($E, $a, $e::ERROR_M_DEFINE_E_P0_LENGTH);
+							}
+							
+							$r = [];
+							
+							foreach($__type as $k => $v)
+								$r[$k] = self::define($v);
+							
+							return $r;
+						}
 						
-						foreach($__type as $k => $v)
-							$r[$k] = self::define($v);
+						$e = $c.'\ComponentMethodCallException';
+						$a = ['method' => __METHOD__];
+						$E = new ArgumentExpectedException([
+							'target'	=> __METHOD__,
+							'expected'	=> implode('|',
+							[
+								__const_Type::SPL_STRING.' ILLI\Core\Std\Def\__const_Type::SPL*',
+								__const_Type::SPL_CLASS.' *',
+								__const_Type::SPL_ARRAY.' ['.implode(', ',
+								[
+									__const_Type::SPL_STRING.' ILLI\Core\Std\Def\__const_Type::SPL*',
+									'…',
+									__const_Type::SPL_CLASS.' *'
+								]).']',
+							]),
+							'detected'	=> getType($v = $__type),
+							'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
+						]);
 						
-						return $r;
+						throw ($c === __CLASS__ || FALSE === class_exists($e))
+							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_DEFINE_E_P0_EXPECTED)
+							: new $e($E, $a, $e::ERROR_M_DEFINE_E_P0_EXPECTED);
+							
 					}
 					
-					throw new ArgumentExpectedException([
-						'target'	=> __METHOD__,
-						'expected'	=> 'string ILLI\Core\Std\Def\__const_Type::SPL*|string className|array [ILLI\Core\Std\Def\__const_Type::SPL*, …, className]',
-						'detected'	=> getType($v = $__type),
-						'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
-					]);
+					$n = &self::$__def[$__type];
+					$a = func_get_args();
+					
+					if(FALSE === isset($n))
+					{
+						$a[0] = (array) $a[0];
+						#+ instance-based ADT: ADTInstance<instanceOf myClass>
+						#+ allow definition of ADT as subADT (ADT-classes are not listed as array-keys in ::$__def): ADTInstance<instanceOf ADT*>
+						return Invoke::emitClass('ILLI\Core\Std\Def\ADTInstance', $a);
+					}
+					
+					array_shift($a);
+					
+					#+ default ADT: ADTArray, ADTBoolean, ..., ADT*
+					return Invoke::emitClass($n, $a);
 				}
-				
-				$n = &self::$__def[$__type];
-				$a = func_get_args();
-				
-				if(FALSE === isset($n))
+				catch(ComponentMethodCallException $E)
 				{
-					$a[0] = (array) $a[0];
-					#+ instance-based ADT: ADTInstance<instanceOf myClass>
-					#+ allow definition of ADT as subADT (ADT-classes are not listed as array-keys in ::$__def): ADTInstance<instanceOf ADT*>
-					return Invoke::emitClass('ILLI\Core\Std\Def\ADTInstance', $a);
+					throw $E;
 				}
-				
-				array_shift($a);
-				
-				#+ default ADT: ADTArray, ADTBoolean, ..., ADT*
-				return Invoke::emitClass($n, $a);
+				catch(Exception $E)
+				{
+					$e = $c.'\ComponentMethodCallException';
+					$a = ['method' => __METHOD__];
+					throw ($c === __CLASS__ || FALSE === class_exists($e))
+						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_DEFINE)
+						: new $e($E, $a, $e::ERROR_M_DEFINE);
+				}
 			}
 		#::
 		
@@ -248,7 +317,7 @@
 				{
 					return parent::offsetGet(0);
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentMethodCallException';
@@ -273,7 +342,7 @@
 				{
 					return self::$__gc[$this->getName()];
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentMethodCallException';
@@ -299,7 +368,7 @@
 				{
 					return implode('|', $this->getGC()->toArray());
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentMethodCallException';
@@ -320,14 +389,17 @@
 			 *	a valid __const_Type
 			 *
 			 * @param	array $__defineTypes [{:offset} => {:gcType}]
-			 * @catchable	ILLI\Core\Std\Def\ADT\ComponentMethodCallException
+			 * @return	array
+			 * @fires	ILLI\Core\Std\Exception\ArgumentExpectedException when $__defineTypes is not of type array
 			 * @fires	ILLI\Core\Std\Exception\ArgumentExpectedException when {:gcType} is not of type string
 			 * @fires	ILLI\Core\Std\Exception\ArgumentLengthZeroException when result-array is empty
-			 * @throws	ILLI\Core\Std\Def\ADT\ComponentMethodCallException::ERROR_M_PARSE_DEF_E_EXPECTED_STRING
-			 * @throws	ILLI\Core\Std\Def\ADT\ComponentMethodCallException::ERROR_M_PARSE_DEF_E_RESULT_LENGTH_ZERO
+			 * @catchable	ILLI\Core\Std\Def\ADT\ComponentMethodCallException
 			 * @throws	ILLI\Core\Std\Def\ADT\ComponentMethodCallException::ERROR_M_PARSE_DEF
+			 * @throws	ILLI\Core\Std\Def\ADT\ComponentMethodCallException::ERROR_M_PARSE_DEF_E_P0_EXPECTED
+			 * @throws	ILLI\Core\Std\Def\ADT\ComponentMethodCallException::ERROR_M_PARSE_DEF_E_P0_V_EXPECTED
+			 * @throws	ILLI\Core\Std\Def\ADT\ComponentMethodCallException::ERROR_M_PARSE_DEF_E_R_LENGTH
 			 */
-			final protected function parseDef(array $__defineTypes)
+			protected function parseDef($__defineTypes)
 			{
 				$c = get_called_class();
 				$e = $c.'\ComponentMethodCallException';
@@ -335,6 +407,23 @@
 				
 				try
 				{
+					if(FALSE === is_array($__defineTypes))
+					{
+						$e = $c.'\ComponentMethodCallException';
+						$a = ['method' => __METHOD__];
+						$E = new ArgumentExpectedException
+						([
+							'target'	=> $c,
+							'expected'	=> __const_Type::SPL_ARRAY,
+							'detected'	=> $t = getType($v = $__defineTypes),
+							'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
+						]);
+						
+						throw ($c === __CLASS__ || FALSE === class_exists($e))
+							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_PARSE_DEF_E_P0_EXPECTED)
+							: new $e($E, $a, $e::ERROR_M_PARSE_DEF_E_P0_EXPECTED);
+					}
+					
 					$r = [];
 					
 					foreach($__defineTypes as $k => $v)
@@ -347,7 +436,7 @@
 						
 						$E = new ArgumentExpectedException([
 							'target'	=> $this->getName().'['.$k.']',
-							'expected'	=> 'string', 
+							'expected'	=> __const_TYPE::SPL_STRING, 
 							'detected'	=> $t = getType($v),
 							'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
 						]);
@@ -359,8 +448,8 @@
 						];
 						
 						throw ($c === __CLASS__ || FALSE === class_exists($e))
-							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_PARSE_DEF_E_EXPECTED_STRING)
-							: new $e($E, $a, $e::ERROR_M_PARSE_DEF_E_EXPECTED_STRING);
+							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_PARSE_DEF_E_P0_V_EXPECTED)
+							: new $e($E, $a, $e::ERROR_M_PARSE_DEF_E_P0_V_EXPECTED);
 							
 					}
 					
@@ -369,14 +458,14 @@
 					
 					$E = new ArgumentLengthZeroException;
 					throw ($c === __CLASS__ || FALSE === class_exists($e))
-						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_PARSE_DEF_E_RESULT_LENGTH_ZERO)
-						: new $e($E, $a, $e::ERROR_M_PARSE_DEF_E_RESULT_LENGTH_ZERO);
+						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_PARSE_DEF_E_R_LENGTH)
+						: new $e($E, $a, $e::ERROR_M_PARSE_DEF_E_R_LENGTH);
 				}
 				catch(ComponentMethodCallException $E)
 				{
 					throw $E;
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					throw ($c === __CLASS__ || FALSE === class_exists($e))
 						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_TO_STRING)
@@ -388,8 +477,7 @@
 			 * Destroy anonymous ATD definitions
 			 *
 			 * @catchable	ILLI\Core\Std\Def\ADT\ComponentMethodCallException
-			 * @throws	ILLI\Core\Std\Def\ADT\ComponentMethodCallException::ERROR_DTOR
-			 * @void
+			 * @throws	ILLI\Core\Std\Def\ADT\ComponentMethodCallException::ERROR_M_DTOR
 			 */
 			public function __destruct()
 			{
@@ -400,13 +488,13 @@
 					if($c === __CLASS__)
 						unset(self::$__gc[$this->getName()]);
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					$e = $c.'\ComponentMethodCallException';
 					$a = ['method' => __METHOD__];
 					throw ($c === __CLASS__ || FALSE === class_exists($e))
-						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_DTOR)
-						: new $e($E, $a, $e::ERROR_DTOR);
+						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_DTOR)
+						: new $e($E, $a, $e::ERROR_M_DTOR);
 				}
 			}
 		
@@ -421,18 +509,41 @@
 			 *
 			 * @param	array $__defineTypes [{:offset} => {:gcType}]
 			 * @return	string
+			 * @fires	ILLI\Core\Std\Exception\ArgumentExpectedException when $__defineTypes is not of type array
 			 * @catchable	ILLI\Core\Std\Def\ADT\ComponentMethodCallException
 			 * @throws	ILLI\Core\Std\Def\ADT\ComponentMethodCallException::ERROR_M_CREATE_HASH_ADDR
+			 * @throws	ILLI\Core\Std\Def\ADT\ComponentMethodCallException::ERROR_M_CREATE_HASH_ADDR_E_P0_EXPECTED
 			 * @see		::$__gc
 			 */
-			protected function createHashAddr(array $__defineTypes = [])
+			protected function createHashAddr($__defineTypes = [])
 			{
 				try
 				{
+					if(FALSE === is_array($__defineTypes))
+					{
+						$e = $c.'\ComponentMethodCallException';
+						$a = ['method' => __METHOD__];
+						$E = new ArgumentExpectedException
+						([
+							'target'	=> $c,
+							'expected'	=> __const_Type::SPL_ARRAY,
+							'detected'	=> $t = getType($v = $__defineTypes),
+							'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
+						]);
+						
+						throw ($c === __CLASS__ || FALSE === class_exists($e))
+							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_CREATE_HASH_ADDR_E_P0_EXPECTED)
+							: new $e($E, $a, $e::ERROR_M_CREATE_HASH_ADDR_E_P0_EXPECTED);
+					}
+					
 					#~ performanced ADT: cache request by called-class; otherwise by hash
 					return ($c = get_called_class()) === __CLASS__ ? Spl::nameWithHash($c, $this) : $c;
 				}
-				catch(\Exception $E)
+				catch(ComponentMethodCallException $E)
+				{
+					throw $E;
+				}
+				catch(Exception $E)
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentMethodCallException';
@@ -457,7 +568,7 @@
 					{
 						return $this->getGC()->getSize();
 					}
-					catch(\Exception $E)
+					catch(Exception $E)
 					{
 						$c = get_called_class();
 						$e = $c.'\ComponentMethodCallException';
@@ -479,7 +590,7 @@
 					{
 						return $this->getGC()->offsetExists($__offset);
 					}
-					catch(\Exception $E)
+					catch(Exception $E)
 					{
 						$c = get_called_class();
 						$e = $c.'\ComponentMethodCallException';
@@ -501,7 +612,7 @@
 					{
 						return $this->getGC()->offsetGet($__offset);
 					}
-					catch(\Exception $E)
+					catch(Exception $E)
 					{
 						$c = get_called_class();
 						$e = $c.'\ComponentMethodCallException';
@@ -523,7 +634,7 @@
 					{
 						return $this->getGC()->count();
 					}
-					catch(\Exception $E)
+					catch(Exception $E)
 					{
 						$c = get_called_class();
 						$e = $c.'\ComponentMethodCallException';
@@ -545,7 +656,7 @@
 					{
 						return $this->getGC()->current();
 					}
-					catch(\Exception $E)
+					catch(Exception $E)
 					{
 						$c = get_called_class();
 						$e = $c.'\ComponentMethodCallException';
@@ -567,7 +678,7 @@
 					{
 						return $this->getGC()->key();
 					}
-					catch(\Exception $E)
+					catch(Exception $E)
 					{
 						$c = get_called_class();
 						$e = $c.'\ComponentMethodCallException';
@@ -589,7 +700,7 @@
 					{
 						return $this->getGC()->next();
 					}
-					catch(\Exception $E)
+					catch(Exception $E)
 					{
 						$c = get_called_class();
 						$e = $c.'\ComponentMethodCallException';
@@ -611,7 +722,7 @@
 					{
 						return $this->getGC()->rewind();
 					}
-					catch(\Exception $E)
+					catch(Exception $E)
 					{
 						$c = get_called_class();
 						$e = $c.'\ComponentMethodCallException';
@@ -633,7 +744,7 @@
 					{
 						return $this->getGC()->valid();
 					}
-					catch(\Exception $E)
+					catch(Exception $E)
 					{
 						$c = get_called_class();
 						$e = $c.'\ComponentMethodCallException';
@@ -655,7 +766,7 @@
 					{
 						return $this->getGC()->end();
 					}
-					catch(\Exception $E)
+					catch(Exception $E)
 					{
 						$c = get_called_class();
 						$e = $c.'\ComponentMethodCallException';
@@ -677,7 +788,7 @@
 					{
 						return $this->getGC()->keys();
 					}
-					catch(\Exception $E)
+					catch(Exception $E)
 					{
 						$c = get_called_class();
 						$e = $c.'\ComponentMethodCallException';
@@ -699,7 +810,7 @@
 					{
 						return $this->getGC()->prev();
 					}
-					catch(\Exception $E)
+					catch(Exception $E)
 					{
 						$c = get_called_class();
 						$e = $c.'\ComponentMethodCallException';
@@ -721,7 +832,7 @@
 					{
 						return $this->getGC()->values();
 					}
-					catch(\Exception $E)
+					catch(Exception $E)
 					{
 						$c = get_called_class();
 						$e = $c.'\ComponentMethodCallException';
@@ -737,8 +848,8 @@
 					
 					/**
 					 * @notSupported
-				 	 * @catchable	ILLI\Core\Std\Def\ADT\ComponentMethodCallException
 				 	 * @fires	ILLI\Core\Std\Exception\NotSupportedException
+				 	 * @catchable	ILLI\Core\Std\Def\ADT\ComponentMethodCallException
 				 	 * @throws	ILLI\Core\Std\Def\ADT\ComponentMethodCallException::ERROR_M_SET_SIZE
 					 */
 					final public function setSize($__size)
@@ -754,8 +865,8 @@
 					
 					/**
 					 * @notSupported
-				 	 * @catchable	ILLI\Core\Std\Def\ADT\ComponentMethodCallException
 				 	 * @fires	ILLI\Core\Std\Exception\NotSupportedException
+				 	 * @catchable	ILLI\Core\Std\Def\ADT\ComponentMethodCallException
 				 	 * @throws	ILLI\Core\Std\Def\ADT\ComponentMethodCallException::ERROR_M_OFFSET_SET
 					 */
 					final public function offsetSet($__offset, $__value)
@@ -771,8 +882,8 @@
 					
 					/**
 					 * @notSupported
-				 	 * @catchable	ILLI\Core\Std\Def\ADT\ComponentMethodCallException
 				 	 * @fires	ILLI\Core\Std\Exception\NotSupportedException
+				 	 * @catchable	ILLI\Core\Std\Def\ADT\ComponentMethodCallException
 				 	 * @throws	ILLI\Core\Std\Def\ADT\ComponentMethodCallException::ERROR_M_OFFSET_UNSET
 					 */
 					final public function offsetUnset($__offset)
@@ -788,8 +899,8 @@
 					
 					/**
 					 * @notSupported
-				 	 * @catchable	ILLI\Core\Std\Def\ADT\ComponentMethodCallException
 				 	 * @fires	ILLI\Core\Std\Exception\NotSupportedException
+				 	 * @catchable	ILLI\Core\Std\Def\ADT\ComponentMethodCallException
 				 	 * @throws	ILLI\Core\Std\Def\ADT\ComponentMethodCallException::ERROR_M_FROM_ARRAY
 					 */
 					final public static function fromArray($__array, $__saveIndexes = TRUE)
@@ -804,42 +915,5 @@
 					}
 				#::
 			#::
-		#::
-		
-		#:deprecated:
-			/**
-			 * @deprecated
-			 */
-			final protected function mergeTypes(array $__definedTypes, array $__defineTypes)
-			{
-					throw new NotSupportedException([
-						'target' => __METHOD__
-					]);
-				$a = func_get_args();
-				$r = [];
-				
-				foreach($a as $t)
-				{
-					foreach($t as $k => $v)
-					{
-						if(FALSE === is_integer($k))
-							throw new ArgumentExpectedException([
-								'target'	=> get_called_class().'['.$k.']',
-								'expected'	=> 'integer',
-								'detected'	=> $t = getType($v),
-								'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
-							]);
-							
-						if(isset($r[$k]))
-							throw new ArgumentInUseException([
-								'target' => get_called_class().'['.$k.']'
-							]);
-							
-						$r[$k] = $v;
-					}
-				}
-				
-				return $r;
-			}
 		#::
 	}

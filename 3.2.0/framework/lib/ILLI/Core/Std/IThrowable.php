@@ -19,7 +19,6 @@
 		public function asSolved();
 		public function isSolved();
 		
-		public static function reset();
 		public static function parents($__splClassName = NULL);
 		public static function hasCatched($__exceptionClass);
 		public static function hasErrorsLogged();

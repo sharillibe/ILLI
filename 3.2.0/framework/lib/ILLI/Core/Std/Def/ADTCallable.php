@@ -3,10 +3,16 @@
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Std\Def\ADTCallable\ComponentMethodCallException;
 	USE ILLI\Core\Std\Def\ADTCallable\ComponentInitializationException;
+	USE Exception;
 	
-	CLASS ADTCallable EXTENDS \ILLI\Core\Std\Def\ADV
+	FINAL CLASS ADTCallable EXTENDS \ILLI\Core\Std\Def\ADV
 	{
 		#:ILLI\Core\Std\Def\ADT:
+			/**
+			 * Instantiate a new Abstract Data Type Definition of callable.
+			 *
+			 * @catchable	ILLI\Core\Std\Def\ADTCallable\ComponentInitializationException
+			 */
 			public function __construct()
 			{
 				try
@@ -17,7 +23,7 @@
 				{
 					throw $E;
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentInitializationException';
@@ -28,13 +34,24 @@
 				}
 			}
 			
+			/**
+			 * value validation
+			 *
+			 * The value is callable.
+			 *
+			 * @param	mixed $__value
+			 * @return	boolean
+			 * @catchable	ILLI\Core\Std\Def\ADTCallable\ComponentInitializationException
+			 * @throws	ILLI\Core\Std\Def\ADTCallable\ComponentInitializationException::ERROR_M_VALIDATE
+			 * @see		ILLI\Core\Std\Def\__const_Type
+			 */
 			public function validate($__value)
 			{
 				try
 				{
 					return is_callable($__value);
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentMethodCallException';

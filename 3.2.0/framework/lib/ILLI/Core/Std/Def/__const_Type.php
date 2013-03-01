@@ -34,4 +34,5 @@
 		CONST SPL_METHOD		= 'method';
 		CONST SPL_TRAIT			= 'trait';
 		CONST SPL_TUPLE			= 'tuple';
+		CONST SPL_PAIR			= 'pair';
 	}

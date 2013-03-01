@@ -4,10 +4,16 @@
 	USE ILLI\Core\Std\Def\ADTMethod\ComponentMethodCallException;
 	USE ILLI\Core\Std\Def\ADTMethod\ComponentInitializationException;
 	USE ILLI\Util\String;
+	USE Exception;
 	
 	FINAL CLASS ADTMethod EXTENDS \ILLI\Core\Std\Def\ADT
 	{
 		#:ILLI\Core\Std\Def\ADT:
+			/**
+			 * Instantiate a new Abstract Data Type Definition of method.
+			 *
+			 * @catchable	ILLI\Core\Std\Def\ADTMethod\ComponentInitializationException
+			 */
 			public function __construct()
 			{
 				try
@@ -18,7 +24,7 @@
 				{
 					throw $E;
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentInitializationException';
@@ -29,6 +35,17 @@
 				}
 			}
 			
+			/**
+			 * value validation
+			 *
+			 * The value is an existing method.
+			 *
+			 * @param	mixed $__value
+			 * @return	boolean
+			 * @catchable	ILLI\Core\Std\Def\ADTMethod\ComponentInitializationException
+			 * @throws	ILLI\Core\Std\Def\ADTMethod\ComponentInitializationException::ERROR_M_VALIDATE
+			 * @see		ILLI\Core\Std\Def\__const_Type
+			 */
 			public function validate($__value)
 			{
 				try
@@ -51,7 +68,7 @@
 					
 					return method_exists($c, $m);
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentMethodCallException';

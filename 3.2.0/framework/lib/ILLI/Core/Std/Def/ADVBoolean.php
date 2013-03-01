@@ -3,10 +3,17 @@
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Std\Def\ADVBoolean\ComponentMethodCallException;
 	USE ILLI\Core\Std\Def\ADVBoolean\ComponentInitializationException;
+	USE Exception;
 	
 	CLASS ADVBoolean EXTENDS \ILLI\Core\Std\Def\ADV
 	{
 		#:ILLI\Core\Std\Def\ADV:
+			/**
+			 * Instantiate a new ADT-Value-Pair for value of type boolean.
+			 *
+			 * @param	boolean		$__data		the initial data
+			 * @catchable	ILLI\Core\Std\Def\ADVBoolean\ComponentInitializationException
+			 */
 			public function __construct($__data = NULL)
 			{
 				try
@@ -20,7 +27,7 @@
 				{
 					throw $E;
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentInitializationException';
