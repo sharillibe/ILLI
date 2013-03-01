@@ -3,10 +3,17 @@
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Std\Def\ADVDirectory\ComponentMethodCallException;
 	USE ILLI\Core\Std\Def\ADVDirectory\ComponentInitializationException;
+	USE Exception;
 	
 	CLASS ADVDirectory EXTENDS \ILLI\Core\Std\Def\ADV
 	{
 		#:ILLI\Core\Std\Def\ADV:
+			/**
+			 * Instantiate a new ADT-Value-Pair for value of type directory-path.
+			 *
+			 * @param	string		$__data		the initial data
+			 * @catchable	ILLI\Core\Std\Def\ADVDirectory\ComponentInitializationException
+			 */
 			public function __construct($__data = NULL)
 			{
 				try
@@ -20,7 +27,7 @@
 				{
 					throw $E;
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentInitializationException';

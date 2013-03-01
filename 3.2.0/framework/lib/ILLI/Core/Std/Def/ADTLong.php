@@ -3,10 +3,16 @@
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Std\Def\ADTLong\ComponentMethodCallException;
 	USE ILLI\Core\Std\Def\ADTLong\ComponentInitializationException;
+	USE Exception;
 	
 	FINAL CLASS ADTLong EXTENDS \ILLI\Core\Std\Def\ADT
 	{
 		#:ILLI\Core\Std\Def\ADT:
+			/**
+			 * Instantiate a new Abstract Data Type Definition of long (integer).
+			 *
+			 * @catchable	ILLI\Core\Std\Def\ADTLong\ComponentInitializationException
+			 */
 			public function __construct()
 			{
 				try
@@ -17,7 +23,7 @@
 				{
 					throw $E;
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentInitializationException';
@@ -28,13 +34,24 @@
 				}
 			}
 			
+			/**
+			 * value validation
+			 *
+			 * The type of given value equals with __const_Type::SPL_LONG.
+			 *
+			 * @param	mixed $__value
+			 * @return	boolean
+			 * @catchable	ILLI\Core\Std\Def\ADTLong\ComponentInitializationException
+			 * @throws	ILLI\Core\Std\Def\ADTLong\ComponentInitializationException::ERROR_M_VALIDATE
+			 * @see		ILLI\Core\Std\Def\__const_Type
+			 */
 			public function validate($__value)
 			{
 				try
 				{
 					return $this[0] === getType($__value);
 				}
-				catch(\Exception $E)
+				catch(Exception $E)
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentMethodCallException';
