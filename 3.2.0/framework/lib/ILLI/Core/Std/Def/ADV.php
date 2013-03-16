@@ -80,8 +80,8 @@
 		 *
 		 * @param	string	$__defineType	{:gcType}
 		 * @param	array	$__defineType	[{:offset} => {:gcType}]
-		 * @fires	ILLI\Core\Std\Exception\ArgumentExpectedException when $__defineTypes is not of type array or string
-		 * @fires	ILLI\Core\Std\Exception\ArgumentLengthZeroException when $__defineTypes is an empty array or string
+		 * @fires	ILLI\Core\Std\Exception\ArgumentExpectedException when $__defineType is not of type array or string
+		 * @fires	ILLI\Core\Std\Exception\ArgumentLengthZeroException when $__defineType is an empty array or string
 		 * @catchable	ILLI\Core\Std\Def\ADV\ComponentInitializationException
 		 * @throws	ILLI\Core\Std\Def\ADV\ComponentMethodCallException::ERROR_M_CTOR_E_P0_EXPECTED
 		 * @throws	ILLI\Core\Std\Def\ADV\ComponentMethodCallException::ERROR_M_CTOR_E_P0_LENGTH
@@ -94,8 +94,8 @@
 			
 			try
 			{	
-				if(FALSE === is_array($__defineTypes)
-				&& FALSE === is_string($__defineTypes))
+				if(FALSE === is_array($__defineType)
+				&& FALSE === is_string($__defineType))
 				{
 					$e = $c.'\ComponentMethodCallException';
 					$a = ['method' => __METHOD__];
@@ -103,7 +103,7 @@
 					([
 						'target'	=> $c,
 						'expected'	=> implode('|', [__const_Type::SPL_ARRAY, __const_Type::SPL_STRING]),
-						'detected'	=> $t = getType($v = $__defineTypes),
+						'detected'	=> $t = getType($v = $__defineType),
 						'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
 					]);
 					
@@ -112,7 +112,7 @@
 						: new $e($E, $a, $e::ERROR_M_CTOR_E_P0_EXPECTED);
 				}
 				
-				if(!$__defineTypes)
+				if(!$__defineType)
 				{
 					$e = $c.'\ComponentMethodCallException';
 					$E = new ArgumentLengthZeroException;
@@ -201,8 +201,8 @@
 				]);
 				
 				throw ($c === __CLASS__ || FALSE === class_exists($e))
-					? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_SET_E_TYPE_EXPECTED)
-					: new $e($E, $a, $e::ERROR_M_SET_E_TYPE_EXPECTED);
+					? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_SET_E_P0_EXPECTED)
+					: new $e($E, $a, $e::ERROR_M_SET_E_P0_EXPECTED);
 				
 			}
 			catch(ComponentMethodCallException $E)
