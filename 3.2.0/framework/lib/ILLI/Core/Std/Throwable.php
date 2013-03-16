@@ -319,7 +319,11 @@
 				$t = [];
 				$t = TRUE === $this->isExternal() ? $this->getExternal()->getTrace() : $this->getTrace();
 				
-				$d = [
+				if(FALSE === isset($t[0]))
+					return [];
+				
+				return $t[0] + 
+				[
 					'class'		=> '[internal]',
 					'line'		=> '[internal]',
 					'file'		=> '[internal]',
@@ -327,10 +331,6 @@
 					'function'	=> '',
 					'args'		=> []
 				];
-				
-				return FALSE === isset($t[0]))
-					? $d
-					: $t[0] + $d;
 			}
 		#::
 		

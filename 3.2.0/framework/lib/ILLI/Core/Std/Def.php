@@ -6,11 +6,8 @@
 	USE ILLI\Core\Std\Def\ComponentMethodCallException;
 	USE Exception;
 	
-	CLASS Def EXTENDS \ILLI\Core\Std\StaticClass
+	FINAL CLASS Def EXTENDS \ILLI\Core\Std\StaticClass
 	{
-		CONST ADT	= 'ILLI\Core\Std\Def\ADT';
-		CONST ADV	= 'ILLI\Core\Std\Def\ADV';
-		
 		/**
 		 * create ADT instance
 		 *
@@ -21,7 +18,7 @@
 		{
 			try
 			{
-				return Invoke::emitStatic(static::ADT, 'define', func_get_args());
+				return Invoke::emitStatic('ILLI\Core\Std\Def\ADT', 'define', func_get_args());
 			}
 			catch(Exception $E)
 			{
@@ -39,7 +36,7 @@
 		{
 			try
 			{
-				return Invoke::emitStatic(static::ADV, 'define', func_get_args());
+				return Invoke::emitStatic('ILLI\Core\Std\Def\ADV', 'define', func_get_args());
 			}
 			catch(Exception $E)
 			{
