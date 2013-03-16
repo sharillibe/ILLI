@@ -25,6 +25,11 @@
 			Core_Std_Invoke___trait_Static_emit	AS public emitStatic;
 		}
 		
+		USE \ILLI\Core\Std\Invoke\__trait_Function
+		{
+			Core_Std_Invoke___trait_Function_emit	AS public emitFunction;
+		}
+		
 		/**
 		 * emit normalized invokable array
 		 *
