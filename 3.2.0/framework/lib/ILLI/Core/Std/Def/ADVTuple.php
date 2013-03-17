@@ -26,7 +26,6 @@
 			 */
 			CONST __GC	= __CLASS__;
 			
-			
 			/**
 			 * Instantiate a new ADT-Value-Pair for value of type tuple.
 			 *
@@ -39,7 +38,7 @@
 			 *	a valid __const_Type
 			 *
 			 * @param	array	$__defineOffsetType	[{:offset} => {:gcType}]
-			 * @param	array	$__data			the initial data
+		 	* @param	array	$__data			the initial data [{:offset} => {:gcValue}]
 			 * @fires	ILLI\Core\Std\Exception\ArgumentExpectedException when $__defineOffsetType is not of type array
 			 * @fires	ILLI\Core\Std\Exception\ArgumentLengthZeroException when $__defineOffsetType is an empty array
 			 * @catchable	ILLI\Core\Std\Def\ADVTuple\ComponentInitializationException
@@ -86,11 +85,7 @@
 					
 					if(TRUE === isset($t))
 					{
-						if(NULL !== $__data)
-						{
-							$this->set($__data);
-						}
-						
+						$this->set((array) $__data);
 						return;
 					}
 					
@@ -102,8 +97,7 @@
 					
 					$t = Fsb::fromArray($r);
 					
-					if(NULL !== $__data)
-						$this->set($__data);
+					$this->set((array) $__data);
 				}
 				catch(ComponentInitializationException $E)
 				{
@@ -218,7 +212,7 @@
 				}
 			}
 			
-			public function mergeOffsetTypes(array $__defined, array $__define)
+			public function mergeOffsetTypes(array $__define, array $__defined)
 			{
 				$c = get_called_class();
 				$e = $c.'\ComponentMethodCallException';
@@ -290,6 +284,18 @@
 						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_MERGE_OFFSET_TYPES)
 						: new $e($E, $a, $e::ERROR_M_MERGE_OFFSET_TYPES);
 				}
+			}
+			
+			public function mergeOffsetValues($__define, array $__defined)
+			{
+				$r = [];
+				
+				$__define = (array) $__define;
+					
+				foreach($__defined as $k => $v)
+					$r[$k] = isset($__define[$k]) ? $__define[$k] : $v;
+				
+				return $r;
 			}
 		
 			/**

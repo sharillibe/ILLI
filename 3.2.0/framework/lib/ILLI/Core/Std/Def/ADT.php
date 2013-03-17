@@ -170,7 +170,8 @@
 				__const_Type::SPL_OBJECT		=> __const_ADTClass::SPL_OBJECT,
 				__const_Type::SPL_RESOURCE		=> __const_ADTClass::SPL_RESOURCE,
 				__const_Type::SPL_STRING		=> __const_ADTClass::SPL_STRING,
-				__const_Type::SPL_TRAIT			=> __const_ADTClass::SPL_TRAIT
+				__const_Type::SPL_TRAIT			=> __const_ADTClass::SPL_TRAIT,
+				__const_Type::SPL_VOID			=> __const_ADTClass::SPL_VOID
 			];
 			
 			/**
@@ -211,12 +212,15 @@
 						{
 							if([] === $__type)
 							{
+								/*
 								$e = $c.'\ComponentMethodCallException';
 								$E = new ArgumentLengthZeroException;
 								$a = ['method' => __METHOD__];
 								throw ($c === __CLASS__ || FALSE === class_exists($e))
 									? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_DEFINE_E_P0_LENGTH)
 									: new $e($E, $a, $e::ERROR_M_DEFINE_E_P0_LENGTH);
+								*/
+								$__type = [__const_Type::SPL_VOID];
 							}
 							
 							$r = [];
