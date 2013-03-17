@@ -8,6 +8,7 @@
 	USE ILLI\Core\Std\Exception\ArgumentExpectedException;
 	USE ILLI\Core\Std\Exception\ArgumentLengthZeroException;
 	USE ILLI\Core\Std\Exception\IndexInUseException;
+	USE ILLI\Core\Std\Exception\IndexOutOfRangeException;
 	USE ILLI\Core\Std\Exception\ClassConstantNotFoundException;
 	USE ILLI\Core\Std\Spl\Fsb;
 	USE ILLI\Core\Std\Spl\FsbCollection;
@@ -147,193 +148,6 @@
 						: new $e($E, $a);
 				}
 			}
-			
-			public function __set($__constantName, $__value)
-			{
-				$c = get_called_class();
-				$e = $c.'\ComponentMethodCallException';
-				$a = ['method' => __METHOD__];
-				
-				try
-				{
-					if(FALSE === is_string($__constantName)
-					|| TRUE === is_numeric($__constantName))
-					{
-						$E = new ArgumentExpectedException
-						([
-							'target'	=> get_called_class(),
-							'expected'	=> __const_Type::SPL_STRING,
-							'detected'	=> $t = getType($v = $__constantName),
-							'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
-						]);
-						
-						throw ($c === __CLASS__ || FALSE === class_exists($e))
-							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M___SET_E_P0_EXPECTED)
-							: new $e($E, $a, $e::ERROR_M___SET_E_P0_EXPECTED);
-					}
-					
-					if(FALSE === defined($constName = get_called_class().'::'.$__constantName))
-					{
-						$E = new ClassConstantNotFoundException(['class' => $c, 'const' => $__constantName]);
-						
-						throw ($c === __CLASS__ || FALSE === class_exists($e))
-							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M___SET_E_P0_NOT_DEFINED)
-							: new $e($E, $a, $e::ERROR_M___SET_E_P0_NOT_DEFINED);
-					}
-					
-					$constValue = constant($constName);
-					
-					if(FALSE === $this->validateVal($constValue, $__value))
-					{
-						$E = new ArgumentExpectedException([
-							'target'	=> $this->getName().'['.$constValue.'] ('.$__constantName.')',
-							'expected'	=> implode('|', array_unique($this->getValGC($constValue)->invoke('toString'))), 
-							'detected'	=> $t = getType($v = $__value),
-							'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
-						]);
-						
-						$a +=
-						[
-							'offset'	=> $__constantName,
-							'class'		=> $c
-						];
-						
-						throw ($c === __CLASS__ || FALSE === class_exists($e))
-							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M___SET_E_P1_EXPECTED)
-							: new $e($E, $a, $e::ERROR_M___SET_E_P1_EXPECTED);
-					}
-					
-					$this->__data[$constValue] = $__value;
-					
-					return $this;
-				}
-				catch(ComponentMethodCallException $E)
-				{
-					throw $E;
-				}
-				catch(Exception $E)
-				{
-					$a = ['method' => __METHOD__];
-					throw ($c === __CLASS__ || FALSE === class_exists($e))
-						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_MERGE_OFFSET_TYPES)
-						: new $e($E, $a, $e::ERROR_M_MERGE_OFFSET_TYPES);
-				}
-			}
-			
-			public function __get($__constantName)
-			{
-				$c = get_called_class();
-				$e = $c.'\ComponentMethodCallException';
-				$a = ['method' => __METHOD__];
-				
-				try
-				{
-					if(FALSE === defined($c = get_called_class().'::'.$__constantName))
-						throw new Exception('Undefined offset '.$__constantName.' in '.$this->getName());
-						
-					$t = $this->get();
-					return $this->__data[constant($c)];
-				}
-				catch(ComponentMethodCallException $E)
-				{
-					throw $E;
-				}
-				catch(Exception $E)
-				{
-					$a = ['method' => __METHOD__];
-					throw ($c === __CLASS__ || FALSE === class_exists($e))
-						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_MERGE_OFFSET_TYPES)
-						: new $e($E, $a, $e::ERROR_M_MERGE_OFFSET_TYPES);
-				}
-			}
-			
-			public static function mergeOffsetTypes(array $__define, array $__defined)
-			{
-				$c = get_called_class();
-				$e = $c.'\ComponentMethodCallException';
-				$a = ['method' => __METHOD__];
-				
-				try
-				{
-					$r = [];
-					
-					foreach($__defined as $const => $value)
-					{
-						if(FALSE === is_integer($const))
-						{
-							$E = new ArgumentExpectedException
-							([
-								'target'	=> get_called_class(),
-								'expected'	=> __const_Type::SPL_LONG,
-								'detected'	=> $t = getType($v = $const),
-								'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
-							]);
-							
-							throw ($c === __CLASS__ || FALSE === class_exists($e))
-								? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_MERGE_OFFSET_TYPES_E_P0_EXPECTED)
-								: new $e($E, $a, $e::ERROR_M_MERGE_OFFSET_TYPES_E_P0_EXPECTED);
-						}
-						
-						$r[$const] = $value;
-					}
-					
-					foreach($__define as $const => $value)
-					{
-						if(FALSE === is_integer($const))
-						{
-							$E = new ArgumentExpectedException
-							([
-								'target'	=> get_called_class(),
-								'expected'	=> __const_Type::SPL_LONG,
-								'detected'	=> $t = getType($v = $const),
-								'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
-							]);
-							
-							throw ($c === __CLASS__ || FALSE === class_exists($e))
-								? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_MERGE_OFFSET_TYPES_E_P1_EXPECTED)
-								: new $e($E, $a, $e::ERROR_M_MERGE_OFFSET_TYPES_E_P1_EXPECTED);
-						}
-						
-						if(isset($r[$const]))
-						{
-							$E = new IndexInUseException(['offset' => count($r) - 1]);
-							throw ($c === __CLASS__ || FALSE === class_exists($e))
-								? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_MERGE_OFFSET_TYPES_E_P1_IN_USE)
-								: new $e($E, $a, $e::ERROR_M_MERGE_OFFSET_TYPES_E_P1_IN_USE);
-						}
-							
-						$r[$const] = $value;
-					}
-					
-					return $r;
-				}
-				catch(ComponentMethodCallException $E)
-				{
-					throw $E;
-				}
-				catch(Exception $E)
-				{
-					$a = ['method' => __METHOD__];
-					throw ($c === __CLASS__ || FALSE === class_exists($e))
-						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_MERGE_OFFSET_TYPES)
-						: new $e($E, $a, $e::ERROR_M_MERGE_OFFSET_TYPES);
-				}
-			}
-			
-			public static function mergeOffsetValues($__define, array $__defined)
-			{
-				$r = [];
-				
-				$__define = (array) $__define;
-					
-				foreach($__define as $k => $v)
-					$r[$k] = $v;
-					
-				foreach($__defined as $k => $v)
-					isset($r[$k]) ?: $r[$k] = $v;
-				
-				return $r;
-			}
 		
 			/**
 			 * value validation
@@ -454,6 +268,407 @@
 				}
 			}
 		#::
+		
+		/**
+		 * direct access by constant name
+		 *
+		 * @param 	string 	$__constantName		constant with defined tuple index
+		 * @param	mixed	$__value		type based on ADT
+		 * @fires	ILLI\Core\Std\Exception\ArgumentExpectedException when $__constantName is of type numeric or not of type string
+		 * @fires	ILLI\Core\Std\Exception\ClassConstantNotFoundException when $__constantName is not a declared constant
+		 * @fires	ILLI\Core\Std\Exception\IndexOutOfRangeException when value of $__constantName is not in tuple scope
+		 * @fires	ILLI\Core\Std\Exception\ArgumentExpectedException $__value validation-fail
+		 * @catchable	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException
+		 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M___SET
+		 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M___SET_E_P0_EXPECTED
+		 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M___SET_E_P0_NOT_DEFINED
+		 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M___SET_E_P0_OUT_OF_RANGE
+		 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M___SET_E_P1_EXPECTED
+		 */
+		public function __set($__constantName, $__value)
+		{
+			$c = get_called_class();
+			$e = $c.'\ComponentMethodCallException';
+			$a = ['method' => __METHOD__];
+			
+			try
+			{
+				if(FALSE === is_string($__constantName)
+				|| TRUE === is_numeric($__constantName))
+				{
+					$E = new ArgumentExpectedException
+					([
+						'target'	=> get_called_class(),
+						'expected'	=> __const_Type::SPL_STRING,
+						'detected'	=> $t = getType($v = $__constantName),
+						'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
+					]);
+					
+					throw ($c === __CLASS__ || FALSE === class_exists($e))
+						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M___SET_E_P0_EXPECTED)
+						: new $e($E, $a, $e::ERROR_M___SET_E_P0_EXPECTED);
+				}
+				
+				if(FALSE === defined($constName = get_called_class().'::'.$__constantName))
+				{
+					$E = new ClassConstantNotFoundException(['class' => $c, 'const' => $__constantName]);
+					
+					throw ($c === __CLASS__ || FALSE === class_exists($e))
+						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M___SET_E_P0_NOT_DEFINED)
+						: new $e($E, $a, $e::ERROR_M___SET_E_P0_NOT_DEFINED);
+				}
+				
+				$constValue = constant($constName);
+				
+				if(FALSE === isset($this->__data[$constValue]))
+				{
+					$E = new IndexOutOfRangeException([
+						'offset'	=> $constValue,
+					]);
+					
+					throw ($c === __CLASS__ || FALSE === class_exists($e))
+						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M___SET_E_P0_OUT_OF_RANGE)
+						: new $e($E, $a, $e::ERROR_M___SET_E_P0_OUT_OF_RANGE);
+				}
+				
+				if(FALSE === $this->validateVal($constValue, $__value))
+				{
+					$E = new ArgumentExpectedException([
+						'target'	=> $this->getName().'['.$constValue.'] ('.$__constantName.')',
+						'expected'	=> implode('|', array_unique($this->getValGC($constValue)->invoke('toString'))), 
+						'detected'	=> $t = getType($v = $__value),
+						'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
+					]);
+					
+					$a +=
+					[
+						'offset'	=> $__constantName,
+						'class'		=> $c
+					];
+					
+					throw ($c === __CLASS__ || FALSE === class_exists($e))
+						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M___SET_E_P1_EXPECTED)
+						: new $e($E, $a, $e::ERROR_M___SET_E_P1_EXPECTED);
+				}
+				
+				$this->__data[$constValue] = $__value;
+				
+				return $this;
+			}
+			catch(ComponentMethodCallException $E)
+			{
+				throw $E;
+			}
+			catch(Exception $E)
+			{
+				$a = ['method' => __METHOD__];
+				throw ($c === __CLASS__ || FALSE === class_exists($e))
+					? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M___SET)
+					: new $e($E, $a, $e::ERROR_M___SET);
+			}
+		}
+		
+		/**
+		 * direct access by constant name
+		 *
+		 * @param 	string 	$__constantName		constant with defined tuple index
+		 * @return	mixed	type based on ADT
+		 * @fires	ILLI\Core\Std\Exception\ArgumentExpectedException when $__constantName is of type numeric or not of type string
+		 * @fires	ILLI\Core\Std\Exception\ClassConstantNotFoundException when $__constantName is not a declared constant
+		 * @fires	ILLI\Core\Std\Exception\IndexOutOfRangeException when value of $__constantName is not in tuple scope
+		 * @catchable	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException
+		 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M___GET
+		 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M___GET_E_P0_EXPECTED
+		 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M___GET_E_P0_NOT_DEFINED
+		 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M___GET_E_P0_OUT_OF_RANGE
+		 */
+		public function __get($__constantName)
+		{
+			$c = get_called_class();
+			$e = $c.'\ComponentMethodCallException';
+			$a = ['method' => __METHOD__];
+			
+			try
+			{
+				if(FALSE === is_string($__constantName)
+				|| TRUE === is_numeric($__constantName))
+				{
+					$E = new ArgumentExpectedException
+					([
+						'target'	=> get_called_class(),
+						'expected'	=> __const_Type::SPL_STRING,
+						'detected'	=> $t = getType($v = $__constantName),
+						'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
+					]);
+					
+					throw ($c === __CLASS__ || FALSE === class_exists($e))
+						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M___GET_E_P0_EXPECTED)
+						: new $e($E, $a, $e::ERROR_M___GET_E_P0_EXPECTED);
+				}
+				
+				if(FALSE === defined($constName = get_called_class().'::'.$__constantName))
+				{
+					$E = new ClassConstantNotFoundException(['class' => $c, 'const' => $__constantName]);
+					
+					throw ($c === __CLASS__ || FALSE === class_exists($e))
+						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M___GET_E_P0_NOT_DEFINED)
+						: new $e($E, $a, $e::ERROR_M___GET_E_P0_NOT_DEFINED);
+				}
+				
+				if(FALSE === isset($this->__data[$constValue]))
+				{
+					$E = new IndexOutOfRangeException([
+						'offset'	=> $constValue,
+					]);
+					
+					throw ($c === __CLASS__ || FALSE === class_exists($e))
+						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M___GET_E_P0_OUT_OF_RANGE)
+						: new $e($E, $a, $e::ERROR_M___GET_E_P0_OUT_OF_RANGE);
+				}
+				
+				$constValue = constant($constName);
+				return $this->__data[$constValue];
+			}
+			catch(ComponentMethodCallException $E)
+			{
+				throw $E;
+			}
+			catch(Exception $E)
+			{
+				$a = ['method' => __METHOD__];
+				throw ($c === __CLASS__ || FALSE === class_exists($e))
+					? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M___GET)
+					: new $e($E, $a, $e::ERROR_M___GET);
+			}
+		}
+		
+		/**
+		 * merge offset ADT collection
+		 *
+		 * "define" can not overide "defined":
+		 *
+		 * 	$new = [1 => long, 2 => string]
+		 * 	merge($new, [0 => double, 1 => string] // error offset 1: defined as string
+		 *
+		 * 	$new = [2 => long, 3 => string]
+		 * 	merge($new, [0 => double, 1 => string] // [0 => double, 1 => string, 2 => long, 3 => string]
+		 *
+		 * @param	array	$__define	tuple ADT
+		 * @param	array	$__defined	proto ADT
+		 * @return	array
+		 * @fires	ILLI\Core\Std\Exception\ArgumentExpectedException when $__define is not of type array
+		 * @fires	ILLI\Core\Std\Exception\ArgumentExpectedException when $__defined is not of type array
+		 * @fires	ILLI\Core\Std\Exception\ArgumentExpectedException when offset in $__define is not of type long
+		 * @fires	ILLI\Core\Std\Exception\ArgumentExpectedException when offset in $__defined is not of type long
+		 * @fires	ILLI\Core\Std\Exception\IndexInUseException when offset in $__define is declared as offset in $__defined
+		 * @catchable	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException
+		 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M_MERGE_OFFSET_TYPES
+		 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M_MERGE_OFFSET_TYPES_E_P0_EXPECTED
+		 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M_MERGE_OFFSET_TYPES_E_P1_EXPECTED
+		 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M_MERGE_OFFSET_TYPES_E_P0_K_EXPECTED
+		 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M_MERGE_OFFSET_TYPES_E_P1_K_EXPECTED
+		 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M_MERGE_OFFSET_TYPES_E_P1_K_IN_USE
+		 */
+		public static function mergeOffsetTypes($__define, $__defined)
+		{
+			$c = get_called_class();
+			$e = $c.'\ComponentMethodCallException';
+			$a = ['method' => __METHOD__];
+			
+			try
+			{
+				if(FALSE === is_array($__define))
+				{
+					$E = new ArgumentExpectedException
+					([
+						'target'	=> get_called_class(),
+						'expected'	=> __const_Type::SPL_ARRAY,
+						'detected'	=> $t = getType($v = $__define),
+						'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
+					]);
+					
+					throw ($c === __CLASS__ || FALSE === class_exists($e))
+						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_MERGE_OFFSET_TYPES_E_P0_EXPECTED)
+						: new $e($E, $a, $e::ERROR_M_MERGE_OFFSET_TYPES_E_P0_EXPECTED);
+				}
+				
+				if(FALSE === is_array($__defined))
+				{
+					$E = new ArgumentExpectedException
+					([
+						'target'	=> get_called_class(),
+						'expected'	=> __const_Type::SPL_ARRAY,
+						'detected'	=> $t = getType($v = $__define),
+						'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
+					]);
+					
+					throw ($c === __CLASS__ || FALSE === class_exists($e))
+						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_MERGE_OFFSET_TYPES_E_P1_EXPECTED)
+						: new $e($E, $a, $e::ERROR_M_MERGE_OFFSET_TYPES_E_P1_EXPECTED);
+				}
+				
+				$r = [];
+				
+				foreach($__defined as $const => $value)
+				{
+					if(FALSE === is_integer($const))
+					{
+						$E = new ArgumentExpectedException
+						([
+							'target'	=> get_called_class(),
+							'expected'	=> __const_Type::SPL_LONG,
+							'detected'	=> $t = getType($v = $const),
+							'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
+						]);
+						
+						throw ($c === __CLASS__ || FALSE === class_exists($e))
+							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_MERGE_OFFSET_TYPES_E_P1_K_EXPECTED)
+							: new $e($E, $a, $e::ERROR_M_MERGE_OFFSET_TYPES_E_P1_K_EXPECTED);
+					}
+					
+					$r[$const] = $value;
+				}
+				
+				foreach($__define as $const => $value)
+				{
+					if(FALSE === is_integer($const))
+					{
+						$E = new ArgumentExpectedException
+						([
+							'target'	=> get_called_class(),
+							'expected'	=> __const_Type::SPL_LONG,
+							'detected'	=> $t = getType($v = $const),
+							'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
+						]);
+						
+						throw ($c === __CLASS__ || FALSE === class_exists($e))
+							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_MERGE_OFFSET_TYPES_E_P0_K_EXPECTED)
+							: new $e($E, $a, $e::ERROR_M_MERGE_OFFSET_TYPES_E_P0_K_EXPECTED);
+					}
+					
+					if(isset($r[$const]))
+					{
+						$E = new IndexInUseException(['offset' => count($r) - 1]);
+						throw ($c === __CLASS__ || FALSE === class_exists($e))
+							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_MERGE_OFFSET_TYPES_E_P0_K_IN_USE)
+							: new $e($E, $a, $e::ERROR_M_MERGE_OFFSET_TYPES_E_P0_K_IN_USE);
+					}
+						
+					$r[$const] = $value;
+				}
+				
+				return $r;
+			}
+			catch(ComponentMethodCallException $E)
+			{
+				throw $E;
+			}
+			catch(Exception $E)
+			{
+				$a = ['method' => __METHOD__];
+				throw ($c === __CLASS__ || FALSE === class_exists($e))
+					? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_MERGE_OFFSET_TYPES)
+					: new $e($E, $a, $e::ERROR_M_MERGE_OFFSET_TYPES);
+			}
+		}
+		
+		/**
+		 * merge offset data collection
+		 *
+		 * "defined" as default values -> can not overide "define":
+		 *
+		 * @param	array	$__define	tuple data
+		 * @param	array	$__defined	proto data
+		 * @return	array
+		 * @fires	ILLI\Core\Std\Exception\ArgumentExpectedException when $__defined is not of type array
+		 * @fires	ILLI\Core\Std\Exception\ArgumentExpectedException when offset in $__define is not of type long
+		 * @fires	ILLI\Core\Std\Exception\ArgumentExpectedException when offset in $__defined is not of type long
+		 * @catchable	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException
+		 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M_MERGE_OFFSET_TYPES
+		 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M_MERGE_OFFSET_TYPES_E_P1_EXPECTED
+		 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M_MERGE_OFFSET_TYPES_E_P0_K_EXPECTED
+		 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M_MERGE_OFFSET_TYPES_E_P1_K_EXPECTED
+		 */
+		public static function mergeOffsetValues($__define, array $__defined)
+		{
+			$c = get_called_class();
+			$e = $c.'\ComponentMethodCallException';
+			$a = ['method' => __METHOD__];
+			
+			try
+			{
+				if(FALSE === is_array($__defined))
+				{
+					$E = new ArgumentExpectedException
+					([
+						'target'	=> get_called_class(),
+						'expected'	=> __const_Type::SPL_ARRAY,
+						'detected'	=> $t = getType($v = $__defined),
+						'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
+					]);
+					
+					throw ($c === __CLASS__ || FALSE === class_exists($e))
+						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_MERGE_OFFSET_VALUES_E_P1_EXPECTED)
+						: new $e($E, $a, $e::ERROR_M_MERGE_OFFSET_VALUES_E_P1_EXPECTED);
+				}
+				
+				$r = [];
+				
+				$__define = (array) $__define;
+					
+				foreach($__define as $k => $v)
+				{
+					if(FALSE === is_integer($k))
+					{
+						$E = new ArgumentExpectedException
+						([
+							'target'	=> get_called_class(),
+							'expected'	=> __const_Type::SPL_LONG,
+							'detected'	=> $t = getType($v = $k),
+							'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
+						]);
+						
+						throw ($c === __CLASS__ || FALSE === class_exists($e))
+							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_MERGE_OFFSET_VALUES_E_P0_K_EXPECTED)
+							: new $e($E, $a, $e::ERROR_M_MERGE_OFFSET_VALUES_E_P0_K_EXPECTED);
+					}
+					
+					$r[$k] = $v;
+				}
+					
+				foreach($__defined as $k => $v)
+				{
+					if(FALSE === is_integer($k))
+					{
+						$E = new ArgumentExpectedException
+						([
+							'target'	=> get_called_class(),
+							'expected'	=> __const_Type::SPL_LONG,
+							'detected'	=> $t = getType($v = $k),
+							'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
+						]);
+						
+						throw ($c === __CLASS__ || FALSE === class_exists($e))
+							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_MERGE_OFFSET_VALUES_E_P1_K_EXPECTED)
+							: new $e($E, $a, $e::ERROR_M_MERGE_OFFSET_VALUES_E_P1_K_EXPECTED);
+					}
+					
+					isset($r[$k]) ?: $r[$k] = $v;
+				}
+				
+				return $r;
+			}
+			catch(ComponentMethodCallException $E)
+			{
+				throw $E;
+			}
+			catch(Exception $E)
+			{
+				throw ($c === __CLASS__ || FALSE === class_exists($e))
+					? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_MERGE_OFFSET_VALUES)
+					: new $e($E, $a, $e::ERROR_M_MERGE_OFFSET_VALUES);
+			}
+		}
 		
 		/**
 		 * offset value validation
