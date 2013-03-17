@@ -20,6 +20,7 @@
 		#+ aliases
 		CONST SPL_FLOAT			= 'float';
 		CONST SPL_LONG			= 'long';
+		CONST SPL_VOID			= 'void';
 		
 		#+ misc
 		CONST SPL_STRICT_ARRAY		= 'strictarray';
