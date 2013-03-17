@@ -27,8 +27,6 @@
 			 */
 			CONST __GC	= __CLASS__;
 			
-			static $__adtgc = [];
-			
 			/**
 			 * Instantiate a new ADT-Value-Pair for value of type tuple.
 			 *
