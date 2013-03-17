@@ -26,6 +26,8 @@
 			 */
 			CONST __GC	= __CLASS__;
 			
+			static $__adtgc = [];
+			
 			/**
 			 * Instantiate a new ADT-Value-Pair for value of type tuple.
 			 *
@@ -38,7 +40,7 @@
 			 *	a valid __const_Type
 			 *
 			 * @param	array	$__defineOffsetType	[{:offset} => {:gcType}]
-		 	* @param	array	$__data			the initial data [{:offset} => {:gcValue}]
+		 	 * @param	array	$__data			the initial data [{:offset} => {:gcValue}]
 			 * @fires	ILLI\Core\Std\Exception\ArgumentExpectedException when $__defineOffsetType is not of type array
 			 * @fires	ILLI\Core\Std\Exception\ArgumentLengthZeroException when $__defineOffsetType is an empty array
 			 * @catchable	ILLI\Core\Std\Def\ADVTuple\ComponentInitializationException
@@ -46,6 +48,11 @@
 			 * @throws	ILLI\Core\Std\Def\ADVTuple\ComponentMethodCallException::ERROR_M_CTOR_E_P0_LENGTH
 			 * @see		ILLI\Core\Std\Def\ADV::__construct()
 			 * @see		ILLI\Core\Std\Def\ADT::define()
+			 *
+			 * @testing	ADT collection-cache:
+			 * 			::$__gc stores the full-matrix only.
+			 * 			to bypass hundrets of FsbCollections and ADT*-instances of the same type we need a local static ADT-cache
+			 *			to x-link from $__STATIC_adt[typeAddr]->typeCollection -> ::$__gc[tuplename][index]->typeCollection
 			 */
 			public function __construct($__defineOffsetType, $__data = NULL)
 			{
@@ -92,8 +99,36 @@
 					$d = $this->parseDef($__defineOffsetType);
 					$r = [];
 					
-					foreach($d as $o)
-						$r[] = FsbCollection::fromArray(NULL === $o ? [] : ADT::define((array) $o));
+					static $__STATIC_adt;
+					isset($__STATIC_adt) ?: $__STATIC_adt = [];
+					
+					foreach($d as $i => $o)
+					{
+						// prev version static::$adt
+						//$r[] = FsbCollection::fromArray(NULL === $o ? [] : ($adt = ADT::define((array) $o)));
+						
+						$o = (array) $o;
+						if([] !== $o)
+						{
+							// create unique type-map addr
+							$q = $o;
+							sort($q);
+							$q = implode('|', array_unique($q));
+							
+							if(FALSE === isset($__STATIC_adt[$q]))
+								$__STATIC_adt[$q] = FsbCollection::fromArray(ADT::define($o));
+							
+							$r[] = &$__STATIC_adt[$q];
+						}
+						else
+						{
+							throw new Exception('test this... void?');
+							//$r[] = FsbCollection::fromArray([]);
+						}
+						
+					}
+					
+					var_dump([get_called_class() => $__STATIC_adt]);
 					
 					$t = Fsb::fromArray($r);
 					
@@ -212,7 +247,7 @@
 				}
 			}
 			
-			public function mergeOffsetTypes(array $__define, array $__defined)
+			public static function mergeOffsetTypes(array $__define, array $__defined)
 			{
 				$c = get_called_class();
 				$e = $c.'\ComponentMethodCallException';
@@ -262,7 +297,6 @@
 						if(isset($r[$const]))
 						{
 							$E = new IndexInUseException(['offset' => count($r) - 1]);
-							$a = ['class' => $c, 'const' => $const];
 							throw ($c === __CLASS__ || FALSE === class_exists($e))
 								? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_MERGE_OFFSET_TYPES_E_P1_IN_USE)
 								: new $e($E, $a, $e::ERROR_M_MERGE_OFFSET_TYPES_E_P1_IN_USE);
@@ -286,14 +320,17 @@
 				}
 			}
 			
-			public function mergeOffsetValues($__define, array $__defined)
+			public static function mergeOffsetValues($__define, array $__defined)
 			{
 				$r = [];
 				
 				$__define = (array) $__define;
 					
+				foreach($__define as $k => $v)
+					$r[$k] = $v;
+					
 				foreach($__defined as $k => $v)
-					$r[$k] = isset($__define[$k]) ? $__define[$k] : $v;
+					isset($r[$k]) ?: $r[$k] = $v;
 				
 				return $r;
 			}
