@@ -41,7 +41,7 @@
 		 *	a valid __const_Type value
 		 *
 		 * @param	array	$__defineOffsetType	[{:offset} => {:gcType}]
-		 	* @param	array	$__data			the initial data [{:offset} => {:gcValue}]
+		 * @param	array	$__data			the initial data [{:offset} => {:gcValue}]
 		 */
 		public function __construct(array $__defineOffsetType = [], array $__data = [])
 		{
