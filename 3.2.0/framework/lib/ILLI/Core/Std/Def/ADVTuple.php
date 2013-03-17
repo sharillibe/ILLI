@@ -128,7 +128,7 @@
 						
 					}
 					
-					var_dump([get_called_class() => $__STATIC_adt]);
+					//var_dump([get_called_class() => $__STATIC_adt]);
 					
 					$t = Fsb::fromArray($r);
 					
