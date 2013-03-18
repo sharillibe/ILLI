@@ -1,8 +1,7 @@
 <?PHP
 	namespace bootload;
 	
-	USE	Server,
-		Invoke;
+	USE	Invoke;
 		
 	USE	Exception,
 		ErrorException,
@@ -11,11 +10,8 @@ try
 {
 	require_once __DIR__.'/illi.php';
 	
-	Server\Init::setup();
-	Server\Init::development();
-	Server\Init::debug();
-	
 	Invoke\Init::illi();
+	Invoke\Init::run();
 }
 catch(Throwable $T)
 {
