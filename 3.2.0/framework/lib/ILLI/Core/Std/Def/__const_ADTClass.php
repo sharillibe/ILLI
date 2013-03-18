@@ -24,4 +24,5 @@
 		CONST SPL_RESOURCE	= 'ILLI\Core\Std\Def\ADTResource';
 		CONST SPL_STRING	= 'ILLI\Core\Std\Def\ADTString';
 		CONST SPL_TRAIT		= 'ILLI\Core\Std\Def\ADTTrait';
+		CONST SPL_VOID		= 'ILLI\Core\Std\Def\ADTVoid';
 	}
