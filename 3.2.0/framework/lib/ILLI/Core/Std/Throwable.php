@@ -513,21 +513,20 @@
 					
 				set_exception_handler(static::$__handle['fire']);
 				
+				ini_set('track_errors',			1);
+				ini_set("display_errors",		0);
+				ini_set("display_startup_errors",	0);
 				
 				static $shutdown;
 				
 				$shutdown ?: $shutdown = Invoke::emitCallable(function()
 				{
-					ini_set('track_errors',			1);
-					ini_set("display_errors",		0);
-					ini_set("display_startup_errors",	0);
-					
 					$fatal = &static::$__handle['fatal'];
-					register_shutdown_function( function() use (&$fatal)
+					
+					register_shutdown_function(function() use (&$fatal)
 					{
-						return (NULL !== ($error = error_get_last()))
-							? $fatal($error['type'], $error['message'], $error['file'], $error['line'])
-							: $fatal(E_CORE_ERROR, '[shutdown]', 0, '[internal]');
+						NULL === ($error = error_get_last())
+							?: $fatal($error['type'], $error['message'], $error['file'], $error['line']);
 					});
 					
 					return TRUE;
