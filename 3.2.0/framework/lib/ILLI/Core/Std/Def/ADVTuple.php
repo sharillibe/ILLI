@@ -413,6 +413,8 @@
 						: new $e($E, $a, $e::ERROR_M___GET_E_P0_NOT_DEFINED);
 				}
 				
+				$constValue = constant($constName);
+				
 				if(FALSE === isset($this->__data[$constValue]))
 				{
 					$E = new IndexOutOfRangeException([
@@ -424,7 +426,6 @@
 						: new $e($E, $a, $e::ERROR_M___GET_E_P0_OUT_OF_RANGE);
 				}
 				
-				$constValue = constant($constName);
 				return $this->__data[$constValue];
 			}
 			catch(ComponentMethodCallException $E)
