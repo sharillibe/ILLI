@@ -517,9 +517,9 @@
 				ini_set("display_errors",		0);
 				ini_set("display_startup_errors",	0);
 				
-				static $shutdown;
+				static $__STATIC_shutdown;
 				
-				$shutdown ?: $shutdown = Invoke::emitCallable(function()
+				$__STATIC_shutdown ?: $__STATIC_shutdown = Invoke::emitCallable(function()
 				{
 					$fatal = &static::$__handle['fatal'];
 					
