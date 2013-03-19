@@ -1,6 +1,7 @@
 <?PHP
 	NAMESPACE ILLI\Core\Std\Spl;
 	USE ILLI\Core\Std\Exception;
+	USE ILLI\Core\Util\String;
 	USE Closure;
 	USE ReflectionFunction;
 	USE SplFileObject;
@@ -93,7 +94,7 @@
 				$F->next();
 			}
 	
-			return substr($r, $b = strpos($r, 'function'), strrpos($r, '}') - $b + 1);
+			return String::lrepeat(substr($r, $b = strpos($r, 'function'), strrpos($r, '}') - $b + 1), "\t", 1, ['lines' => [0], 'last' => TRUE, 'inverse' => TRUE]);
 		}
 	
 		protected function _fetchUse()
