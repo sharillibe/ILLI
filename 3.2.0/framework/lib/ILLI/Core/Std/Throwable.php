@@ -4,9 +4,11 @@
 	USE ILLI\Core\Std\Throwable\External;
 	USE ILLI\Core\Std\Throwable\Failure;
 	USE ILLI\Core\Std\Throwable\Trapped;
+	USE ILLI\Core\Std\Throwable\Fatal;
 	USE ILLI\Core\Std\Throwable\Log;
 	USE ILLI\Core\Std\Throwable\Export;
 	USE ILLI\Core\Std\IThrowable;
+	USE ILLI\Core\Std\Invoke;
 	USE ILLI\Core\Util\Set;
 	USE ILLI\Core\Util\String;
 	USE Closure;
@@ -284,13 +286,20 @@
 				return $this->getFire()['file'];
 			}
 			
-			public function getFireSource()
+			public function getFireSource(array $__config = [])
 			{
-				if(FALSE === file_exists($f = $this->getFire()['file']))
+				$__config +=
+				[
+					'file' => $this->getFire()['file'],
+					'line' => $this->getFire()['line']
+				];
+				
+				if('[internal]' === ($f = $__config['file'])
+				|| FALSE === file_exists($f))
 					return '';
 					
 				$f = explode(PHP_EOL, file_get_contents($f));
-				$c = $this->getFire()['line'] - 1;
+				$c = $__config['line'] - 1;
 				$r = [];
 				
 				foreach(range($c - 3, $c + 3) as $i)
@@ -319,11 +328,7 @@
 				$t = [];
 				$t = TRUE === $this->isExternal() ? $this->getExternal()->getTrace() : $this->getTrace();
 				
-				if(FALSE === isset($t[0]))
-					return [];
-				
-				return $t[0] + 
-				[
+				$d = [
 					'class'		=> '[internal]',
 					'line'		=> '[internal]',
 					'file'		=> '[internal]',
@@ -331,6 +336,20 @@
 					'function'	=> '',
 					'args'		=> []
 				];
+				
+				if(FALSE === isset($t[0]))
+					return $d;
+					
+				switch(TRUE):
+					case $this instanceOf Fatal:
+						return [
+							'file' => $t[0]['args'][2],
+							'line' => $t[0]['args'][3]
+						] + $d;
+						break;
+				endswitch;
+				
+				return $t[0] + $d;
 			}
 		#::
 		
@@ -349,12 +368,63 @@
 			
 			public static function run()
 			{
-				if(self::$__isRunning)
+				if(TRUE === self::$__isRunning)
 					return;
 					
 				self::$__isRunning = TRUE;
 				
 				$c = get_called_class();
+			
+				$handle = function($__info)
+				{
+					$p = static::$__parse;
+					$f = &static::$__handle['fire'];
+					$c = &static::$__config;
+					$i = (array) (is_object($__info) ? $f($__info, TRUE) : $__info) +
+					[
+						'type'		=> NULL,
+						'message'	=> NULL,
+						'code'		=> 0,
+						'file'		=> NULL,
+						'line'		=> 0,
+						'trace'		=> [],
+						'context'	=> NULL,
+						'Exception'	=> NULL
+					];
+					
+					foreach(['origin', 'trace'] as $p)
+					{
+						$f 	= static::$__prepare[$p];
+						$i[$p]	= $f($i['trace']);
+					}
+					
+					foreach($c as $k => $_)
+					{
+						foreach(array_keys($c) as $k)
+						{
+							if($k === 'fire')
+								continue;
+								
+							if(FALSE === isset($i[$k])
+							|| FALSE === isset($p[$k]))
+								continue 2;
+								
+							if(($_ = $p[$k]) && FALSE === $_($c, $i))
+								continue 2;
+						}
+						
+						if(FALSE === isset($c['fire']))
+							return FALSE;
+							
+						if($k === 'fire')
+						{
+							$f = $c[$k];
+							return FALSE !== $f($i);
+						}
+					}
+					
+					return TRUE;
+				};
 				
 				static::$__parse +=
 				[
@@ -403,16 +473,21 @@
 				
 				static::$__handle +=
 				[
-					'trap' => function($code, $message, $file, $line = 0) use ($c)
+					'fatal' => function($code, $message, $file, $line = 0) use ($handle)
 					{
-						$c::handle(Trapped::import(new ErrorException($message, $code, 1, $file, $line)));
+						$E = Fatal::import(new ErrorException($message, $code, 1, $file, $line));
+						print $E->toTrack()->asText();
+					},
+					'trap' => function($code, $message, $file, $line = 0) use ($handle)
+					{
+						$handle(Trapped::import(new ErrorException($message, $code, 1, $file, $line)));
 					},
 					'raise' => function($code, $message, $file, $line = 0)
 					{
 						$E = Failure::import(new ErrorException($message, $code, 1, $file, $line));
 						throw $E;
 					},
-					'fire' => function($Exception, $return = false) use ($c)
+					'fire' => function($Exception, $return = FALSE) use ($handle)
 					{
 						if(ob_get_length())
 							ob_end_clean();
@@ -428,15 +503,35 @@
 						foreach(['message', 'file', 'line', 'trace', 'code'] as $k)
 							$i[$k] = $Exception->{'get'.ucfirst($k)}();
 						
-						return $return ? $i : $c::handle($i);
+						return TRUE === $return ? $i : $handle($i);
 					}
 				];
-					
+				
 				TRUE === static::TRAP
 					? set_error_handler(static::$__handle['trap'])
 					: set_error_handler(static::$__handle['raise']);
 					
 				set_exception_handler(static::$__handle['fire']);
+				
+				
+				static $shutdown;
+				
+				$shutdown ?: $shutdown = Invoke::emitCallable(function()
+				{
+					ini_set('track_errors',			1);
+					ini_set("display_errors",		0);
+					ini_set("display_startup_errors",	0);
+					
+					$fatal = &static::$__handle['fatal'];
+					register_shutdown_function( function() use (&$fatal)
+					{
+						return (NULL !== ($error = error_get_last()))
+							? $fatal($error['type'], $error['message'], $error['file'], $error['line'])
+							: $fatal(E_CORE_ERROR, '[shutdown]', 0, '[internal]');
+					});
+					
+					return TRUE;
+				});
 			}
 			
 			public static function stop()
@@ -449,57 +544,6 @@
 			public static function isRunning()
 			{
 				return self::$__isRunning;
-			}
-			
-			public static function handle($__info)
-			{
-				$p = static::$__parse;
-				$f = &static::$__handle['fire'];
-				$c = &static::$__config;
-				$i = (array) (is_object($__info) ? $f($__info, TRUE) : $__info) +
-				[
-					'type'		=> NULL,
-					'message'	=> NULL,
-					'code'		=> 0,
-					'file'		=> NULL,
-					'line'		=> 0,
-					'trace'		=> [],
-					'context'	=> NULL,
-					'Exception'	=> NULL
-				];
-				
-				foreach(['origin', 'trace'] as $p)
-				{
-					$f 	= static::$__prepare[$p];
-					$i[$p]	= $f($i['trace']);
-				}
-				
-				foreach($c as $k => $_)
-				{
-					foreach(array_keys($c) as $k)
-					{
-						if($k === 'fire')
-							continue;
-							
-						if(FALSE === isset($i[$k])
-						|| FALSE === isset($p[$k]))
-							continue 2;
-							
-						if(($_ = $p[$k]) && FALSE === $_($c, $i))
-							continue 2;
-					}
-					
-					if(FALSE === isset($c['fire']))
-						return FALSE;
-						
-					if($k === 'fire')
-					{
-						$f = $c[$k];
-						return FALSE !== $f($i);
-					}
-				}
-				
-				return TRUE;
 			}
 		#::
 		
