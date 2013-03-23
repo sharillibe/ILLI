@@ -22,6 +22,8 @@
 		CONST CONSTRUCT			= 'Unknown Error.';
 		
 		CONST TRAP			= FALSE;
+		CONST SHUTDOWN			= FALSE;
+		CONST DISPLAY			= FALSE;
 		
 		private $__hash			= NULL;
 		private $__addr			= NULL;
@@ -341,6 +343,7 @@
 					return $d;
 					
 				switch(TRUE):
+					case $this instanceOf Trapped:
 					case $this instanceOf Fatal:
 						return [
 							'file' => $t[0]['args'][2],
@@ -358,6 +361,7 @@
 			protected static $__parse	= [];
 			protected static $__handle	= [];
 			protected static $__prepare	= [];
+			protected static $__handler	= NULL;
 			
 			private static $__isRunning	= FALSE;
 			
@@ -375,9 +379,11 @@
 				
 				$c = get_called_class();
 			
-				$handle = function($__info)
+				$handler = &static::$__handler;
+				
+				$handler ?: $handler = function($__info)
 				{
-					$p = static::$__parse;
+					$p = &static::$__parse;
 					$f = &static::$__handle['fire'];
 					$c = &static::$__config;
 					$i = (array) (is_object($__info) ? $f($__info, TRUE) : $__info) +
@@ -392,35 +398,35 @@
 						'Exception'	=> NULL
 					];
 					
-					foreach(['origin', 'trace'] as $p)
+					foreach(['origin', 'trace'] as $_)
 					{
-						$f 	= static::$__prepare[$p];
-						$i[$p]	= $f($i['trace']);
+						$__	= static::$__prepare[$_];
+						$i[$_]	= $__($i['trace']);
 					}
 					
 					foreach($c as $k => $_)
 					{
 						foreach(array_keys($c) as $k)
 						{
-							if($k === 'fire')
+							if(isset(static::$__handle[$k]))
 								continue;
 								
 							if(FALSE === isset($i[$k])
 							|| FALSE === isset($p[$k]))
 								continue 2;
 								
-							if(($_ = $p[$k]) && FALSE === $_($c, $i))
+							if(TRUE === isset($p[$k])
+							&& FALSE === $p[$k]($c, $i))
+							{
 								continue 2;
+							}
 						}
 						
 						if(FALSE === isset($c['fire']))
 							return FALSE;
-							
-						if($k === 'fire')
-						{
-							$f = $c[$k];
-							return FALSE !== $f($i);
-						}
+						
+						$h = $c['fire'];
+						return FALSE !== $h($i);
 					}
 					
 					return TRUE;
@@ -437,7 +443,7 @@
 					},
 					'code' => function($c, $i)
 					{
-						return (boolean) ($c['code'] & $i['code']);
+						return $i['code'] === ($c['code'] & $i['code']);
 					},
 					'stack' => function($c, $i)
 					{
@@ -473,21 +479,24 @@
 				
 				static::$__handle +=
 				[
-					'fatal' => function($code, $message, $file, $line = 0) use ($handle)
+					'shutdown' => function()
+					{
+					},
+					'fatal' => function($code, $message, $file, $line = 0) use (&$handler)
 					{
 						$E = Fatal::import(new ErrorException($message, $code, 1, $file, $line));
-						print $E->toTrack()->asText();
-					},
-					'trap' => function($code, $message, $file, $line = 0) use ($handle)
-					{
-						$handle(Trapped::import(new ErrorException($message, $code, 1, $file, $line)));
+						throw $E;
 					},
 					'raise' => function($code, $message, $file, $line = 0)
 					{
 						$E = Failure::import(new ErrorException($message, $code, 1, $file, $line));
 						throw $E;
 					},
-					'fire' => function($Exception, $return = FALSE) use ($handle)
+					'trap' => function($code, $message, $file, $line = 0) use (&$handler)
+					{
+						$handler(Trapped::import(new ErrorException($message, $code, 1, $file, $line)));
+					},
+					'fire' => function($Exception, $return = FALSE) use ($c, &$handler)
 					{
 						if(ob_get_length())
 							ob_end_clean();
@@ -503,7 +512,7 @@
 						foreach(['message', 'file', 'line', 'trace', 'code'] as $k)
 							$i[$k] = $Exception->{'get'.ucfirst($k)}();
 						
-						return TRUE === $return ? $i : $handle($i);
+						return TRUE === $return ? $i : $handler($i);
 					}
 				];
 				
@@ -513,31 +522,40 @@
 					
 				set_exception_handler(static::$__handle['fire']);
 				
-				ini_set('track_errors',			1);
-				ini_set("display_errors",		0);
-				ini_set("display_startup_errors",	0);
-				
-				static $__STATIC_shutdown;
-				
-				$__STATIC_shutdown ?: $__STATIC_shutdown = Invoke::emitCallable(function()
+				if(TRUE === static::SHUTDOWN)
 				{
-					$fatal = &static::$__handle['fatal'];
+					ini_set('track_errors',			1);
+					ini_set("display_errors",		0);
+					ini_set("display_startup_errors",	0);
+				
+					static $__STATIC_shutdown;
 					
-					register_shutdown_function(function() use (&$fatal)
+					$__STATIC_shutdown ?: $__STATIC_shutdown = Invoke::emitCallable(function() use ($c)
 					{
-						NULL === ($error = error_get_last())
-							?: $fatal($error['type'], $error['message'], $error['file'], $error['line']);
+						$f = &static::$__handle['fatal'];
+						$t = &static::$__handle['trap'];
+						$s = &static::$__handle['shutdown'];
+						$u = $c::TRAP;
+						
+						register_shutdown_function(function() use (&$f, &$s, &$t, &$u)
+						{
+							if(NULL !== ($e = error_get_last()))
+								Invoke::emitCallable(TRUE === $u ? $t : $t, [$e['type'], $e['message'], $e['file'], $e['line']]);
+							
+							Invoke::emitCallable($s);
+						});
+						
+						return TRUE;
 					});
-					
-					return TRUE;
-				});
+				}
 			}
 			
 			public static function stop()
 			{
 				restore_error_handler();
 				restore_exception_handler();
-				self::$__isRunning = FALSE;
+				self::$__isRunning	= FALSE;
+				self::$__handler	= NULL;
 			}
 			
 			public static function isRunning()
