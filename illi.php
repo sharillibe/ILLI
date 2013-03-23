@@ -6,13 +6,13 @@
 			const ENCODING		= 'UTF-8';
 			
 			CONST DO_SETUP		= 1;
-			CONST DO_SERVER		= 2;
+			CONST DO_DEBUG		= 2;
 			CONST DO_DEV		= 4;
 			
 			protected static $__map =
 			[
 				self::DO_SETUP	=> 'setup',
-				self::DO_SERVER	=> 'debug',
+				self::DO_DEBUG	=> 'debug',
 				self::DO_DEV	=> 'development'
 			];
 			
