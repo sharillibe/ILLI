@@ -540,7 +540,7 @@
 						register_shutdown_function(function() use (&$f, &$s, &$t, &$u)
 						{
 							if(NULL !== ($e = error_get_last()))
-								Invoke::emitCallable(TRUE === $u ? $t : $t, [$e['type'], $e['message'], $e['file'], $e['line']]);
+								Invoke::emitCallable(TRUE === $u ? $t : $f, [$e['type'], $e['message'], $e['file'], $e['line']]);
 							
 							Invoke::emitCallable($s);
 						});
