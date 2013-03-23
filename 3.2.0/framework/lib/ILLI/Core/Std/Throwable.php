@@ -362,6 +362,7 @@
 			protected static $__handle	= [];
 			protected static $__prepare	= [];
 			protected static $__handler	= NULL;
+			protected static $__parser	= NULL;
 			
 			private static $__isRunning	= FALSE;
 			
@@ -383,6 +384,7 @@
 				
 				$handler ?: $handler = function($__info)
 				{
+					$a = &static::$__parser;
 					$p = &static::$__parse;
 					$f = &static::$__handle['fire'];
 					$c = &static::$__config;
@@ -422,6 +424,10 @@
 							}
 						}
 						
+						if(NULL !== $a)
+							if(FALSE === $a($i))
+								return FALSE;
+						
 						if(FALSE === isset($c['fire']))
 							return FALSE;
 						
@@ -444,6 +450,16 @@
 					'code' => function($c, $i)
 					{
 						return $i['code'] === ($c['code'] & $i['code']);
+					},
+					'file' => function($c, $i)
+					{
+						foreach((array) $c['file'] as $pat)
+						{
+							if(TRUE === (bool) strpos($i['file'], $pat))
+								return TRUE;
+						}
+						
+						return FALSE;
 					},
 					'stack' => function($c, $i)
 					{
@@ -555,7 +571,11 @@
 				restore_error_handler();
 				restore_exception_handler();
 				self::$__isRunning	= FALSE;
-				self::$__handler	= NULL;
+				static::$__handler	= NULL;
+				static::$__config	= [];
+				static::$__parse	= [];
+				static::$__handle	= [];
+				static::$__prepare	= [];
 			}
 			
 			public static function isRunning()
