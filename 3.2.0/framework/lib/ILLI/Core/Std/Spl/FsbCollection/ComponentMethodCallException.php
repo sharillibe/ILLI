@@ -1,5 +1,5 @@
 <?PHP
-	NAMESPACE ILLI\Core\Std\Spl\Fsb;
+	NAMESPACE ILLI\Core\Std\Spl\FsbCollection;
 	
 	CLASS ComponentMethodCallException EXTENDS \ILLI\Core\Std\Spl\Fsb\ComponentMethodCallException
 	{
