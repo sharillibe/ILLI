@@ -225,12 +225,12 @@
 			 * value expected
 			 *
 			 * T = new <long>5
-			 * T::isVal('long')		// true -> <long>T[0] = 5
-			 * T::isVal('long', 10)		// true -> <long>T[0] accepts int
-			 * T::isVal('long', 5.5)	// false -> <long>T[0] accepts int
-			 * T::isVal('double')		// false -> no <double>ADT found
-			 * T::isVal('double', 10)	// false -> no <double>ADT found
-			 * T::isVal('long', 10.5)	// false -> no <double>ADT found
+			 * T::is('long')		// true -> <long>T = 5
+			 * T::is('long', 10)		// true -> <long>T accepts int
+			 * T::is('long', 5.5)		// false -> <long>T accepts int
+			 * T::is('double')		// false -> no <double>ADT found
+			 * T::is('double', 10)		// false -> no <double>ADT found
+			 * T::is('long', 10.5)		// false -> no <double>ADT found
 			 *
 			 * @param	string $__expected
 			 * @param	mixed $__value
