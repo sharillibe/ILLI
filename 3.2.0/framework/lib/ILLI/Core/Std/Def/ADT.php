@@ -177,7 +177,7 @@
 			try
 			{
 				foreach((array) $__expected as $_)
-					if(TRUE === $this->type($__value) === $__expected)
+					if($this->type($__value) === $__expected)
 						return TRUE;
 				
 				return FALSE;
