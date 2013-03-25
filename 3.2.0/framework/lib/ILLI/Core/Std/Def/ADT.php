@@ -124,6 +124,16 @@
 			}
 		}
 		
+		/**
+		 * value ADT
+		 *
+		 * Get the first matching ADT of value.
+		 *
+		 * @param	mixed $__value
+		 * @return	NULL|ADT
+		 * @catchable	ILLI\Core\Std\Def\ADT\ComponentMethodCallException
+		 * @throws	ILLI\Core\Std\Def\ADT\ComponentMethodCallException::ERROR_M_TYPE
+		 */
 		public function type($__value)
 		{
 			try
@@ -151,11 +161,26 @@
 			}
 		}
 		
+		/**
+		 * expected ADT
+		 *
+		 * compare gcType with $__expected
+		 *
+		 * @param	string $__expected
+		 * @param	mixed $__value
+		 * @return	boolean
+		 * @catchable	ILLI\Core\Std\Def\ADT\ComponentMethodCallException
+		 * @throws	ILLI\Core\Std\Def\ADT\ComponentMethodCallException::ERROR_M_TYPE
+		 */
 		public function is($__expected, $__value)
 		{
 			try
 			{
-				return $this->type($__value) === $__expected;
+				foreach((array) $__expected as $_)
+					if(TRUE === $this->type($__value) === $__expected)
+						return TRUE;
+				
+				return FALSE;
 			}
 			catch(Exception $E)
 			{

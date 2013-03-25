@@ -179,7 +179,7 @@
 		 * T::type(5.5)			// -> $__value is acceptable: return <double>ADT
 		 * T::type('foo')		// -> nothing matched, return NULL
 		 *
-		 * M = new [<class|function|closure>function(){}]
+		 * M = new <class|function|closure>function(){}
 		 * M::type(0) 			// -> closure
 		 *
 		 * @param	mixed $__value
