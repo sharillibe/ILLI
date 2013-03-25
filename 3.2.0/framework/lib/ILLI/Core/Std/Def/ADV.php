@@ -150,10 +150,11 @@
 		 * @throws	ILLI\Core\Std\Def\ADV\ComponentMethodCallException::ERROR_M_VALIDATE
 		 * @see		ILLI\Core\Std\Def\ADT::validate()
 		 */
-		public function validate($__value)
+		public function validate($__value = NULL)
 		{
 			try
 			{
+				NULL !== $__value ?: $__value = $this->__data;
 				return $this->getGC()->evaluate('validate', [$__value]);
 			}
 			catch(Exception $E)
@@ -164,6 +165,96 @@
 				throw ($c === __CLASS__ || FALSE === class_exists($e))
 					? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_VALIDATE)
 					: new $e($E, $a, $e::ERROR_M_VALIDATE);
+			}
+		}
+		
+		/**
+		 * value ADT
+		 *
+		 * get the first matching ADT of value. use ::$__data when $__value is NULL.
+		 *
+		 * T = new <long|double>5
+		 * T::type()			// -> T = 5: return <long>ADT
+		 * T::type(10)			// -> $__value is acceptable: return <long>ADT
+		 * T::type(5.5)			// -> $__value is acceptable: return <double>ADT
+		 * T::type('foo')		// -> nothing matched, return NULL
+		 *
+		 * M = new [<class|function|closure>function(){}]
+		 * M::typeVal(0) 		// -> closure
+		 *
+		 * @param	mixed $__value
+		 * @return	ILLI\Core\Std\Def\ADT	first matching ADT
+		 * @return	NULL			nothing matched
+		 * @catchable	ILLI\Core\Std\Def\ADV\ComponentMethodCallException
+		 * @throws	ILLI\Core\Std\Def\ADV\ComponentMethodCallException::ERROR_M_TYPE
+		 */
+		public function type($__value = NULL)
+		{
+			try
+			{
+				NULL !== $__value ?: $__value = $this->__data;
+				if(NULL === $__value)
+					return NULL;
+				
+				foreach($this->getGC() as $ADT)
+					if(TRUE === $ADT->validate($__value))
+						return $ADT;
+					
+				return NULL;
+			}
+			catch(Exception $E)
+			{
+				$c = get_called_class();
+				$e = $c.'\ComponentMethodCallException';
+				$a = ['method' => __METHOD__];
+				throw ($c === __CLASS__ || FALSE === class_exists($e))
+					? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_TYPE)
+					: new $e($E, $a, $e::ERROR_M_TYPE);
+			}
+		}
+		
+		/**
+		 * value expected
+		 *
+		 * T = new <long>5
+		 * T::isVal('long')		// true -> <long>T[0] = 5
+		 * T::isVal('long', 10)		// true -> <long>T[0] accepts int
+		 * T::isVal('long', 5.5)	// false -> <long>T[0] accepts int
+		 * T::isVal('double')		// false -> no <double>ADT found
+		 * T::isVal('double', 10)	// false -> no <double>ADT found
+		 * T::isVal('long', 10.5)	// false -> no <double>ADT found
+		 *
+		 * @param	string $__expected
+		 * @param	mixed $__value
+		 * @return	TRUE		ADT is an instance of $__expected or $__expected is an acceptable gcType
+		 * @return	FALSE		nothing matched
+		 * @catchable	ILLI\Core\Std\Def\ADV\ComponentMethodCallException
+		 * @throws	ILLI\Core\Std\Def\ADV\ComponentMethodCallException::ERROR_M_IS
+		 */
+		public function is($__expected, $__value = NULL)
+		{
+			try
+			{
+				NULL !== $__value ?: $__value = $this->__data;
+				
+				if(NULL === ($ADT = $this->type($__value)))
+					return FALSE;
+					
+				foreach((array) $__expected as $_)
+					if($ADT instanceOf $_
+					|| in_array($_, $ADT->getGC()->toArray()))
+						return TRUE;
+					
+				return FALSE;
+			}
+			catch(Exception $E)
+			{
+				$c = get_called_class();
+				$e = $c.'\ComponentMethodCallException';
+				$a = ['method' => __METHOD__];
+				throw ($c === __CLASS__ || FALSE === class_exists($e))
+					? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_IS)
+					: new $e($E, $a, $e::ERROR_M_IS);
 			}
 		}
 		
