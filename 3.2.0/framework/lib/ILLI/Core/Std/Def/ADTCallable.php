@@ -5,7 +5,7 @@
 	USE ILLI\Core\Std\Def\ADTCallable\ComponentInitializationException;
 	USE Exception;
 	
-	FINAL CLASS ADTCallable EXTENDS \ILLI\Core\Std\Def\ADV
+	FINAL CLASS ADTCallable EXTENDS \ILLI\Core\Std\Def\ADT
 	{
 		#:ILLI\Core\Std\Def\ADT:
 			/**

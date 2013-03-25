@@ -111,17 +111,7 @@
 		{
 			try
 			{
-				$v = &$__value;
-				$t = getType($v);
-				
-				foreach($this->getGC() as $h)
-				{
-					if($t === $h
-					||($t === __const_Type::SPL_OBJECT && (class_exists($h) || interface_exists($h)) && (is_subclass_of($v, $h) || $v instanceOf $h)))
-						return TRUE;
-				}
-				
-				return FALSE;
+				return NULL !== $this->type($__value);
 			}
 			catch(Exception $E)
 			{
@@ -131,6 +121,75 @@
 				throw ($c === __CLASS__ || FALSE === class_exists($e))
 					? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_VALIDATE)
 					: new $e($E, $a, $e::ERROR_M_VALIDATE);
+			}
+		}
+		
+		/**
+		 * value ADT
+		 *
+		 * Get the first matching ADT of value.
+		 *
+		 * @param	mixed $__value
+		 * @return	NULL|ADT
+		 * @catchable	ILLI\Core\Std\Def\ADT\ComponentMethodCallException
+		 * @throws	ILLI\Core\Std\Def\ADT\ComponentMethodCallException::ERROR_M_TYPE
+		 */
+		public function type($__value)
+		{
+			try
+			{
+				$v = &$__value;
+				$t = getType($v);
+				
+				foreach($this->getGC() as $h)
+				{
+					if($t === $h
+					||($t === __const_Type::SPL_OBJECT && (class_exists($h) || interface_exists($h)) && (is_subclass_of($v, $h) || $v instanceOf $h)))
+						return $h;
+				}
+				
+				return NULL;
+			}
+			catch(Exception $E)
+			{
+				$c = get_called_class();
+				$e = $c.'\ComponentMethodCallException';
+				$a = ['method' => __METHOD__];
+				throw ($c === __CLASS__ || FALSE === class_exists($e))
+					? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_TYPE)
+					: new $e($E, $a, $e::ERROR_M_TYPE);
+			}
+		}
+		
+		/**
+		 * expected ADT
+		 *
+		 * compare gcType with $__expected
+		 *
+		 * @param	string $__expected
+		 * @param	mixed $__value
+		 * @return	boolean
+		 * @catchable	ILLI\Core\Std\Def\ADT\ComponentMethodCallException
+		 * @throws	ILLI\Core\Std\Def\ADT\ComponentMethodCallException::ERROR_M_TYPE
+		 */
+		public function is($__expected, $__value)
+		{
+			try
+			{
+				foreach((array) $__expected as $_)
+					if(TRUE === $this->type($__value) === $__expected)
+						return TRUE;
+				
+				return FALSE;
+			}
+			catch(Exception $E)
+			{
+				$c = get_called_class();
+				$e = $c.'\ComponentMethodCallException';
+				$a = ['method' => __METHOD__];
+				throw ($c === __CLASS__ || FALSE === class_exists($e))
+					? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_IS)
+					: new $e($E, $a, $e::ERROR_M_IS);
 			}
 		}
 		

@@ -35,6 +35,8 @@
 		CONST ERROR_M_DEFINE					= 0x0219000;
 		CONST ERROR_M_DEFINE_E_P0_EXPECTED			= 0x0219010;
 		CONST ERROR_M_DEFINE_E_P0_LENGTH			= 0x0219020;
+		CONST ERROR_M_TYPE					= 0x021A000;
+		CONST ERROR_M_IS					= 0x021B000;
 		
 		CONST M_PARSE_DEF_E_P0_EXPECTED				= 'Error in type-definition for {:class} at offset [{:offset}].';
 	}

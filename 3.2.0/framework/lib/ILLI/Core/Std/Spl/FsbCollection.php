@@ -30,7 +30,7 @@
 				{
 					while($this->valid())
 					{
-						if(TRUE === $__Condition(Invoke::emitMethod($I, $__method, $__parameters), $this->key()))
+						if(TRUE === $__Condition(Invoke::emitMethod($this->current(), $__method, $__parameters), $this->key(), $this->current()))
 							return TRUE;
 							
 						$this->next();
