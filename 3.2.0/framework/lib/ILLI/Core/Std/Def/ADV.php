@@ -180,7 +180,7 @@
 		 * T::type('foo')		// -> nothing matched, return NULL
 		 *
 		 * M = new [<class|function|closure>function(){}]
-		 * M::typeVal(0) 		// -> closure
+		 * M::type(0) 			// -> closure
 		 *
 		 * @param	mixed $__value
 		 * @return	ILLI\Core\Std\Def\ADT	first matching ADT
