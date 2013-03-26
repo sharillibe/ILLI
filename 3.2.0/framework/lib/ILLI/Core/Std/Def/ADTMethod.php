@@ -3,7 +3,7 @@
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Std\Def\ADTMethod\ComponentMethodCallException;
 	USE ILLI\Core\Std\Def\ADTMethod\ComponentInitializationException;
-	USE ILLI\Util\String;
+	USE ILLI\Core\Util\String;
 	USE Exception;
 	
 	FINAL CLASS ADTMethod EXTENDS \ILLI\Core\Std\Def\ADT
@@ -66,7 +66,16 @@
 						$m = &$__value[1];
 					}
 					
-					return method_exists($c, $m);
+					if(method_exists($c, $m))
+						return TRUE;
+					
+					if(method_exists($c, '__call'))
+						return TRUE;
+						
+					if(method_exists($c, '__callStatic'))
+						return TRUE;
+					
+					return FALSE;
 				}
 				catch(Exception $E)
 				{
