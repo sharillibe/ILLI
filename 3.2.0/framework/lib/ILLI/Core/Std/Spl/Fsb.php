@@ -39,9 +39,10 @@
 				catch(Exception $E)
 				{
 					$e = $c.'\ComponentInitializationException';
+					$a = ['class' => $c];
 					throw ($c === __CLASS__ || FALSE === class_exists($e))
-						? new ComponentInitializationException($E, ['class' => get_called_class()])
-						: new $e($E, ['class' => get_called_class()]);
+						? new ComponentInitializationException($E, $a)
+						: new $e($E, $a);
 				}
 			}
 			
@@ -84,9 +85,10 @@
 				catch(Exception $E)
 				{
 					$e = $c.'\ComponentMethodCallException';
+					$a = ['method' => __METHOD__];
 					throw ($c === __CLASS__ || FALSE === class_exists($e))
-						? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_FROM_ARRAY, ['method' => __METHOD__])
-						: new $e($E, $e::ERROR_FROM_ARRAY, ['method' => __METHOD__]);
+						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_FROM_ARRAY)
+						: new $e($E, $a, $e::ERROR_M_FROM_ARRAY);
 				}
 			}
 			
@@ -100,9 +102,10 @@
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentMethodCallException';
+					$a = ['method' => __METHOD__];
 					throw ($c === __CLASS__ || FALSE === class_exists($e))
-						? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_TO_ARRAY, ['method' => __METHOD__])
-						: new $e($E, $e::ERROR_TO_ARRAY, ['method' => __METHOD__]);
+						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_TO_ARRAY)
+						: new $e($E, $a, $e::ERROR_M_TO_ARRAY);
 				}
 			}
 			
@@ -116,9 +119,10 @@
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentMethodCallException';
+					$a = ['method' => __METHOD__];
 					throw ($c === __CLASS__ || FALSE === class_exists($e))
-						? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_GET_SIZE, ['method' => __METHOD__])
-						: new $e($E, $e::ERROR_GET_SIZE, ['method' => __METHOD__]);
+						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_GET_SIZE)
+						: new $e($E, $a, $e::ERROR_M_GET_SIZE);
 				}
 			}
 			
@@ -141,8 +145,8 @@
 						]);
 						
 						throw ($c === __CLASS__ || FALSE === class_exists($e))
-							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_SET_SIZE_E_P0_EXPECTED)
-							: new $e($E, $a, $e::ERROR_SET_SIZE_E_P0_EXPECTED);
+							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_SET_SIZE_E_P0_EXPECTED)
+							: new $e($E, $a, $e::ERROR_M_SET_SIZE_E_P0_EXPECTED);
 					}
 					
 					parent::setSize($__size);
@@ -155,9 +159,10 @@
 				catch(Exception $E)
 				{
 					$e = $c.'\ComponentMethodCallException';
+					$a = ['method' => __METHOD__];
 					throw ($c === __CLASS__ || FALSE === class_exists($e))
-						? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_SET_SIZE, ['method' => __METHOD__])
-						: new $e($E, $e::ERROR_SET_SIZE, ['method' => __METHOD__]);
+						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_SET_SIZE)
+						: new $e($E, $a, $e::ERROR_M_SET_SIZE);
 				}
 			}
 			
@@ -171,9 +176,10 @@
 				{
 					$c = get_called_class();
 					$e = $c.'\ComponentMethodCallException';
+					$a = ['method' => __METHOD__];
 					throw ($c === __CLASS__ || FALSE === class_exists($e))
-						? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR___WAKE_UP, ['method' => __METHOD__])
-						: new $e($E, $e::ERROR___WAKE_UP, ['method' => __METHOD__]);
+						? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M___WAKE_UP)
+						: new $e($E, $a, $e::ERROR_M___WAKE_UP);
 				}
 			}
 			
@@ -197,8 +203,8 @@
 							]);
 							
 							throw ($c === __CLASS__ || FALSE === class_exists($e))
-								? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_OFFSET_EXISTS_E_P0_EXPECTED)
-								: new $e($E, $a, $e::ERROR_OFFSET_EXISTS_E_P0_EXPECTED);
+								? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_OFFSET_EXISTS_E_P0_EXPECTED)
+								: new $e($E, $a, $e::ERROR_M_OFFSET_EXISTS_E_P0_EXPECTED);
 						}
 						
 						return parent::offsetExists($__offset);
@@ -210,9 +216,10 @@
 					catch(Exception $E)
 					{
 						$e = $c.'\ComponentMethodCallException';
+						$a = ['method' => __METHOD__];
 						throw ($c === __CLASS__ || FALSE === class_exists($e))
-							? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_OFFSET_EXISTS, ['method' => __METHOD__])
-							: new $e($E, $e::ERROR_OFFSET_EXISTS, ['method' => __METHOD__]);
+							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_OFFSET_EXISTS)
+							: new $e($E, $a, $e::ERROR_M_OFFSET_EXISTS);
 					}
 				}
 				
@@ -235,8 +242,8 @@
 							]);
 							
 							throw ($c === __CLASS__ || FALSE === class_exists($e))
-								? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_OFFSET_GET_E_P0_EXPECTED)
-								: new $e($E, $a, $e::ERROR_OFFSET_GET_E_P0_EXPECTED);
+								? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_OFFSET_GET_E_P0_EXPECTED)
+								: new $e($E, $a, $e::ERROR_M_OFFSET_GET_E_P0_EXPECTED);
 						}
 						
 						return parent::offsetGet($__offset);
@@ -248,9 +255,10 @@
 					catch(Exception $E)
 					{
 						$e = $c.'\ComponentMethodCallException';
+						$a = ['method' => __METHOD__];
 						throw ($c === __CLASS__ || FALSE === class_exists($e))
-							? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_OFFSET_GET, ['method' => __METHOD__])
-							: new $e($E, $e::ERROR_OFFSET_GET, ['method' => __METHOD__]);
+							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_OFFSET_GET)
+							: new $e($E, $a, $e::ERROR_M_OFFSET_GET);
 					}
 				}
 			
@@ -273,8 +281,8 @@
 							]);
 							
 							throw ($c === __CLASS__ || FALSE === class_exists($e))
-								? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_OFFSET_SET_E_P0_EXPECTED)
-								: new $e($E, $a, $e::ERROR_OFFSET_SET_E_P0_EXPECTED);
+								? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_OFFSET_SET_E_P0_EXPECTED)
+								: new $e($E, $a, $e::ERROR_M_OFFSET_SET_E_P0_EXPECTED);
 						}
 						
 						parent::offsetSet($__offset, $__value);
@@ -287,9 +295,10 @@
 					catch(Exception $E)
 					{
 						$e = $c.'\ComponentMethodCallException';
+						$a = ['method' => __METHOD__];
 						throw ($c === __CLASS__ || FALSE === class_exists($e))
-							? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_OFFSET_SET, ['method' => __METHOD__])
-							: new $e($E, $e::ERROR_OFFSET_SET, ['method' => __METHOD__]);
+							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_OFFSET_SET)
+							: new $e($E, $a, $e::ERROR_M_OFFSET_SET);
 					}
 				}
 				
@@ -312,8 +321,8 @@
 							]);
 							
 							throw ($c === __CLASS__ || FALSE === class_exists($e))
-								? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_OFFSET_UNSET_E_P0_EXPECTED)
-								: new $e($E, $a, $e::ERROR_OFFSET_UNSET_E_P0_EXPECTED);
+								? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_OFFSET_UNSET_E_P0_EXPECTED)
+								: new $e($E, $a, $e::ERROR_M_OFFSET_UNSET_E_P0_EXPECTED);
 						}
 						
 						return parent::offsetUnset($__offset);
@@ -325,9 +334,10 @@
 					catch(Exception $E)
 					{
 						$e = $c.'\ComponentMethodCallException';
+						$a = ['method' => __METHOD__];
 						throw ($c === __CLASS__ || FALSE === class_exists($e))
-							? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_OFFSET_UNSET, ['method' => __METHOD__])
-							: new $e($E, $e::ERROR_OFFSET_UNSET, ['method' => __METHOD__]);
+							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_OFFSET_UNSET)
+							: new $e($E, $a, $e::ERROR_M_OFFSET_UNSET);
 					}
 				}
 			#::
@@ -345,9 +355,10 @@
 					{
 						$c = get_called_class();
 						$e = $c.'\ComponentMethodCallException';
+						$a = ['method' => __METHOD__];
 						throw ($c === __CLASS__ || FALSE === class_exists($e))
-							? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_COUNT, ['method' => __METHOD__])
-							: new $e($E, $e::ERROR_COUNT, ['method' => __METHOD__]);
+							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_COUNT)
+							: new $e($E, $a, $e::ERROR_M_COUNT);
 					}
 				}
 			#::
@@ -363,9 +374,10 @@
 					{
 						$c = get_called_class();
 						$e = $c.'\ComponentMethodCallException';
+						$a = ['method' => __METHOD__];
 						throw ($c === __CLASS__ || FALSE === class_exists($e))
-							? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_CURRENT, ['method' => __METHOD__])
-							: new $e($E, $e::ERROR_CURRENT, ['method' => __METHOD__]);
+							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_CURRENT)
+							: new $e($E, $a, $e::ERROR_M_CURRENT);
 					}
 				}
 				
@@ -379,9 +391,10 @@
 					{
 						$c = get_called_class();
 						$e = $c.'\ComponentMethodCallException';
+						$a = ['method' => __METHOD__];
 						throw ($c === __CLASS__ || FALSE === class_exists($e))
-							? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_KEY, ['method' => __METHOD__])
-							: new $e($E, $e::ERROR_KEY, ['method' => __METHOD__]);
+							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_KEY)
+							: new $e($E, $a, $e::ERROR_M_KEY);
 					}
 				}
 				
@@ -395,9 +408,10 @@
 					{
 						$c = get_called_class();
 						$e = $c.'\ComponentMethodCallException';
+						$a = ['method' => __METHOD__];
 						throw ($c === __CLASS__ || FALSE === class_exists($e))
-							? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_NEXT, ['method' => __METHOD__])
-							: new $e($E, $e::ERROR_NEXT, ['method' => __METHOD__]);
+							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_NEXT)
+							: new $e($E, $a, $e::ERROR_M_NEXT);
 					}
 				}
 				
@@ -411,9 +425,10 @@
 					{
 						$c = get_called_class();
 						$e = $c.'\ComponentMethodCallException';
+						$a = ['method' => __METHOD__];
 						throw ($c === __CLASS__ || FALSE === class_exists($e))
-							? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_REWIND, ['method' => __METHOD__])
-							: new $e($E, $e::ERROR_REWIND, ['method' => __METHOD__]);
+							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_REWIND)
+							: new $e($E, $a, $e::ERROR_M_REWIND);
 					}
 				}
 				
@@ -427,9 +442,10 @@
 					{
 						$c = get_called_class();
 						$e = $c.'\ComponentMethodCallException';
+						$a = ['method' => __METHOD__];
 						throw ($c === __CLASS__ || FALSE === class_exists($e))
-							? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_VALID, ['method' => __METHOD__])
-							: new $e($E, $e::ERROR_VALID, ['method' => __METHOD__]);
+							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_VALID)
+							: new $e($E, $a, $e::ERROR_M_VALID);
 					}
 				}
 			#::
@@ -437,9 +453,21 @@
 		
 		public function add($__value)
 		{
-			$s = $this->getSize();
-			$this->setSize($s + 1);
-			$this[$s] = $__value;
+			try
+			{
+				$s = $this->getSize();
+				$this->setSize($s + 1);
+				$this[$s] = $__value;
+			}
+			catch(Exception $E)
+			{
+				$c = get_called_class();
+				$e = $c.'\ComponentMethodCallException';
+				$a = ['method' => __METHOD__];
+				throw ($c === __CLASS__ || FALSE === class_exists($e))
+					? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_ADD)
+					: new $e($E, $a, $e::ERROR_M_ADD);
+			}
 		}
 		
 		public function end()
@@ -453,9 +481,10 @@
 			{
 				$c = get_called_class();
 				$e = $c.'\ComponentMethodCallException';
+				$a = ['method' => __METHOD__];
 				throw ($c === __CLASS__ || FALSE === class_exists($e))
-					? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_END, ['method' => __METHOD__])
-					: new $e($E, $e::ERROR_END, ['method' => __METHOD__]);
+					? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_END)
+					: new $e($E, $a, $e::ERROR_M_END);
 			}
 		}
 		
@@ -479,9 +508,10 @@
 			{
 				$c = get_called_class();
 				$e = $c.'\ComponentMethodCallException';
+				$a = ['method' => __METHOD__];
 				throw ($c === __CLASS__ || FALSE === class_exists($e))
-					? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_KEYS, ['method' => __METHOD__])
-					: new $e($E, $e::ERROR_KEYS, ['method' => __METHOD__]);
+					? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_KEYS)
+					: new $e($E, $a, $e::ERROR_M_KEYS);
 			}
 		}
 		
@@ -498,9 +528,10 @@
 			{
 				$c = get_called_class();
 				$e = $c.'\ComponentMethodCallException';
+				$a = ['method' => __METHOD__];
 				throw ($c === __CLASS__ || FALSE === class_exists($e))
-					? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_PREV, ['method' => __METHOD__])
-					: new $e($E, $e::ERROR_PREV, ['method' => __METHOD__]);
+					? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_PREV)
+					: new $e($E, $a, $e::ERROR_M_PREV);
 			}
 		}
 		
@@ -524,9 +555,10 @@
 			{
 				$c = get_called_class();
 				$e = $c.'\ComponentMethodCallException';
+				$a = ['method' => __METHOD__];
 				throw ($c === __CLASS__ || FALSE === class_exists($e))
-					? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_VALUES, ['method' => __METHOD__])
-					: new $e($E, $e::ERROR_VALUES, ['method' => __METHOD__]);
+					? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_VALUES)
+					: new $e($E, $a, $e::ERROR_M_VALUES);
 			}
 		}
 	}
