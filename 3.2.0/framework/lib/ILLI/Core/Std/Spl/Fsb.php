@@ -435,6 +435,13 @@
 			#::
 		#::
 		
+		public function add($__value)
+		{
+			$s = $this->getSize();
+			$this->setSize($s + 1);
+			$this[$s] = $__value;
+		}
+		
 		public function end()
 		{
 			try

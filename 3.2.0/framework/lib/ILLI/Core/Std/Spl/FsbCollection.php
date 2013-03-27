@@ -6,7 +6,7 @@
 	USE Exception;
 	
 	CLASS FsbCollection EXTENDS \ILLI\Core\Std\Spl\Fsb
-	{	
+	{
 		public function evaluate($__method, array $__parameters, callable $__Condition = NULL)
 		{
 			try
