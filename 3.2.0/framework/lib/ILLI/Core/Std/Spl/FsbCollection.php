@@ -6,7 +6,7 @@
 	USE Exception;
 	
 	CLASS FsbCollection EXTENDS \ILLI\Core\Std\Spl\Fsb
-	{	
+	{
 		public function evaluate($__method, array $__parameters, callable $__Condition = NULL)
 		{
 			try
@@ -43,9 +43,10 @@
 			{
 				$c = get_called_class();
 				$e = $c.'\ComponentMethodCallException';
+				$a = ['method' => __METHOD__];
 				throw ($c === __CLASS__ || FALSE === class_exists($e))
-					? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_EVALUATE, ['method' => __METHOD__])
-					: new $e($E, $e::ERROR_EVALUATE, ['method' => __METHOD__]);
+					? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_EVALUATE)
+					: new $e($E, $a, $e::ERROR_M_EVALUATE);
 			}
 		}
 		
@@ -84,9 +85,10 @@
 			{
 				$c = get_called_class();
 				$e = $c.'\ComponentMethodCallException';
+				$a = ['method' => __METHOD__];
 				throw ($c === __CLASS__ || FALSE === class_exists($e))
-					? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_INVOKE, ['method' => __METHOD__])
-					: new $e($E, $e::ERROR_INVOKE, ['method' => __METHOD__]);
+					? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_INVOKE)
+					: new $e($E, $a, $e::ERROR_M_INVOKE);
 			}
 		}
 		
@@ -121,9 +123,10 @@
 			{
 				$c = get_called_class();
 				$e = $c.'\ComponentMethodCallException';
+				$a = ['method' => __METHOD__];
 				throw ($c === __CLASS__ || FALSE === class_exists($e))
-					? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_FIND, ['method' => __METHOD__])
-					: new $e($E, $e::ERROR_FIND, ['method' => __METHOD__]);
+					? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_FIND)
+					: new $e($E, $a, $e::ERROR_M_FIND);
 			}
 		}
 		
@@ -156,9 +159,10 @@
 			{
 				$c = get_called_class();
 				$e = $c.'\ComponentMethodCallException';
+				$a = ['method' => __METHOD__];
 				throw ($c === __CLASS__ || FALSE === class_exists($e))
-					? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_MAP, ['method' => __METHOD__])
-					: new $e($E, $e::ERROR_MAP, ['method' => __METHOD__]);
+					? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_MAP)
+					: new $e($E, $a, $e::ERROR_M_MAP);
 			}
 		}
 		
@@ -180,9 +184,10 @@
 			{
 				$c = get_called_class();
 				$e = $c.'\ComponentMethodCallException';
+				$a = ['method' => __METHOD__];
 				throw ($c === __CLASS__ || FALSE === class_exists($e))
-					? new ComponentMethodCallException($E, ComponentMethodCallException::ERROR_EACH, ['method' => __METHOD__])
-					: new $e($E, $e::ERROR_EACH, ['method' => __METHOD__]);
+					? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_EACH)
+					: new $e($E, $a, $e::ERROR_M_EACH);
 			}
 		}
 	}
