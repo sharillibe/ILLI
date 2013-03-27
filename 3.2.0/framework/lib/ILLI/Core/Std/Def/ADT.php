@@ -915,6 +915,23 @@
 				 	 * @catchable	ILLI\Core\Std\Def\ADT\ComponentMethodCallException
 				 	 * @throws	ILLI\Core\Std\Def\ADT\ComponentMethodCallException::ERROR_M_SET_SIZE
 					 */
+					final public function add($__value)
+					{
+						$c = get_called_class();
+						$e = $c.'\ComponentMethodCallException';
+						$a = ['method' => __METHOD__];
+						$E = new NotSupportedException(['target' => __METHOD__]);
+						throw ($c === __CLASS__ || FALSE === class_exists($e))
+							? new ComponentMethodCallException($E, $a, ComponentMethodCallException::ERROR_M_ADD)
+							: new $e($E, $a, $e::ERROR_M_ADD);
+					}
+					
+					/**
+					 * @notSupported
+				 	 * @fires	ILLI\Core\Std\Exception\NotSupportedException
+				 	 * @catchable	ILLI\Core\Std\Def\ADT\ComponentMethodCallException
+				 	 * @throws	ILLI\Core\Std\Def\ADT\ComponentMethodCallException::ERROR_M_SET_SIZE
+					 */
 					final public function setSize($__size)
 					{
 						$c = get_called_class();
