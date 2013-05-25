@@ -102,12 +102,15 @@
 					static $__STATIC_adt;
 					isset($__STATIC_adt) ?: $__STATIC_adt = [];
 					
+					ksort($d);
+					
 					foreach($d as $i => $o)
 					{
 						$o = (array) $o;
 						if([] !== $o)
 						{
 							$q = $o;
+							
 							sort($q);
 							$q = implode('|', array_unique($q));
 							

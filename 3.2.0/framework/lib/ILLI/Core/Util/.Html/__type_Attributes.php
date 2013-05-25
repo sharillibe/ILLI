@@ -1,6 +1,7 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Std\Def\__const_AttrTable;
 	USE ILLI\Core\Util\String;
 	
 	CLASS __type_Attributes EXTENDS \ILLI\Core\Std\Def\ADVTuple
@@ -55,15 +56,15 @@
 				self::style		=> __const_Type::SPL_STRING,
 				self::tabindex		=> __const_Type::SPL_LONG,
 				self::title		=> __const_Type::SPL_STRING,
-			]), $__data);
+			]));
 		}
 		
-		public function toArray()
+		public function render()
 		{
 			if(NULL === $this->__data)
-				return [];
+				return NULL;
 				
-			$_ = [];
+			$att = [];
 			
 			foreach($this->getTupleGC() as $k => $GC)
 			{
@@ -72,84 +73,79 @@
 				
 				switch($k):
 					case self::accesskey:
-						$_['accesskey'] = $v;
+						$att['accesskey'] = $v;
 						break;
 					case self::cssClass:
 						if([] === $v)
 							continue;
 						
-						$_['class'] = implode(' ', array_unique($v));
+						$att['class'] = implode(' ', array_unique($v));
 						break;
 					case self::contenteditable:
-						$_['contenteditable'] = $v === TRUE ? 'true' : 'false';
+						$att['contenteditable'] = $v === TRUE ? 'true' : 'false';
 						break;
 					case self::contextmenu:
-						$_['contextmenu'] = $v;
+						$att['contextmenu'] = $v;
 						break;
 					case self::data:
 						if([] === $v)
 							continue;
 						
 						foreach($v as $l => $w)
-							$_['data-'.$l] = $w;
+							$att['data-'.$l] = $w;
 						
 						continue;
 						break;
 					case self::dir:
-						$_['dir'] = $v;
+						$att['dir'] = $v;
 						break;
 					case self::draggable:
-						$_['draggable'] = $v === TRUE ? 'true' : 'false';
+						$att['draggable'] = $v === TRUE ? 'true' : 'false';
 						break;
 					case self::dropzone:
-						$_['dropzone'] = $v;
+						$att['dropzone'] = $v;
 						break;
 					case self::hidden:
-						$_['hidden'] = $v === TRUE ? 'true' : 'false';
+						$att['hidden'] = $v === TRUE ? 'true' : 'false';
 						break;
 					case self::id:
-						$_['id'] = $v;
+						$att['id'] = $v;
 						break;
 					case self::itemid:
-						$_['itemid'] = $v;
+						$att['itemid'] = $v;
 						break;
 					case self::itemprop:
-						$_['itemprop'] = $v;
+						$att['itemprop'] = $v;
 						break;
 					case self::itemref:
-						$_['itemref'] = $v;
+						$att['itemref'] = $v;
 						break;
 					case self::itemscope:
-						$_['itemscope'] = $v;
+						$att['itemscope'] = $v;
 						break;
 					case self::itemtype:
-						$_['itemtype'] = $v;
+						$att['itemtype'] = $v;
 						break;
 					case self::lang:
-						$_['lang'] = $v;
+						$att['lang'] = $v;
 						break;
 					case self::spellcheck:
-						$_['spellcheck'] = $v === TRUE ? 'true' : 'false';
+						$att['spellcheck'] = $v === TRUE ? 'true' : 'false';
 						break;
 					case self::style:
-						$_['style'] = $v;
+						$att['style'] = $v;
 						break;
 					case self::tabindex:
-						$_['tabindex'] = $v;
+						$att['tabindex'] = $v;
 						break;
 					case self::title:
-						$_['title'] = $v;
+						$att['title'] = $v;
 						break;
 				endswitch;
 			}
 			
-			return $_;
-		}
-		
-		public function render()
-		{
-			return [] !== ($_ = $this->toArray())
-				? String::attribute($_, static::$__format)
+			return [] !== $att
+				? String::attribute($att, static::$__format)
 				: NULL;
 		}
 	}
