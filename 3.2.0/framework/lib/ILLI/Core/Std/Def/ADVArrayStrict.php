@@ -95,7 +95,7 @@
 			 * @throws	ILLI\Core\Std\Def\ADVArrayStrict\ComponentMethodCallException::ERROR_M_VALIDATE
 			 * @see		ILLI\Core\Std\Def\ADT::validate()
 			 */
-			public function validate($__value)
+			public function validate($__value = NULL)
 			{
 				try
 				{
