@@ -11,6 +11,14 @@
 	USE ILLI\Core\Util\Html\Attributes;
 	USE ILLI\Core\Util\Html\ElementContent;
 	
+	/**
+	 * @todo parentExclude/contentExclude:
+	 *		article implements iFlow
+	 *		address content iFlow exclude 'article'...
+	 *
+	 *		-> address content:	permitted iFlow with no iSectioning/iHeading
+	 *		-> article parent:	permitted iFlow, must not be a descendant of an 'address'
+	 */
 	CLASS Element
 	{
 		CONST content	= __type_Element::content;

@@ -102,6 +102,9 @@
 						$_['draggable'] = $v === TRUE ? 'true' : 'false';
 						break;
 					case self::dropzone:
+						if(FALSE === in_array($v, ['copy', 'move', 'link']))
+							continue;
+							
 						$_['dropzone'] = $v;
 						break;
 					case self::hidden:

@@ -43,6 +43,7 @@
 						break;
 					case self::value:
 						$_['value'] = $v;
+						break;
 				endswitch;
 			}
 			

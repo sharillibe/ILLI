@@ -33,6 +33,7 @@
 						break;
 					case self::label:
 						$_['label'] = $v;
+						break;
 				endswitch;
 			}
 			
