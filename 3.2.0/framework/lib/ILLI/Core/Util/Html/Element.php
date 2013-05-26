@@ -123,16 +123,19 @@
 				return Invoke::emitClass($load, $__args);
 			};
 			
-			$this->__Type = $inv
+			#~ define __type_Element
+			$this->__Type = $inv #! invoke virtual .\__type_Element as .\Element\__type_{:type}Element
 			(
 				__NAMESPACE__,
 				'__type_Element',
 				__CLASS__,
 				String::insert('__type_{:type}Element', ['type' => $type = Inflector::camelize(static::name)]),
+				#~ __type_Element args:
 				[
+					#+ __type_Element ADT
 					[
 						__type_Element::parent		=> static::$__tParent,
-						__type_Element::attribute	=> get_class($attr = $inv
+						__type_Element::attribute	=> get_class($attr = $inv #! invoke virtual .\__type_Attributes as .\Element\__type_{:type}
 						(
 							__NAMESPACE__,
 							'__type_Attributes',
@@ -140,18 +143,28 @@
 							String::insert('__type_{:type}', ['type' => $type])
 						))
 					],
+					#+ __type_Element setup
 					[
 						__type_Element::ns		=> static::ns,
 						__type_Element::name		=> static::name,
 						__type_Element::close		=> static::close,
 						__type_Element::parent		=> NULL,
 						__type_Element::attribute	=> $attr,
-						__type_Element::content		=> $inv
+						__type_Element::content		=> $inv #! invoke virtual .\ElementContent as .\Element\{:type}Content
 						(
 							__NAMESPACE__,
 							'ElementContent',
 							__CLASS__,
-							String::insert('{:type}Content', ['type' => $type]), [static::$__tContent, $__setup])
+							String::insert('{:type}Content', ['type' => $type]),
+							#~ ElementContent args:
+							[
+								#+ ElementContent ADT
+									static::$__tContent,
+									
+								#+ ElementContent setup
+									$__setup
+							]
+						)
 					]
 				]
 			);
