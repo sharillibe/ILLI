@@ -1,9 +1,8 @@
 <?PHP
-	NAMESPACE ILLI\Core\Util\Html;
+	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
-	USE ILLI\Core\Util\String;
 	
-	CLASS __type_AttributesOptGroup EXTENDS \ILLI\Core\Util\Html\__type_Attributes
+	CLASS __type_Optgroup EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
 		CONST disabled		= 0x14;
 		CONST label		= 0x15;
