@@ -111,7 +111,13 @@
 				$load		= $__typeNs.'\\'.$__type;
 				
 				if(FALSE === class_exists($load, TRUE))
-					eval(String::insert($pattern, ['typeNs' => $__typeNs, 'baseNs' => $__baseNs, 'type' => $__type, 'base' => $__base]));
+					eval(String::insert($pattern,
+					[
+						'typeNs'	=> $__typeNs,
+						'baseNs'	=> $__baseNs,
+						'type'		=> $__type,
+						'base'		=> $__base
+					]));
 				
 				return Invoke::emitClass($load, $__args);
 			};
@@ -122,25 +128,52 @@
 				__type_Element::close		=> TRUE
 			]);
 			
-			$type = Inflector::camelize($val[__type_Element::name]);
+			$val[__type_Element::parent] = NULL;
 			
-			$val[__type_Element::parent]	= NULL;
+			$type = Inflector::camelize($val[__type_Element::name]);
 			
 			#! performance: use ADV static GC; create a sub class for each element
 			#+ @see ILLI\Core\Std\Def\ADV::__GC
 			
 			#~ element attributes
-			$val[__type_Element::attribute]	= $inv(__NAMESPACE__, '__type_Attributes',	__CLASS__, String::insert('__type_{:type}', ['type' => $type]));
+			$val[__type_Element::attribute] = $inv
+			(
+				__NAMESPACE__,
+				'__type_Attributes',
+				__CLASS__,
+				String::insert('__type_{:type}', ['type' => $type])
+			);
 			
 			#~ element content storage
-			$val[__type_Element::content]	= $inv(__NAMESPACE__, 'ElementContent',		__CLASS__, String::insert('{:type}Content', ['type' => $type]), [static::$__tContent, isset($__data[__type_Element::content]) ? $__data[__type_Element::content] : []]);
+			$val[__type_Element::content] = $inv
+			(
+				__NAMESPACE__,
+				'ElementContent',
+				__CLASS__,
+				String::insert('{:type}Content',['type' => $type]),
+				[
+					static::$__tContent,
+					isset($__data[__type_Element::content])
+						? $__data[__type_Element::content]
+						: []
+				]
+			);
 			
 			#~ element tuple
-			$this->__Type			= $inv(__NAMESPACE__, '__type_Element',		__CLASS__, String::insert('__type_{:type}Element', ['type' => $type]), [
-			[
-				__type_Element::parent		=> static::$__tParent,
-				__type_Element::attribute	=> get_class($val[__type_Element::attribute])
-			], $val]);
+			$this->__Type = $inv
+			(
+				__NAMESPACE__,
+				'__type_Element',
+				__CLASS__,
+				String::insert('__type_{:type}Element', ['type' => $type]),
+				[
+					[
+						__type_Element::parent		=> static::$__tParent,
+						__type_Element::attribute	=> get_class($val[__type_Element::attribute])
+					],
+					$val
+				]
+			);
 		}
 		
 		/**
