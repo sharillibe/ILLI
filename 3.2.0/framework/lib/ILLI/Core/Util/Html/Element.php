@@ -45,13 +45,13 @@
 		 * dom node patterns
 		 *
 		 * @var array
+		 * @see ILLI\Core\Util\Html\__type_Element::close
 		 * @see ILLI\Core\Util\String::insert()
 		 */
 		protected static $__template =
 		[
-			0 => '<{:name}{:attributes} />',
-			1 => '<{:name}{:attributes}></{:name}>',
-			2 => '<{:name}{:attributes}>{:content}</{:name}>'
+			0 => '<{:ns}{:name}{:attributes} />',
+			1 => '<{:ns}{:name}{:attributes}>{:content}</{:ns}{:name}>'
 		];
 		
 		/**
@@ -231,12 +231,18 @@
 		public function render()
 		{
 			$t = $this->__Type->get();
-			$r = ($c = $t[__type_Element::content]) instanceOf ElementContent ? $c->render() : NULL;
+			$r = $t[__type_Element::content] instanceOf ElementContent ? $t[__type_Element::content]->render() : NULL;
+			$a = $t[__type_Element::attribute]->render();
+			$n = $t[__type_Element::ns];
 			
-			return String::insert(static::$__template[NULL === $r ? TRUE === $t[__type_Element::close] ? 1 : 0 : 2], [
-				'name'		=> $t[__type_Element::name],
-				'content'	=> $r,
-				'attributes'	=> NULL === ($a = $t[__type_Element::attribute]->render()) ? '' : ' '.$a
-			]);
+			return String::insert
+			(
+				static::$__template[NULL === $r && FALSE === $t[__type_Element::close] ? 0 : 1],
+				[
+					'ns'		=> NULL === $n ? '' : $n.':',
+					'name'		=> $t[__type_Element::name],
+					'content'	=> $r,
+					'attributes'	=> NULL === $a ? '' : ' '.$a
+				]);
 		}
 	}

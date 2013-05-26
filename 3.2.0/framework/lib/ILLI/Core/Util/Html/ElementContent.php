@@ -46,7 +46,9 @@
 				endswitch;
 			}
 			
-			return implode(PHP_EOL, $r);
+			return [] === $r
+				? NULL
+				: implode(PHP_EOL, $r);
 		}
 		
 		#:ArrayAccess:

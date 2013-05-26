@@ -2,16 +2,16 @@
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	
-	CLASS __type_Optgroup EXTENDS \ILLI\Core\Util\Html\__type_Attributes
+	CLASS __type_Base EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST disabled		= 0x14;
-		CONST label		= 0x15;
+		CONST href		= 0x14;
+		CONST target		= 0x15;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{
 			parent::__construct(parent::mergeOffsetTypes($__defineOffsetType, [
-				self::disabled		=> __const_Type::SPL_BOOLEAN,
-				self::label		=> __const_Type::SPL_STRING
+				self::href		=> __const_Type::SPL_STRING,
+				self::target		=> __const_Type::SPL_STRING,  // enum: _self, _blank, _parent, _top
 			]));
 		}
 		
@@ -28,11 +28,14 @@
 					continue;
 				
 				switch($k):
-					case self::disabled:
-						$_['disabled'] = $v;
+					case self::href:
+						$_['href'] = $v;
 						break;
-					case self::label:
-						$_['label'] = $v;
+					case self::target:
+						if(FALSE === in_array($v, ['_self', '_blank', '_parent', '_top']))
+							continue;
+						
+						$_['target'] = $v;
 						break;
 				endswitch;
 			}

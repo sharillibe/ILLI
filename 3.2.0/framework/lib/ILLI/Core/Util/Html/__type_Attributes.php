@@ -40,7 +40,7 @@
 				self::contenteditable	=> __const_Type::SPL_BOOLEAN,
 				self::contextmenu	=> __const_Type::SPL_STRING,
 				self::data		=> __const_Type::SPL_ARRAY,
-				self::dir		=> __const_Type::SPL_STRING,
+				self::dir		=> __const_Type::SPL_STRING, // enum: ltr, trl, auto
 				self::draggable		=> __const_Type::SPL_BOOLEAN,
 				self::dropzone		=> __const_Type::SPL_STRING, // enum: copy, move, link
 				self::hidden		=> __const_Type::SPL_BOOLEAN,
@@ -81,7 +81,7 @@
 						$_['class'] = implode(' ', array_unique($v));
 						break;
 					case self::contenteditable:
-						$_['contenteditable'] = $v === TRUE ? 'true' : 'false';
+						$_['contenteditable'] = $v;
 						break;
 					case self::contextmenu:
 						$_['contextmenu'] = $v;
@@ -96,10 +96,13 @@
 						continue;
 						break;
 					case self::dir:
+						if(FALSE === in_array($v, ['ltr', 'rtl', 'auto']))
+							continue;
+							
 						$_['dir'] = $v;
 						break;
 					case self::draggable:
-						$_['draggable'] = $v === TRUE ? 'true' : 'false';
+						$_['draggable'] = $v;
 						break;
 					case self::dropzone:
 						if(FALSE === in_array($v, ['copy', 'move', 'link']))
@@ -108,7 +111,7 @@
 						$_['dropzone'] = $v;
 						break;
 					case self::hidden:
-						$_['hidden'] = $v === TRUE ? 'true' : 'false';
+						$_['hidden'] = $v;
 						break;
 					case self::id:
 						$_['id'] = $v;
@@ -132,7 +135,7 @@
 						$_['lang'] = $v;
 						break;
 					case self::spellcheck:
-						$_['spellcheck'] = $v === TRUE ? 'true' : 'false';
+						$_['spellcheck'] = $v;
 						break;
 					case self::style:
 						$_['style'] = $v;
@@ -151,8 +154,17 @@
 		
 		public function render()
 		{
-			return [] !== ($_ = $this->toArray())
-				? String::attribute($_, static::$__format)
-				: NULL;
+			return [] === ($_ = $this->toArray())
+				? NULL
+				: String::attribute($_, static::$__format, function($value, $key, $options)
+				{
+					if(FALSE === $value)
+						return NULL;
+						
+					if(TRUE === $value)
+						$value = $key;
+						
+					return String::insert($options['format'], ['key' => $key, 'value' => $value]);
+				});
 		}
 	}

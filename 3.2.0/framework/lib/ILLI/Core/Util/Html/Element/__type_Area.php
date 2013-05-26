@@ -8,7 +8,7 @@
 		CONST coords		= 0x15;
 		CONST download		= 0x16;
 		CONST href		= 0x17;
-		CONST hreflang		= 0x18;
+		CONST hrefLang		= 0x18;
 		CONST media		= 0x19;
 		CONST rel		= 0x1A;
 		CONST target		= 0x1B;
@@ -21,7 +21,7 @@
 				self::coords		=> __const_Type::SPL_STRING,
 				self::download		=> __const_Type::SPL_STRING,
 				self::href		=> __const_Type::SPL_STRING,
-				self::hreflang		=> __const_Type::SPL_STRING,
+				self::hrefLang		=> __const_Type::SPL_STRING,
 				self::media		=> __const_Type::SPL_STRING,
 				self::rel		=> __const_Type::SPL_STRING,
 				self::target		=> __const_Type::SPL_STRING,  // enum: _self, _blank, _parent, _top
@@ -54,7 +54,7 @@
 					case self::href:
 						$_['href'] = $v;
 						break;
-					case self::hreflang:
+					case self::hrefLang:
 						$_['hreflang'] = $v;
 						break;
 					case self::media:

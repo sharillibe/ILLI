@@ -2,16 +2,14 @@
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	
-	CLASS __type_Optgroup EXTENDS \ILLI\Core\Util\Html\__type_Attributes
+	CLASS __type_Blockquote EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST disabled		= 0x14;
-		CONST label		= 0x15;
+		CONST cite		= 0x14;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{
 			parent::__construct(parent::mergeOffsetTypes($__defineOffsetType, [
-				self::disabled		=> __const_Type::SPL_BOOLEAN,
-				self::label		=> __const_Type::SPL_STRING
+				self::cite		=> __const_Type::SPL_STRING
 			]));
 		}
 		
@@ -28,11 +26,8 @@
 					continue;
 				
 				switch($k):
-					case self::disabled:
-						$_['disabled'] = $v;
-						break;
-					case self::label:
-						$_['label'] = $v;
+					case self::cite:
+						$_['cite'] = $v;
 						break;
 				endswitch;
 			}

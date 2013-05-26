@@ -4,8 +4,8 @@
 	
 	CLASS __type_Audio EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST autoplay		= 0x14;
-		CONST autobuffer	= 0x15;
+		CONST autoPlay		= 0x14;
+		CONST autoBuffer	= 0x15;
 		CONST buffered		= 0x16;
 		CONST controls		= 0x17;
 		CONST loop		= 0x18;
@@ -17,8 +17,8 @@
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{
 			parent::__construct(parent::mergeOffsetTypes($__defineOffsetType, [
-				self::autoplay		=> __const_Type::SPL_BOOLEAN,
-				self::autobuffer	=> __const_Type::SPL_BOOLEAN,
+				self::autoPlay		=> __const_Type::SPL_BOOLEAN,
+				self::autoBuffer	=> __const_Type::SPL_BOOLEAN,
 				self::buffered		=> __const_Type::SPL_STRING,
 				self::controls		=> __const_Type::SPL_BOOLEAN,
 				self::loop		=> __const_Type::SPL_BOOLEAN,
@@ -42,23 +42,23 @@
 					continue;
 				
 				switch($k):
-					case self::autoplay:
-						$_['autoplay'] = $v === TRUE ? 'true' : 'false';
+					case self::autoPlay:
+						$_['autoplay'] = $v;
 						break;
-					case self::autobuffer:
-						$_['autobuffer'] = $v === TRUE ? 'true' : 'false';
+					case self::autoBuffer:
+						$_['autobuffer'] = $v;
 						break;
 					case self::buffered:
 						$_['buffered'] = $v;
 						break;
 					case self::controls:
-						$_['controls'] = $v === TRUE ? 'true' : 'false';
+						$_['controls'] = $v;
 						break;
 					case self::loop:
-						$_['loop'] = $v === TRUE ? 'true' : 'false';
+						$_['loop'] = $v;
 						break;
 					case self::muted:
-						$_['muted'] = $v === TRUE ? 'true' : 'false';
+						$_['muted'] = $v;
 						break;
 					case self::played:
 						$_['played'] = $v;

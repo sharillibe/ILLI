@@ -6,7 +6,7 @@
 	{
 		CONST download		= 0x14;
 		CONST href		= 0x15;
-		CONST hreflang		= 0x16;
+		CONST hrefLang		= 0x16;
 		CONST media		= 0x17;
 		CONST ping		= 0x18;
 		CONST rel		= 0x19;
@@ -18,11 +18,11 @@
 			parent::__construct(parent::mergeOffsetTypes($__defineOffsetType, [
 				self::download		=> __const_Type::SPL_STRING,
 				self::href		=> __const_Type::SPL_STRING,
-				self::hreflang		=> __const_Type::SPL_STRING,
+				self::hrefLang		=> __const_Type::SPL_STRING,
 				self::media		=> __const_Type::SPL_STRING,
 				self::ping		=> __const_Type::SPL_STRING,
 				self::rel		=> __const_Type::SPL_STRING,
-				self::target		=> __const_Type::SPL_STRING,  // enum: _self, _blank, _parent, _top
+				self::target		=> __const_Type::SPL_STRING, // enum: _self, _blank, _parent, _top
 				self::type		=> __const_Type::SPL_STRING
 			]));
 		}
@@ -46,7 +46,7 @@
 					case self::href:
 						$_['href'] = $v;
 						break;
-					case self::hreflang:
+					case self::hrefLang:
 						$_['hreflang'] = $v;
 						break;
 					case self::media:

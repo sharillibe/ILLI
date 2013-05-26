@@ -121,8 +121,8 @@
 						}
 						else
 						{
-							throw new Exception('test this... void?');
-							//$r[] = FsbCollection::fromArray([]);
+							#! void
+							$r[] = FsbCollection::fromArray([]);
 						}
 					}
 					
