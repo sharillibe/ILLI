@@ -18,6 +18,8 @@
 	 *
 	 *		-> address content:	permitted iFlow with no iSectioning/iHeading
 	 *		-> article parent:	permitted iFlow, must not be a descendant of an 'address'
+	 *
+	 * @todo schema attributes
 	 */
 	CLASS Element
 	{
