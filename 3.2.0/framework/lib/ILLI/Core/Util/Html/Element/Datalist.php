@@ -11,7 +11,8 @@
 		protected static $__tContent	=
 		[
 			'ILLI\Core\Util\Html\IContent\IPhrasing',
-			'ILLI\Core\Util\Html\Element\Option'
+			'ILLI\Core\Util\Html\Element\Option',
+			__const_Type::SPL_STRING
 		];
 		
 		protected static $__tParent =

@@ -17,8 +17,7 @@
 		protected static $__tContent	=
 		[
 			'ILLI\Core\Util\Html\Element\Option',
-			'ILLI\Core\Util\Html\Element\Optgroup',
-			__const_Type::SPL_STRING
+			'ILLI\Core\Util\Html\Element\Optgroup'
 		];
 		
 		protected static $__tParent =
