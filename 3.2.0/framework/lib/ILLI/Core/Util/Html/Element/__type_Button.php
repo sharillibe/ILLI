@@ -26,7 +26,7 @@
 				self::formEncType	=> __const_Type::SPL_STRING,
 				self::formMethod	=> __const_Type::SPL_STRING,	// enum: post, get
 				self::formNoValidate	=> __const_Type::SPL_BOOLEAN,
-				self::formTarget	=> __const_Type::SPL_STRING,	// enum: _self, _blank, _parent, _top
+				self::formTarget	=> __const_Type::SPL_STRING,
 				self::name		=> __const_Type::SPL_STRING,
 				self::type		=> __const_Type::SPL_STRING,	// enum: submit, reset, button
 				self::value		=> __const_Type::SPL_STRING
@@ -71,9 +71,6 @@
 						$_['formnovalidate'] = $v;
 						break;
 					case self::formTarget:
-						if(FALSE === in_array($v, ['_self', '_blank', '_parent', '_top']))
-							continue;
-						
 						$_['formtarget'] = $v;
 						break;
 					case self::name:

@@ -24,7 +24,7 @@
 				self::hrefLang		=> __const_Type::SPL_STRING,
 				self::media		=> __const_Type::SPL_STRING,
 				self::rel		=> __const_Type::SPL_STRING,
-				self::target		=> __const_Type::SPL_STRING,  // enum: _self, _blank, _parent, _top
+				self::target		=> __const_Type::SPL_STRING,
 				self::type		=> __const_Type::SPL_STRING
 			]));
 		}
@@ -64,9 +64,6 @@
 						$_['rel'] = $v;
 						break;
 					case self::target:
-						if(FALSE === in_array($v, ['_self', '_blank', '_parent', '_top']))
-							continue;
-						
 						$_['target'] = $v;
 						break;
 					case self::type:

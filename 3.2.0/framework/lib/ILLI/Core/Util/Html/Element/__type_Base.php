@@ -11,7 +11,7 @@
 		{
 			parent::__construct(parent::mergeOffsetTypes($__defineOffsetType, [
 				self::href		=> __const_Type::SPL_STRING,
-				self::target		=> __const_Type::SPL_STRING,  // enum: _self, _blank, _parent, _top
+				self::target		=> __const_Type::SPL_STRING,
 			]));
 		}
 		
@@ -32,9 +32,6 @@
 						$_['href'] = $v;
 						break;
 					case self::target:
-						if(FALSE === in_array($v, ['_self', '_blank', '_parent', '_top']))
-							continue;
-						
 						$_['target'] = $v;
 						break;
 				endswitch;
