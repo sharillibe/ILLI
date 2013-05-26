@@ -10,6 +10,9 @@
 	\ILLI\Core\Util\Html\IContent\IPalpable,
 	\ILLI\Core\Util\Html\IContent\IPhrasing
 	{
+		CONST close	= TRUE;
+		CONST name	= 'a';
+		
 		protected static $__tContent =
 		[
 			'ILLI\Core\Util\Html\IContent\ITransparent',
@@ -23,12 +26,4 @@
 			'ILLI\Core\Util\Html\IContent\IFlow',
 			'ILLI\Core\Util\Html\IContent\IPhrasing'
 		];
-		
-		public function __construct($__data = NULL)
-		{
-			$__data				= (array) $__data;
-			$__data[__type_Element::name]	= 'a';
-			$__data[__type_Element::close]	= TRUE;
-			parent::__construct([], $__data);
-		}
 	}

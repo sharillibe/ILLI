@@ -9,6 +9,9 @@
 	\ILLI\Core\Util\Html\IContent\IPalpable,
 	\ILLI\Core\Util\Html\IContent\IRootSectioning
 	{
+		CONST close	= TRUE;
+		CONST name	= 'blockquote';
+		
 		protected static $__tContent =
 		[
 			'ILLI\Core\Util\Html\IContent\IFlow'
@@ -18,12 +21,4 @@
 		[
 			'ILLI\Core\Util\Html\IContent\IFlow'
 		];
-		
-		public function __construct($__data = NULL)
-		{
-			$__data				= (array) $__data;
-			$__data[__type_Element::name]	= 'blockquote';
-			$__data[__type_Element::close]	= TRUE;
-			parent::__construct([], $__data);
-		}
 	}

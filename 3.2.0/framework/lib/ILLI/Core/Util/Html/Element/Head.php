@@ -5,6 +5,9 @@
 	
 	CLASS Head EXTENDS \ILLI\Core\Util\Html\Element
 	{
+		CONST close	= TRUE;
+		CONST name	= 'head';
+		
 		protected static $__tContent =
 		[
 			'ILLI\Core\Util\Html\IContent\IMetadata'
@@ -14,12 +17,4 @@
 		[
 			'ILLI\Core\Util\Html\Element\Html'
 		];
-		
-		public function __construct($__data = NULL)
-		{
-			$__data				= (array) $__data;
-			$__data[__type_Element::name]	= 'head';
-			$__data[__type_Element::close]	= TRUE;
-			parent::__construct([], $__data);
-		}
 	}

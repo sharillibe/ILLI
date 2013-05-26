@@ -3,19 +3,18 @@
 	USE ILLI\Core\Util\Html\__type_Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	
-	CLASS Figcaption EXTENDS \ILLI\Core\Util\Html\Element
+	CLASS Colgroup EXTENDS \ILLI\Core\Util\Html\Element
 	{
 		CONST close	= TRUE;
-		CONST name	= 'figcaption';
+		CONST name	= 'colgroup';
 		
 		protected static $__tContent =
 		[
-			'ILLI\Core\Util\Html\IContent\IFlow',
-			__const_Type::SPL_STRING
+			'ILLI\Core\Util\Html\Element\Col'
 		];
 		
 		protected static $__tParent =
 		[
-			'ILLI\Core\Util\Html\Element\Figure'
+			'ILLI\Core\Util\Html\Element\Table'
 		];
 	}

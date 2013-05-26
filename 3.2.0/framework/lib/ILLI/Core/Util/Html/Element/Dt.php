@@ -5,6 +5,9 @@
 	
 	CLASS Dt EXTENDS \ILLI\Core\Util\Html\Element
 	{
+		CONST close	= TRUE;
+		CONST name	= 'dt';
+		
 		protected static $__tContent =
 		[
 			'ILLI\Core\Util\Html\IContent\IFlow',
@@ -15,12 +18,4 @@
 		[
 			'ILLI\Core\Util\Html\Element\Dl'
 		];
-		
-		public function __construct($__data = NULL)
-		{
-			$__data				= (array) $__data;
-			$__data[__type_Element::name]	= 'dt';
-			$__data[__type_Element::close]	= TRUE;
-			parent::__construct([], $__data);
-		}
 	}

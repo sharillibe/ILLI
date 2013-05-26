@@ -23,7 +23,9 @@
 	 */
 	CLASS Element
 	{
-		CONST content	= __type_Element::content;
+		CONST ns	= NULL;
+		CONST name	= 'stub';
+		CONST close	= TRUE;
 		
 		/**
 		 * ADT __type_Element::content
@@ -94,16 +96,11 @@
 		 *
 		 *		$a->content[] = new P; // error
 		 *
-		 * :gcType<string>
-		 *	a valid __const_Type
-		 *
-		 * @param	array	$__defineOffsetType	[{:offset} => {:gcType}]
-	 	 * @param	array	$__data			the initial data [{:offset} => {:gcValue}]
 		 * @see		ILLI\Core\Util\Html\__type_Element::__construct()
 		 * @see		ILLI\Core\Util\Html\__type_Attributes::__construct()
 		 * @see		ILLI\Core\Util\Html\__ElementContent::__construct()
 		 */
-		public function __construct($__defineOffsetType = [], $__data = [])
+		public function __construct(array $__setup = [])
 		{
 			static $inv;
 			
@@ -113,6 +110,8 @@
 				$load		= $__typeNs.'\\'.$__type;
 				
 				if(FALSE === class_exists($load, TRUE))
+					#! performance: use ADV static GC; create a sub class for each element
+					#+ @see ILLI\Core\Std\Def\ADV::__GC
 					eval(String::insert($pattern,
 					[
 						'typeNs'	=> $__typeNs,
@@ -124,56 +123,36 @@
 				return Invoke::emitClass($load, $__args);
 			};
 			
-			$val = __type_Element::mergeOffsetValues($__data,
-			[
-				__type_Element::name		=> 'stub',
-				__type_Element::close		=> TRUE
-			]);
-			
-			$val[__type_Element::parent] = NULL;
-			
-			$type = Inflector::camelize($val[__type_Element::name]);
-			
-			#! performance: use ADV static GC; create a sub class for each element
-			#+ @see ILLI\Core\Std\Def\ADV::__GC
-			
-			#~ element attributes
-			$val[__type_Element::attribute] = $inv
-			(
-				__NAMESPACE__,
-				'__type_Attributes',
-				__CLASS__,
-				String::insert('__type_{:type}', ['type' => $type])
-			);
-			
-			#~ element content storage
-			$val[__type_Element::content] = $inv
-			(
-				__NAMESPACE__,
-				'ElementContent',
-				__CLASS__,
-				String::insert('{:type}Content',['type' => $type]),
-				[
-					static::$__tContent,
-					isset($__data[__type_Element::content])
-						? $__data[__type_Element::content]
-						: []
-				]
-			);
-			
-			#~ element tuple
 			$this->__Type = $inv
 			(
 				__NAMESPACE__,
 				'__type_Element',
 				__CLASS__,
-				String::insert('__type_{:type}Element', ['type' => $type]),
+				String::insert('__type_{:type}Element', ['type' => $type = Inflector::camelize(static::name)]),
 				[
 					[
 						__type_Element::parent		=> static::$__tParent,
-						__type_Element::attribute	=> get_class($val[__type_Element::attribute])
+						__type_Element::attribute	=> get_class($attr = $inv
+						(
+							__NAMESPACE__,
+							'__type_Attributes',
+							__CLASS__,
+							String::insert('__type_{:type}', ['type' => $type])
+						))
 					],
-					$val
+					[
+						__type_Element::ns		=> static::ns,
+						__type_Element::name		=> static::name,
+						__type_Element::close		=> static::close,
+						__type_Element::parent		=> NULL,
+						__type_Element::attribute	=> $attr,
+						__type_Element::content		=> $inv
+						(
+							__NAMESPACE__,
+							'ElementContent',
+							__CLASS__,
+							String::insert('{:type}Content', ['type' => $type]), [static::$__tContent, $__setup])
+					]
 				]
 			);
 		}
@@ -185,6 +164,7 @@
 		 * @read	ILLI\Core\Util\Html\__type_Element::close
 		 * @read	ILLI\Core\Util\Html\__type_Element::content
 		 * @read	ILLI\Core\Util\Html\__type_Element::name
+		 * @read	ILLI\Core\Util\Html\__type_Element::ns
 		 * @read	ILLI\Core\Util\Html\__type_Element::parent
 		 * @param 	string 	$__constantName		constant with defined tuple index
 		 * @return	mixed	type based on ADT

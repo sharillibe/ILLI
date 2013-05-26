@@ -13,6 +13,9 @@
 	\ILLI\Core\Util\Html\IContent\IFormAssoc\ILabelable,
 	\ILLI\Core\Util\Html\IContent\IFormAssoc\ISubmittable
 	{
+		CONST close	= TRUE;
+		CONST name	= 'button';
+		
 		protected static $__tContent =
 		[
 			'ILLI\Core\Util\Html\IContent\IPhrasing',
@@ -23,12 +26,4 @@
 		[
 			'ILLI\Core\Util\Html\IContent\IPhrasing'
 		];
-		
-		public function __construct($__data = NULL)
-		{
-			$__data				= (array) $__data;
-			$__data[__type_Element::name]	= 'button';
-			$__data[__type_Element::close]	= TRUE;
-			parent::__construct([], $__data);
-		}
 	}

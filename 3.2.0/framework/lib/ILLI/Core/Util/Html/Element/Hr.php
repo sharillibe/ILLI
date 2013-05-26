@@ -7,6 +7,9 @@
 	IMPLEMENTS
 	\ILLI\Core\Util\Html\IContent\IFlow
 	{
+		CONST close	= FALSE;
+		CONST name	= 'hr';
+		
 		protected static $__tContent =
 		[
 			#! void element
@@ -16,12 +19,4 @@
 		[
 			'ILLI\Core\Util\Html\IContent\IFlow'
 		];
-		
-		public function __construct($__data = NULL)
-		{
-			$__data				= (array) $__data;
-			$__data[__type_Element::name]	= 'hr';
-			$__data[__type_Element::close]	= FALSE;
-			parent::__construct([], $__data);
-		}
 	}

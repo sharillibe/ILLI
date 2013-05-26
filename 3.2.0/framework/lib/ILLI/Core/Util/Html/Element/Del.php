@@ -8,6 +8,9 @@
 	\ILLI\Core\Util\Html\IContent\IFlow,
 	\ILLI\Core\Util\Html\IContent\IPhrasing
 	{
+		CONST close	= TRUE;
+		CONST name	= 'del';
+		
 		protected static $__tContent =
 		[
 			'ILLI\Core\Util\Html\IContent\ITransparent',
@@ -18,12 +21,4 @@
 		[
 			'ILLI\Core\Util\Html\IContent\IPhrasing'
 		];
-		
-		public function __construct($__data = NULL)
-		{
-			$__data				= (array) $__data;
-			$__data[__type_Element::name]	= 'del';
-			$__data[__type_Element::close]	= TRUE;
-			parent::__construct([], $__data);
-		}
 	}

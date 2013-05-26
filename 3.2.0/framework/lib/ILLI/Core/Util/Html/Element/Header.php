@@ -8,6 +8,9 @@
 	\ILLI\Core\Util\Html\IContent\IFlow,
 	\ILLI\Core\Util\Html\IContent\IPalpable
 	{
+		CONST close	= TRUE;
+		CONST name	= 'header';
+		
 		protected static $__tContent =
 		[
 			'ILLI\Core\Util\Html\IContent\IFlow',
@@ -18,12 +21,4 @@
 		[
 			'ILLI\Core\Util\Html\IContent\IFlow'
 		];
-		
-		public function __construct($__data = NULL)
-		{
-			$__data				= (array) $__data;
-			$__data[__type_Element::name]	= 'header';
-			$__data[__type_Element::close]	= TRUE;
-			parent::__construct([], $__data);
-		}
 	}

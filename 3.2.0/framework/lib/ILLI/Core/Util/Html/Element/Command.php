@@ -9,6 +9,9 @@
 	\ILLI\Core\Util\Html\IContent\IMetadata,
 	\ILLI\Core\Util\Html\IContent\IPhrasing
 	{
+		CONST close	= FALSE;
+		CONST name	= 'command';
+		
 		protected static $__tContent =
 		[
 			#! void element
@@ -18,12 +21,4 @@
 		[
 			'ILLI\Core\Util\Html\Element\Colgroup'
 		];
-		
-		public function __construct($__data = NULL)
-		{
-			$__data				= (array) $__data;
-			$__data[__type_Element::name]	= 'command';
-			$__data[__type_Element::close]	= FALSE;
-			parent::__construct([], $__data);
-		}
 	}

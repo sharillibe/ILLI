@@ -9,6 +9,9 @@
 	\ILLI\Core\Util\Html\IContent\IHeading,
 	\ILLI\Core\Util\Html\IContent\IPalpable
 	{
+		CONST close	= TRUE;
+		CONST name	= 'h3';
+		
 		protected static $__tContent =
 		[
 			'ILLI\Core\Util\Html\IContent\IPhrasing',
@@ -20,12 +23,4 @@
 			'ILLI\Core\Util\Html\Element\Hgroup',
 			'ILLI\Core\Util\Html\IContent\IFlow'
 		];
-		
-		public function __construct($__data = NULL)
-		{
-			$__data				= (array) $__data;
-			$__data[__type_Element::name]	= 'h3';
-			$__data[__type_Element::close]	= TRUE;
-			parent::__construct([], $__data);
-		}
 	}

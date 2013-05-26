@@ -14,6 +14,9 @@
 	\ILLI\Core\Util\Html\IContent\IFormAssoc\IResettable,
 	\ILLI\Core\Util\Html\IContent\IFormAssoc\ISubmittable
 	{
+		CONST close	= TRUE;
+		CONST name	= 'select';
+		
 		protected static $__tContent	=
 		[
 			'ILLI\Core\Util\Html\Element\Option',
@@ -24,12 +27,4 @@
 		[
 			'ILLI\Core\Util\Html\IContent\IPhrasing'
 		];
-		
-		public function __construct($__data = NULL)
-		{
-			$__data				= (array) $__data;
-			$__data[__type_Element::name]	= 'select';
-			$__data[__type_Element::close]	= TRUE;
-			parent::__construct([], $__data);
-		}
 	}

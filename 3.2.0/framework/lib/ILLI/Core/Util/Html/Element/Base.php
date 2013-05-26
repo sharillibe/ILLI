@@ -7,6 +7,9 @@
 	IMPLEMENTS
 	\ILLI\Core\Util\Html\IContent\IMetadata
 	{
+		CONST close	= FALSE;
+		CONST name	= 'base';
+		
 		protected static $__tContent =
 		[
 			#! void element
@@ -16,12 +19,4 @@
 		[
 			'ILLI\Core\Util\Html\Element\Head'
 		];
-		
-		public function __construct($__data = NULL)
-		{
-			$__data				= (array) $__data;
-			$__data[__type_Element::name]	= 'base';
-			$__data[__type_Element::close]	= FALSE;
-			parent::__construct([], $__data);
-		}
 	}

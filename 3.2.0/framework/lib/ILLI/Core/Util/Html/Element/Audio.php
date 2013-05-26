@@ -11,6 +11,9 @@
 	\ILLI\Core\Util\Html\IContent\IPhrasing,
 	\ILLI\Core\Util\Html\IContent\ISectioning
 	{
+		CONST close	= TRUE;
+		CONST name	= 'audio';
+		
 		protected static $__tContent =
 		[
 			'ILLI\Core\Util\Html\IContent\ITransparent',
@@ -24,12 +27,4 @@
 			// any element that accepts 'ILLI\Core\Util\Html\IContent\IEmbedded'
 			'ILLI\Core\Util\Html\IContent'
 		];
-		
-		public function __construct($__data = NULL)
-		{
-			$__data				= (array) $__data;
-			$__data[__type_Element::name]	= 'audio';
-			$__data[__type_Element::close]	= TRUE;
-			parent::__construct([], $__data);
-		}
 	}

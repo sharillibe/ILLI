@@ -11,6 +11,9 @@
 	\ILLI\Core\Util\Html\IContent\IPalpable,
 	\ILLI\Core\Util\Html\IContent\IPhrasing
 	{
+		CONST close	= FALSE;
+		CONST name	= 'embed';
+		
 		protected static $__tContent =
 		[
 			#! void element
@@ -21,12 +24,4 @@
 			// any element that accepts 'ILLI\Core\Util\Html\IContent\IEmbedded'
 			'ILLI\Core\Util\Html\IContent'
 		];
-		
-		public function __construct($__data = NULL)
-		{
-			$__data				= (array) $__data;
-			$__data[__type_Element::name]	= 'embed';
-			$__data[__type_Element::close]	= FALSE;
-			parent::__construct([], $__data);
-		}
 	}

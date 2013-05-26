@@ -9,6 +9,9 @@
 	\ILLI\Core\Util\Html\IContent\IPalpable,
 	\ILLI\Core\Util\Html\IContent\IRootSectioning
 	{
+		CONST close	= TRUE;
+		CONST name	= 'figure';
+		
 		protected static $__tContent =
 		[
 			'ILLI\Core\Util\Html\Element\Figcaption',
@@ -19,12 +22,4 @@
 		[
 			'ILLI\Core\Util\Html\IContent\IFlow'
 		];
-		
-		public function __construct($__data = NULL)
-		{
-			$__data				= (array) $__data;
-			$__data[__type_Element::name]	= 'figure';
-			$__data[__type_Element::close]	= TRUE;
-			parent::__construct([], $__data);
-		}
 	}

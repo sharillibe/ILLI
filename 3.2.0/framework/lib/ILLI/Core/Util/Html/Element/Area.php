@@ -8,6 +8,9 @@
 	\ILLI\Core\Util\Html\IContent\IFlow,
 	\ILLI\Core\Util\Html\IContent\IPhrasing
 	{
+		CONST close	= FALSE;
+		CONST name	= 'area';
+		
 		protected static $__tContent =
 		[
 			#! void element
@@ -17,12 +20,4 @@
 		[
 			'ILLI\Core\Util\Html\IContent\IPhrasing'
 		];
-		
-		public function __construct($__data = NULL)
-		{
-			$__data				= (array) $__data;
-			$__data[__type_Element::name]	= 'area';
-			$__data[__type_Element::close]	= FALSE;
-			parent::__construct([], $__data);
-		}
 	}

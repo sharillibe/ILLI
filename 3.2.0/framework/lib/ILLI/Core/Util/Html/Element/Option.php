@@ -5,6 +5,9 @@
 	
 	CLASS Option EXTENDS \ILLI\Core\Util\Html\Element
 	{
+		CONST close	= TRUE;
+		CONST name	= 'option';
+		
 		protected static $__tContent =
 		[
 			__const_Type::SPL_STRING
@@ -16,12 +19,4 @@
 			'ILLI\Core\Util\Html\Element\Optgroup',
 			'ILLI\Core\Util\Html\Element\Datalist'
 		];
-		
-		public function __construct($__data = NULL)
-		{
-			$__data				= (array) $__data;
-			$__data[__type_Element::name]	= 'option';
-			$__data[__type_Element::close]	= TRUE;
-			parent::__construct([], $__data);
-		}
 	}

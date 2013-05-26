@@ -5,6 +5,9 @@
 	
 	CLASS Caption EXTENDS \ILLI\Core\Util\Html\Element
 	{
+		CONST close	= TRUE;
+		CONST name	= 'caption';
+		
 		protected static $__tContent =
 		[
 			'ILLI\Core\Util\Html\IContent\IFlow',
@@ -15,12 +18,4 @@
 		[
 			'ILLI\Core\Util\Html\Element\Table'
 		];
-		
-		public function __construct($__data = NULL)
-		{
-			$__data				= (array) $__data;
-			$__data[__type_Element::name]	= 'caption';
-			$__data[__type_Element::close]	= TRUE;
-			parent::__construct([], $__data);
-		}
 	}
