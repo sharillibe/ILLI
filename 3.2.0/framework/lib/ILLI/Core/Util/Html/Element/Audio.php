@@ -21,6 +21,7 @@
 		
 		protected static $__tParent =
 		[
+			// any element that accepts 'ILLI\Core\Util\Html\IContent\IEmbedded'
 			'ILLI\Core\Util\Html\IContent'
 		];
 		
