@@ -1,9 +1,8 @@
 <?PHP
-	NAMESPACE ILLI\Core\Util\Html;
+	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
-	USE ILLI\Core\Util\String;
 	
-	CLASS __type_AttributesSelect EXTENDS \ILLI\Core\Util\Html\__type_Attributes
+	CLASS __type_Select EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
 		CONST autofocus		= 0x14;
 		CONST disabled		= 0x15;
