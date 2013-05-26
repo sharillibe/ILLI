@@ -6,8 +6,6 @@
 	
 	CLASS __type_Element EXTENDS \ILLI\Core\Std\Def\ADVTuple
 	{
-		//CONST __GC		= __CLASS__;
-		
 		CONST name		= 0x00;
 		CONST close		= 0x01;
 		CONST content		= 0x02;

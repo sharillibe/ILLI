@@ -11,45 +11,34 @@
 	USE ILLI\Core\Util\Html\Attributes;
 	USE ILLI\Core\Util\Html\ElementContent;
 	
-	/**
-	 * HTML helper base element
-	 *
-	 *	required:
-	 *		Name EXTENDS Element
-	 *		__type_AttributesName EXTENDS __type_Attributes
-	 *
-	 *	optional (bypass ADV internal GC):
-	 *		ElementContentName EXTENDS ElementContent
-	 *		__type_ElementName EXTENDS __type_Element
-	 *
-	 *	usage:
-	 *	 	$a = new Select;
-	 *	 	$a->attribute->cssClass = (array) 'my';
-	 *	 	$a->attribute->required = TRUE;
-	 *	 		$g = new OptGroup;
-	 *	 		$g->attribute->label = 'foobar';
-	 *	 			$o1 = new Option;
-	 *	 			$o1->attribute->value = 'foo';
-	 *	 			$o1->attribute->label = 'foo';
-	 *	 			$o1->content[] = 'foo';
-	 *	 		$g->content[] = $o1;
-	 *	 	$a->content[] = $g;
-	 *	 		$o2 = new Option;
-	 *	 		$o2->attribute->value = 'bar';
-	 *	 		$o2->attribute->label = 'bar';
-	 *	 		$o2->content[] = 'bar';
-	 *	 	$a->content[] = $o2;
-	 *
-	 *		$a->content[] = new P; // error
-	 */
 	CLASS Element
 	{
 		CONST content	= __type_Element::content;
-		CONST parent	= __type_Element::parent;
 		
+		/**
+		 * ADT __type_Element::content
+		 *
+		 * @var array
+		 * @see ILLI\Core\Util\Html\__type_Element
+		 * @see	ILLI\Core\Std\Def\ADV::define()
+		 */
 		protected static $__tContent	= ['\ILLI\Core\Util\Html\Element'];
+		
+		/**
+		 * ADT __type_Element::parent
+		 *
+		 * @var array
+		 * @see ILLI\Core\Util\Html\__type_Element
+		 * @see	ILLI\Core\Std\Def\ADV::define()
+		 */
 		protected static $__tParent	= ['\ILLI\Core\Util\Html\Element'];
 		
+		/**
+		 * dom node patterns
+		 *
+		 * @var array
+		 * @see ILLI\Core\Util\String::insert()
+		 */
 		protected static $__template =
 		[
 			0 => '<{:name}{:attributes} />',
@@ -57,8 +46,53 @@
 			2 => '<{:name}{:attributes}>{:content}</{:name}>'
 		];
 		
+		/**
+		 * element def
+		 *
+		 * @var __type_Element
+		 */
 		protected $__Type = NULL;
 		
+		/**
+		 * Instantiate a new HTML Element
+		 *
+		 *	required:
+		 *		Name EXTENDS Element
+		 *		__type_AttributesName EXTENDS __type_Attributes
+		 *
+		 *	optional (bypass ADV internal GC):
+		 *		ElementContentName EXTENDS ElementContent
+		 *		__type_ElementName EXTENDS __type_Element
+		 *
+		 *	usage:
+		 *	 	$a = new Select;
+		 *	 	$a->attribute->cssClass = (array) 'my';
+		 *	 	$a->attribute->required = TRUE;
+		 *	 		$g = new Optgroup;
+		 *	 		$g->attribute->label = 'foobar';
+		 *	 			$o1 = new Option;
+		 *	 			$o1->attribute->value = 'foo';
+		 *	 			$o1->attribute->label = 'foo';
+		 *	 			$o1->content[] = 'foo';
+		 *	 		$g->content[] = $o1;
+		 *	 	$a->content[] = $g;
+		 *	 		$o2 = new Option;
+		 *	 		$o2->attribute->value = 'bar';
+		 *	 		$o2->attribute->label = 'bar';
+		 *	 		$o2->content[] = 'bar';
+		 *	 	$a->content[] = $o2;
+		 *
+		 *		$a->content[] = new P; // error
+		 *
+		 * :gcType<string>
+		 *	a valid __const_Type
+		 *
+		 * @param	array	$__defineOffsetType	[{:offset} => {:gcType}]
+	 	 * @param	array	$__data			the initial data [{:offset} => {:gcValue}]
+		 * @see		ILLI\Core\Util\Html\__type_Element::__construct()
+		 * @see		ILLI\Core\Util\Html\__type_Attributes::__construct()
+		 * @see		ILLI\Core\Util\Html\__ElementContent::__construct()
+		 */
 		public function __construct($__defineOffsetType = [], $__data = [])
 		{
 			static $inv;
@@ -68,7 +102,6 @@
 				$pattern	= 'NAMESPACE {:typeNs}; CLASS {:type} EXTENDS \{:baseNs}\{:base} {}';
 				$load		= $__typeNs.'\\'.$__type;
 				
-				// bypass ADV GC: create a sub-class for each element
 				if(FALSE === class_exists($load, TRUE))
 					eval(String::insert($pattern, ['typeNs' => $__typeNs, 'baseNs' => $__baseNs, 'type' => $__type, 'base' => $__base]));
 				
@@ -84,25 +117,52 @@
 			$type = Inflector::camelize($val[__type_Element::name]);
 			
 			$val[__type_Element::parent]	= NULL;
+			
+			#! performance: use ADV static GC; create a sub class for each element
+			#+ @see ILLI\Core\Std\Def\ADV::__GC
+			
+			#~ element attributes
 			$val[__type_Element::attribute]	= $inv(__NAMESPACE__, '__type_Attributes',	__CLASS__, String::insert('__type_{:type}', ['type' => $type]));
 			
+			#~ element content storage
 			$val[__type_Element::content]	= $inv(__NAMESPACE__, 'ElementContent',		__CLASS__, String::insert('{:type}Content', ['type' => $type]), [static::$__tContent, isset($__data[__type_Element::content]) ? $__data[__type_Element::content] : []]);
+			
+			#~ element tuple
 			$this->__Type			= $inv(__NAMESPACE__, '__type_Element',		__CLASS__, String::insert('__type_{:type}Element', ['type' => $type]), [
 			[
-					__type_Element::parent		=> static::$__tParent,
-					__type_Element::attribute	=> get_class($val[__type_Element::attribute])
+				__type_Element::parent		=> static::$__tParent,
+				__type_Element::attribute	=> get_class($val[__type_Element::attribute])
 			], $val]);
 		}
 		
-		public function __get($__name)
+		/**
+		 * direct access read by constant name
+		 *
+		 * @read	ILLI\Core\Util\Html\__type_Element::attributes
+		 * @read	ILLI\Core\Util\Html\__type_Element::close
+		 * @read	ILLI\Core\Util\Html\__type_Element::content
+		 * @read	ILLI\Core\Util\Html\__type_Element::name
+		 * @read	ILLI\Core\Util\Html\__type_Element::parent
+		 * @param 	string 	$__constantName		constant with defined tuple index
+		 * @return	mixed	type based on ADT
+		 */
+		public function __get($__constantName)
 		{
 			$t = $this->__Type->get();
-			return $t[constant(get_class($this->__Type).'::'.$__name)];
+			return $t[constant(get_class($this->__Type).'::'.$__constantName)];
 		}
 		
-		public function __set($__name, $__value)
+		/**
+		 * direct access write by constant name
+		 *
+		 * @write	ILLI\Core\Util\Html\__type_Element::content
+		 * @param 	string 	$__constantName		constant with defined tuple index
+		 * @param	mixed	$__value		type based on ADT
+		 * @see		ILLI\Core\Util\Html\__type_Element::content
+		 */
+		public function __set($__constantName, $__value)
 		{
-			if(constant(get_class($this->__Type).'::'.$__name) === __type_Element::content)
+			if(constant(get_class($this->__Type).'::'.$__constantName) === __type_Element::content)
 			{
 				$this->__Type->get()[__type_Element::content]->set($__value);
 				
@@ -111,11 +171,22 @@
 			}
 		}
 		
+		/**
+		 * convert element to string (magic)
+		 *
+		 * @return string DOM node
+		 * @see ::render()
+		 */
 		public function __toString()
 		{
 			return (string) $this->render();
 		}
 		
+		/**
+		 * convert element to string
+		 *
+		 * @return string DOM node
+		 */
 		public function render()
 		{
 			$t = $this->__Type->get();
