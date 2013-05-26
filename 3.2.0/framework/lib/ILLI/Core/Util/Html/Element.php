@@ -4,6 +4,7 @@
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Std\Def\__const_ADVClass;
 	USE ILLI\Core\Std\Invoke;
+	USE ILLI\Core\Std\Exception\ClassNotFoundException;
 	USE ILLI\Core\Util\String;
 	USE ILLI\Core\Util\Inflector;
 	USE ILLI\Core\Util\Html\__type_Element;
@@ -46,7 +47,6 @@
 		CONST content	= __type_Element::content;
 		CONST parent	= __type_Element::parent;
 		
-		protected static $__tAttributes	= '\ILLI\Core\Util\Html\__type_Attributes';
 		protected static $__tContent	= ['\ILLI\Core\Util\Html\Element'];
 		protected static $__tParent	= ['\ILLI\Core\Util\Html\Element'];
 		
@@ -63,16 +63,14 @@
 		{
 			static $inv;
 			
-			isset($inv) ?: $inv = function($__base, $__type, $__args = [])
+			isset($inv) ?: $inv = function($__baseNs, $__base, $__typeNs, $__type, $__args = [])
 			{
-				$pattern	= 'NAMESPACE {:ns}; CLASS {:type} EXTENDS \{:ns}\{:base} {}';
-				$base		= $__base;
-				$type		= Inflector::camelize(Inflector::variablize($base.'_'.$__type));
-				$load		= __NAMESPACE__.'\\'.$type;
+				$pattern	= 'NAMESPACE {:typeNs}; CLASS {:type} EXTENDS \{:baseNs}\{:base} {}';
+				$load		= $__typeNs.'\\'.$__type;
 				
 				// bypass ADV GC: create a sub-class for each element
-				if(FALSE === class_exists($load, FALSE))
-					eval(String::insert($pattern, ['ns' => __NAMESPACE__, 'type' => $type, 'base' => $base]));
+				if(FALSE === class_exists($load, TRUE))
+					eval(String::insert($pattern, ['typeNs' => $__typeNs, 'baseNs' => $__baseNs, 'type' => $__type, 'base' => $__base]));
 				
 				return Invoke::emitClass($load, $__args);
 			};
@@ -83,16 +81,17 @@
 				__type_Element::close		=> TRUE
 			]);
 			
-			$val[__type_Element::attribute]	= Invoke::emitClass(static::$__tAttributes);
+			$type = Inflector::camelize($val[__type_Element::name]);
+			
 			$val[__type_Element::parent]	= NULL;
-			$val[__type_Element::content]	= $inv('ElementContent', $val[__type_Element::name], [static::$__tContent, isset($__data[__type_Element::content]) ? $__data[__type_Element::content] : []]);
-			$this->__Type			= $inv('__type_Element', $val[__type_Element::name], [
-				[
+			$val[__type_Element::attribute]	= $inv(__NAMESPACE__, '__type_Attributes',	__CLASS__, String::insert('__type_{:type}', ['type' => $type]));
+			
+			$val[__type_Element::content]	= $inv(__NAMESPACE__, 'ElementContent',		__CLASS__, String::insert('{:type}Content', ['type' => $type]), [static::$__tContent, isset($__data[__type_Element::content]) ? $__data[__type_Element::content] : []]);
+			$this->__Type			= $inv(__NAMESPACE__, '__type_Element',		__CLASS__, String::insert('__type_{:type}Element', ['type' => $type]), [
+			[
 					__type_Element::parent		=> static::$__tParent,
-					__type_Element::attribute	=> static::$__tAttributes,
-				],
-				$val
-			]);
+					__type_Element::attribute	=> get_class($val[__type_Element::attribute])
+			], $val]);
 		}
 		
 		public function __get($__name)
