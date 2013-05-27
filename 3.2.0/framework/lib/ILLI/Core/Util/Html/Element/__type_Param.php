@@ -1,11 +1,12 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_Param EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST name		= 0x14;
-		CONST value		= 0x15;
+		CONST name		= __addr_Attributes::PARAM_name;
+		CONST value		= __addr_Attributes::PARAM_value;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{

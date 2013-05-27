@@ -1,11 +1,12 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_Label EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST forId		= 0x14; // for
-		CONST form		= 0x15;
+		CONST forId		= __addr_Attributes::LABEL_for;
+		CONST form		= __addr_Attributes::LABEL_form;
 		
 		protected static $__keywordAlias =
 		[

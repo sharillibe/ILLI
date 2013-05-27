@@ -1,16 +1,17 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_Iframe EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST allowFullScreen	= 0x14;
-		CONST height		= 0x15;
-		CONST name		= 0x16;
-		CONST sandbox		= 0x17;
-		CONST seamless		= 0x18;
-		CONST src		= 0x19;
-		CONST width		= 0x1A;
+		CONST allowFullScreen	= __addr_Attributes::IFRAME_allowFullScreen;
+		CONST height		= __addr_Attributes::IFRAME_height;
+		CONST name		= __addr_Attributes::IFRAME_name;
+		CONST sandbox		= __addr_Attributes::IFRAME_sandbox;
+		CONST seamless		= __addr_Attributes::IFRAME_seamless;
+		CONST src		= __addr_Attributes::IFRAME_src;
+		CONST width		= __addr_Attributes::IFRAME_width;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{

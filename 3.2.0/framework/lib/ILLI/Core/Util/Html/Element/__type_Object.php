@@ -1,16 +1,17 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_Object EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST data		= 0x14;
-		CONST form		= 0x15;
-		CONST height		= 0x16;
-		CONST name		= 0x17;
-		CONST type		= 0x18;
-		CONST useMap		= 0x19;
-		CONST width		= 0x1A;
+		CONST data		= __addr_Attributes::OBECT_data;
+		CONST form		= __addr_Attributes::OBECT_form;
+		CONST height		= __addr_Attributes::OBECT_height;
+		CONST name		= __addr_Attributes::OBECT_name;
+		CONST type		= __addr_Attributes::OBECT_type;
+		CONST useMap		= __addr_Attributes::OBECT_useMap;
+		CONST width		= __addr_Attributes::OBECT_width;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{

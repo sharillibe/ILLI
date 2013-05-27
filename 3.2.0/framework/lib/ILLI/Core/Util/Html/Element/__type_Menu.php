@@ -1,11 +1,12 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_Menu EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST type		= 0x14;
-		CONST label		= 0x15;
+		CONST type		= __addr_Attributes::MENU_type;
+		CONST label		= __addr_Attributes::MENU_label;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{

@@ -1,20 +1,21 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_Button EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST autoFocus		= 0x14;
-		CONST disabled		= 0x15;
-		CONST form		= 0x16;
-		CONST formAction	= 0x17;
-		CONST formEncType	= 0x18;
-		CONST formMethod	= 0x19;
-		CONST formNoValidate	= 0x1A;
-		CONST formTarget	= 0x1B;
-		CONST name		= 0x1C;
-		CONST type		= 0x1D;
-		CONST value		= 0x1E;
+		CONST autoFocus		= __addr_Attributes::BUTTON_autoFocus;
+		CONST disabled		= __addr_Attributes::BUTTON_disabled;
+		CONST form		= __addr_Attributes::BUTTON_form;
+		CONST formAction	= __addr_Attributes::BUTTON_formAction;
+		CONST formEncType	= __addr_Attributes::BUTTON_formEncType;
+		CONST formMethod	= __addr_Attributes::BUTTON_formMethod;
+		CONST formNoValidate	= __addr_Attributes::BUTTON_formNoValidate;
+		CONST formTarget	= __addr_Attributes::BUTTON_formTarget;
+		CONST name		= __addr_Attributes::BUTTON_name;
+		CONST type		= __addr_Attributes::BUTTON_type;
+		CONST value		= __addr_Attributes::BUTTON_value;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{

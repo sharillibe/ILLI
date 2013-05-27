@@ -1,16 +1,17 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_Link EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST crossOrigin	= 0x14;
-		CONST href		= 0x15;
-		CONST hrefLang		= 0x16;
-		CONST media		= 0x17;
-		CONST rel		= 0x18;
-		CONST sizes		= 0x19;
-		CONST type		= 0x1A;
+		CONST crossOrigin	= __addr_Attributes::LINK_crossOrigin;
+		CONST href		= __addr_Attributes::LINK_href;
+		CONST hrefLang		= __addr_Attributes::LINK_hrefLang;
+		CONST media		= __addr_Attributes::LINK_media;
+		CONST rel		= __addr_Attributes::LINK_rel;
+		CONST sizes		= __addr_Attributes::LINK_sizes;
+		CONST type		= __addr_Attributes::LINK_type;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{

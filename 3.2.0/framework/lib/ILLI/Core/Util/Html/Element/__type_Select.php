@@ -1,17 +1,18 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_Select EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST autoFocus		= 0x14;
-		CONST disabled		= 0x15;
-		CONST form		= 0x16;
-		CONST multiple		= 0x17;
-		CONST selectedIndex	= 0x18;
-		CONST name		= 0x19;
-		CONST required		= 0x1A;
-		CONST size		= 0x1B;
+		CONST autoFocus		= __addr_Attributes::SELECT_autoFocus;
+		CONST disabled		= __addr_Attributes::SELECT_disabled;
+		CONST form		= __addr_Attributes::SELECT_form;
+		CONST multiple		= __addr_Attributes::SELECT_multiple;
+		CONST selectedIndex	= __addr_Attributes::SELECT_selectedIndex;
+		CONST name		= __addr_Attributes::SELECT_name;
+		CONST required		= __addr_Attributes::SELECT_required;
+		CONST size		= __addr_Attributes::SELECT_size;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{

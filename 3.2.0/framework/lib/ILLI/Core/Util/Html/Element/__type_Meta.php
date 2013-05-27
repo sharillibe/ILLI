@@ -1,13 +1,14 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_Meta EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST charset		= 0x14;
-		CONST content		= 0x15;
-		CONST httpEquiv		= 0x16;
-		CONST name		= 0x17;
+		CONST charset		= __addr_Attributes::MENU_charset;
+		CONST content		= __addr_Attributes::MENU_content;
+		CONST httpEquiv		= __addr_Attributes::MENU_httpEquiv;
+		CONST name		= __addr_Attributes::MENU_name;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{

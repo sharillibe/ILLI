@@ -7,9 +7,10 @@
 	IMPLEMENTS
 	\ILLI\Core\Util\Html\IContent\IEmbedded,
 	\ILLI\Core\Util\Html\IContent\IFlow,
-	\ILLI\Core\Util\Html\IContent\IPalpable,
+	\ILLI\Core\Util\Html\IContent\IMedia,
+	\ILLI\Core\Util\Html\IContent\IInteractive,
 	\ILLI\Core\Util\Html\IContent\IPhrasing,
-	\ILLI\Core\Util\Html\IContent\ISectioning
+	\ILLI\Core\Util\Html\IContent\IPalpable
 	{
 		CONST close	= TRUE;
 		CONST name	= 'audio';

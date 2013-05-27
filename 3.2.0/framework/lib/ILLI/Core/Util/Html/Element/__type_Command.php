@@ -1,15 +1,16 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_Command EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST checked		= 0x14;
-		CONST disabled		= 0x15;
-		CONST icon		= 0x16;
-		CONST label		= 0x17;
-		CONST radioGroup	= 0x18;
-		CONST type		= 0x19;
+		CONST checked		= __addr_Attributes::COMMAND_checked;
+		CONST disabled		= __addr_Attributes::COMMAND_disabled;
+		CONST icon		= __addr_Attributes::COMMAND_icon;
+		CONST label		= __addr_Attributes::COMMAND_label;
+		CONST radioGroup	= __addr_Attributes::COMMAND_radioGroup;
+		CONST type		= __addr_Attributes::COMMAND_type;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{
