@@ -1,24 +1,23 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_Audio EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST autoPlay		= 0x14;
-		CONST autoBuffer	= 0x15;
-		CONST buffered		= 0x16;
-		CONST controls		= 0x17;
-		CONST loop		= 0x18;
-		CONST muted		= 0x19;
-		CONST played		= 0x1A;
-		CONST preload		= 0x1B;
-		CONST src		= 0x1C;
+		CONST autoPlay		= __addr_Attributes::AUDIO_autoPlay;
+		CONST buffered		= __addr_Attributes::AUDIO_buffered;
+		CONST controls		= __addr_Attributes::AUDIO_controls;
+		CONST loop		= __addr_Attributes::AUDIO_loop;
+		CONST muted		= __addr_Attributes::AUDIO_muted;
+		CONST played		= __addr_Attributes::AUDIO_played;
+		CONST preload		= __addr_Attributes::AUDIO_preload;
+		CONST src		= __addr_Attributes::AUDIO_src;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{
 			parent::__construct(parent::mergeOffsetTypes($__defineOffsetType, [
 				self::autoPlay		=> __const_Type::SPL_BOOLEAN,
-				self::autoBuffer	=> __const_Type::SPL_BOOLEAN,
 				self::buffered		=> __const_Type::SPL_STRING,
 				self::controls		=> __const_Type::SPL_BOOLEAN,
 				self::loop		=> __const_Type::SPL_BOOLEAN,
@@ -45,9 +44,6 @@
 					case self::autoPlay:
 						$_['autoplay'] = $v;
 						break;
-					case self::autoBuffer:
-						$_['autobuffer'] = $v;
-						break;
 					case self::buffered:
 						$_['buffered'] = $v;
 						break;
@@ -64,7 +60,7 @@
 						$_['played'] = $v;
 						break;
 					case self::preload:
-						if(FALSE === in_array($v, ['none', 'meta', 'auto', '']))
+						if(FALSE === in_array($v, ['none', 'metadata', 'auto', '']))
 							continue;
 							
 						$_['preload'] = $v;

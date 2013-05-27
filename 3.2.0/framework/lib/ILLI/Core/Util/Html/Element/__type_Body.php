@@ -1,26 +1,27 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_Body EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST onAfterPrint	= 0x14;
-		CONST onBeforePrint	= 0x15;
-		CONST onBeforeUnload	= 0x16;
-		CONST onBlur		= 0x17;
-		CONST onError		= 0x18;
-		CONST onFocus		= 0x19;
-		CONST onHashChange	= 0x1A;
-		CONST onLoad		= 0x1B;
-		CONST onMessage		= 0x1C;
-		CONST onOffline		= 0x1D;
-		CONST onOnline		= 0x1E;
-		CONST onPopState	= 0x1F;
-		CONST onRedo		= 0x20;
-		CONST onResize		= 0x21;
-		CONST onStorage		= 0x22;
-		CONST onUndo		= 0x23;
-		CONST onUnload		= 0x24;
+		CONST onAfterPrint	= __addr_Attributes::BODY_onAfterPrint;
+		CONST onBeforePrint	= __addr_Attributes::BODY_onBeforePrint;
+		CONST onBeforeUnload	= __addr_Attributes::BODY_onBeforeUnload;
+		CONST onBlur		= __addr_Attributes::BODY_onBlur;
+		CONST onError		= __addr_Attributes::BODY_onError;
+		CONST onFocus		= __addr_Attributes::BODY_onFocus;
+		CONST onHashChange	= __addr_Attributes::BODY_onHashChange;
+		CONST onLoad		= __addr_Attributes::BODY_onLoad;
+		CONST onMessage		= __addr_Attributes::BODY_onMessage;
+		CONST onOffline		= __addr_Attributes::BODY_onOffline;
+		CONST onOnline		= __addr_Attributes::BODY_onOnline;
+		CONST onPopState	= __addr_Attributes::BODY_onPopState;
+		CONST onRedo		= __addr_Attributes::BODY_onRedo;
+		CONST onResize		= __addr_Attributes::BODY_onResize;
+		CONST onStorage		= __addr_Attributes::BODY_onStorage;
+		CONST onUndo		= __addr_Attributes::BODY_onUndo;
+		CONST onUnload		= __addr_Attributes::BODY_onUnload;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{

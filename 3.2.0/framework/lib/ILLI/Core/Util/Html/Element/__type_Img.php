@@ -1,16 +1,17 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_Img EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST alt		= 0x14;
-		CONST crossOrigin	= 0x15;
-		CONST height		= 0x16;
-		CONST isMap		= 0x17;
-		CONST src		= 0x18;
-		CONST width		= 0x19;
-		CONST useMap		= 0x1A;
+		CONST alt		= __addr_Attributes::IMG_alt;
+		CONST crossOrigin	= __addr_Attributes::IMG_crossOrigin;
+		CONST height		= __addr_Attributes::IMG_height;
+		CONST isMap		= __addr_Attributes::IMG_isMap;
+		CONST src		= __addr_Attributes::IMG_src;
+		CONST width		= __addr_Attributes::IMG_width;
+		CONST useMap		= __addr_Attributes::IMG_useMap;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{

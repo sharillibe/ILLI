@@ -1,17 +1,18 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_Form EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST acceptCharset	= 0x14;
-		CONST action		= 0x15;
-		CONST autoComplete	= 0x16;
-		CONST encType		= 0x17;
-		CONST method		= 0x18;
-		CONST name		= 0x19;
-		CONST noValidate	= 0x1A;
-		CONST target		= 0x1B;
+		CONST acceptCharset	= __addr_Attributes::FORM_acceptCharset;
+		CONST action		= __addr_Attributes::FORM_action;
+		CONST autoComplete	= __addr_Attributes::FORM_autoComplete;
+		CONST encType		= __addr_Attributes::FORM_encType;
+		CONST method		= __addr_Attributes::FORM_method;
+		CONST name		= __addr_Attributes::FORM_name;
+		CONST noValidate	= __addr_Attributes::FORM_noValidate;
+		CONST target		= __addr_Attributes::FORM_target;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{

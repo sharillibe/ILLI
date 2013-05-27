@@ -1,29 +1,30 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__const_AttrIndex;
 	
 	CLASS __type_Attributes EXTENDS ElementAttributes
 	{
-		CONST accessKey		= 0x00;
-		CONST cssClass		= 0x01;
-		CONST contentEditable	= 0x02;
-		CONST contextMenu	= 0x03;
-		CONST data		= 0x04;
-		CONST dir		= 0x05;
-		CONST draggable		= 0x06;
-		CONST dropzone		= 0x07;
-		CONST hidden		= 0x08;
-		CONST id		= 0x09;
-		CONST itemId		= 0x0A;
-		CONST itemProp		= 0x0B;
-		CONST itemRef		= 0x0C;
-		CONST itemScope		= 0x0D;
-		CONST itemType		= 0x0E;
-		CONST lang		= 0x0F;
-		CONST spellCheck	= 0x10;
-		CONST style		= 0x11;
-		CONST tabIndex		= 0x12;
-		CONST title		= 0x13;
+		CONST accessKey		= __addr_Attributes::GLOB_accessKey;
+		CONST cssClass		= __addr_Attributes::GLOB_class;
+		CONST contentEditable	= __addr_Attributes::GLOB_contentEditable;
+		CONST contextMenu	= __addr_Attributes::GLOB_contextMenu;
+		CONST data		= __addr_Attributes::GLOB_data;
+		CONST dir		= __addr_Attributes::GLOB_dir;
+		CONST draggable		= __addr_Attributes::GLOB_draggable;
+		CONST dropzone		= __addr_Attributes::GLOB_dropzone;
+		CONST hidden		= __addr_Attributes::GLOB_hidden;
+		CONST id		= __addr_Attributes::GLOB_id;
+		CONST itemId		= __addr_Attributes::GLOB_itemId;
+		CONST itemProp		= __addr_Attributes::GLOB_itemProp;
+		CONST itemRef		= __addr_Attributes::GLOB_itemRef;
+		CONST itemScope		= __addr_Attributes::GLOB_itemScope;
+		CONST itemType		= __addr_Attributes::GLOB_itemType;
+		CONST lang		= __addr_Attributes::GLOB_lang;
+		CONST spellCheck	= __addr_Attributes::GLOB_spellCheck;
+		CONST style		= __addr_Attributes::GLOB_style;
+		CONST tabIndex		= __addr_Attributes::GLOB_tabIndex;
+		CONST title		= __addr_Attributes::GLOB_title;
 		
 		/**
 		 * global HTML attributes

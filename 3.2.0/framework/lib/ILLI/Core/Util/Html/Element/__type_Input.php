@@ -1,40 +1,41 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_Input EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST accept			= 0x14;
-		CONST autoComplete		= 0x15;
-		CONST autoFocus			= 0x16;
-		CONST autoSave			= 0x17;
-		CONST checked			= 0x18;
-		CONST disabled			= 0x19;
-		CONST form			= 0x1A;
-		CONST formAction		= 0x1B;
-		CONST formEncType		= 0x1C;
-		CONST formMethod		= 0x1D;
-		CONST formNoValidate		= 0x1E;
-		CONST formTarget		= 0x1F;
-		CONST height			= 0x20;
-		CONST inputMode			= 0x21;
-		CONST dataListId		= 0x22; // alias: list
-		CONST max			= 0x23;
-		CONST maxLength			= 0x24;
-		CONST min			= 0x25;
-		CONST multiple			= 0x26;
-		CONST name			= 0x27;
-		CONST pattern			= 0x28;
-		CONST placeHolder		= 0x29;
-		CONST readOnly			= 0x2A;
-		CONST required			= 0x2B;
-		CONST selectionDirection	= 0x2C;
-		CONST size			= 0x2D;
-		CONST src			= 0x2E;
-		CONST step			= 0x2F;
-		CONST type			= 0x30;
-		CONST value			= 0x31;
-		CONST width			= 0x32;
+		CONST accept			= __addr_Attributes::INPUT_accept;
+		CONST autoComplete		= __addr_Attributes::INPUT_autoComplete;
+		CONST autoFocus			= __addr_Attributes::INPUT_autoFocus;
+		CONST autoSave			= __addr_Attributes::INPUT_autoSave;
+		CONST checked			= __addr_Attributes::INPUT_checked;
+		CONST disabled			= __addr_Attributes::INPUT_disabled;
+		CONST form			= __addr_Attributes::INPUT_form;
+		CONST formAction		= __addr_Attributes::INPUT_formAction;
+		CONST formEncType		= __addr_Attributes::INPUT_formEncType;
+		CONST formMethod		= __addr_Attributes::INPUT_formMethod;
+		CONST formNoValidate		= __addr_Attributes::INPUT_formNoValidate;
+		CONST formTarget		= __addr_Attributes::INPUT_formTarget;
+		CONST height			= __addr_Attributes::INPUT_height;
+		CONST inputMode			= __addr_Attributes::INPUT_inputMode;
+		CONST dataListId		= __addr_Attributes::INPUT_list;
+		CONST max			= __addr_Attributes::INPUT_max;
+		CONST maxLength			= __addr_Attributes::INPUT_maxLength;
+		CONST min			= __addr_Attributes::INPUT_min;
+		CONST multiple			= __addr_Attributes::INPUT_multiple;
+		CONST name			= __addr_Attributes::INPUT_name;
+		CONST pattern			= __addr_Attributes::INPUT_pattern;
+		CONST placeHolder		= __addr_Attributes::INPUT_placeHolder;
+		CONST readOnly			= __addr_Attributes::INPUT_readOnly;
+		CONST required			= __addr_Attributes::INPUT_required;
+		CONST selectionDirection	= __addr_Attributes::INPUT_selectionDirection;
+		CONST size			= __addr_Attributes::INPUT_size;
+		CONST src			= __addr_Attributes::INPUT_src;
+		CONST step			= __addr_Attributes::INPUT_step;
+		CONST type			= __addr_Attributes::INPUT_type;
+		CONST value			= __addr_Attributes::INPUT_value;
+		CONST width			= __addr_Attributes::INPUT_width;
 		
 		protected static $__keywordAlias =
 		[

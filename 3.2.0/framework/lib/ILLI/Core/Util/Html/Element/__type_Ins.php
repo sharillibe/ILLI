@@ -1,11 +1,12 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_Ins EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST cite		= 0x14;
-		CONST dateTime		= 0x15;
+		CONST cite		= __addr_Attributes::INS_cite;
+		CONST dateTime		= __addr_Attributes::INS_dateTime;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{

@@ -1,17 +1,18 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_A EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST download		= 0x14;
-		CONST href		= 0x15;
-		CONST hrefLang		= 0x16;
-		CONST media		= 0x17;
-		CONST ping		= 0x18;
-		CONST rel		= 0x19;
-		CONST target		= 0x1A;
-		CONST type		= 0x1B;
+		CONST download		= __addr_Attributes::A_download;
+		CONST href		= __addr_Attributes::A_href;
+		CONST hrefLang		= __addr_Attributes::A_hrefLang;
+		CONST media		= __addr_Attributes::A_media;
+		CONST ping		= __addr_Attributes::A_ping;
+		CONST rel		= __addr_Attributes::A_rel;
+		CONST target		= __addr_Attributes::A_target;
+		CONST type		= __addr_Attributes::A_type;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{
