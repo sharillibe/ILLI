@@ -3,7 +3,7 @@
 	USE ILLI\Core\Util\Html\__type_Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	
-	CLASS Audio EXTENDS \ILLI\Core\Util\Html\Element
+	CLASS Video EXTENDS \ILLI\Core\Util\Html\Element
 	IMPLEMENTS
 	\ILLI\Core\Util\Html\IContent\IEmbedded,
 	\ILLI\Core\Util\Html\IContent\IFlow,
@@ -13,7 +13,7 @@
 	\ILLI\Core\Util\Html\IContent\IPalpable
 	{
 		CONST close	= TRUE;
-		CONST name	= 'audio';
+		CONST name	= 'video';
 		
 		protected static $__tContent =
 		[
