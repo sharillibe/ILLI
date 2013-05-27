@@ -13,7 +13,8 @@
 		
 		protected static $__tContent =
 		[
-			'ILLI\Core\Util\Html\IContent\ITransparent',
+			// 'ILLI\Core\Util\Html\IContent\ITransparent',
+			'ILLI\Core\Util\Html\IContent\IContent',
 			__const_Type::SPL_STRING
 		];
 		

@@ -15,7 +15,8 @@
 		
 		protected static $__tContent =
 		[
-			'ILLI\Core\Util\Html\IContent\ITransparent',
+			// 'ILLI\Core\Util\Html\IContent\ITransparent',
+			'ILLI\Core\Util\Html\IContent\IContent',
 			'ILLI\Core\Util\Html\Element\A',
 			'ILLI\Core\Util\Html\Element\Button',
 			'ILLI\Core\Util\Html\Element\Input',

@@ -1,26 +1,13 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html;
-	USE ILLI\Core\Exception;
 	USE ILLI\Core\Std\Def\__const_Type;
-	USE ILLI\Core\Std\Def\__const_ADVClass;
 	USE ILLI\Core\Std\Invoke;
-	USE ILLI\Core\Std\Exception\ClassNotFoundException;
-	USE ILLI\Core\Util\String;
-	USE ILLI\Core\Util\Inflector;
 	USE ILLI\Core\Util\Html\__type_Element;
 	USE ILLI\Core\Util\Html\Attributes;
 	USE ILLI\Core\Util\Html\ElementContent;
+	USE ILLI\Core\Util\Inflector;
+	USE ILLI\Core\Util\String;
 	
-	/**
-	 * @todo parentExclude/contentExclude:
-	 *		article implements iFlow
-	 *		address content iFlow exclude 'article'...
-	 *
-	 *		-> address content:	permitted iFlow with no iSectioning/iHeading
-	 *		-> article parent:	permitted iFlow, must not be a descendant of an 'address'
-	 *
-	 * @todo schema attributes
-	 */
 	CLASS Element
 	{
 		CONST ns	= NULL;
@@ -54,8 +41,8 @@
 		 */
 		protected static $__template =
 		[
-			0 => '<{:ns}{:name}{:attributes} />',
-			1 => '<{:ns}{:name}{:attributes}>{:content}</{:ns}{:name}>'
+			0 => '<{:ns}{:name}{:wai}{:attributes} />',
+			1 => '<{:ns}{:name}{:wai}{:attributes}>{:content}</{:ns}{:name}>'
 		];
 		
 		/**
@@ -99,6 +86,27 @@
 		 * @see		ILLI\Core\Util\Html\__type_Element::__construct()
 		 * @see		ILLI\Core\Util\Html\__type_Attributes::__construct()
 		 * @see		ILLI\Core\Util\Html\__ElementContent::__construct()
+		 *
+		 *
+		 * @todo parentExclude/contentExclude:
+		 *		article implements iFlow
+		 *		address content iFlow exclude 'article'...
+		 *
+		 *		-> address content:	permitted iFlow with no iSectioning/iHeading
+		 *		-> article parent:	permitted iFlow, must not be a descendant of an 'address'
+		 *
+		 * @todo schema attr ns
+		 *
+		 * @todo adaptable types
+		 *
+		 * @fixed transparent model
+		 *		For instance, an ins element inside a ruby element cannot contain an rt element,
+		 *		because the part of the ruby element's content model that allows ins elements
+		 *		is the part that allows phrasing content, and the rt element is not phrasing content.
+		 *
+		 * 		via http://developers.whatwg.org/content-models.html#transparent
+		 *
+		 *		tmp fix: use $__tContent[IContent] instead of $__tContent[IContent\ITransparent]
 		 */
 		public function __construct(array $__setup = [])
 		{
@@ -141,6 +149,13 @@
 							'__type_Attributes',
 							__CLASS__,
 							String::insert('__type_{:type}', ['type' => $type])
+						)),
+						__type_Element::wai		=> get_class($wai = $inv #! invoke virtual .\__type_WAI as .\Element\__type_{:type}WAI
+						(
+							__NAMESPACE__,
+							'__type_WAI',
+							__CLASS__,
+							String::insert('__type_{:type}WAI', ['type' => $type])
 						))
 					],
 					#+ __type_Element setup
@@ -150,6 +165,7 @@
 						__type_Element::close		=> static::close,
 						__type_Element::parent		=> NULL,
 						__type_Element::attribute	=> $attr,
+						__type_Element::wai		=> $wai,
 						__type_Element::content		=> $inv #! invoke virtual .\ElementContent as .\Element\{:type}Content
 						(
 							__NAMESPACE__,
@@ -173,7 +189,8 @@
 		/**
 		 * direct access read by constant name
 		 *
-		 * @read	ILLI\Core\Util\Html\__type_Element::attributes
+		 * @read	ILLI\Core\Util\Html\__type_Element::attribute
+		 * @read	ILLI\Core\Util\Html\__type_Element::wai
 		 * @read	ILLI\Core\Util\Html\__type_Element::close
 		 * @read	ILLI\Core\Util\Html\__type_Element::content
 		 * @read	ILLI\Core\Util\Html\__type_Element::name
@@ -228,6 +245,7 @@
 			$t = $this->__Type->get();
 			$r = $t[__type_Element::content] instanceOf ElementContent ? $t[__type_Element::content]->render() : NULL;
 			$a = $t[__type_Element::attribute]->render();
+			$w = $t[__type_Element::wai]->render();
 			$n = $t[__type_Element::ns];
 			
 			return String::insert
@@ -237,7 +255,8 @@
 					'ns'		=> NULL === $n ? '' : $n.':',
 					'name'		=> $t[__type_Element::name],
 					'content'	=> $r,
-					'attributes'	=> NULL === $a ? '' : ' '.$a
+					'attributes'	=> NULL === $a ? '' : ' '.$a,
+					'wai'		=> NULL === $w ? '' : ' '.$w
 				]);
 		}
 	}

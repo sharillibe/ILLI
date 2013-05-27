@@ -1,9 +1,8 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html;
 	USE ILLI\Core\Std\Def\__const_Type;
-	USE ILLI\Core\Util\String;
 	
-	CLASS __type_Attributes EXTENDS \ILLI\Core\Std\Def\ADVTuple
+	CLASS __type_Attributes EXTENDS ElementAttributes
 	{
 		CONST accessKey		= 0x00;
 		CONST cssClass		= 0x01;
@@ -26,12 +25,11 @@
 		CONST tabIndex		= 0x12;
 		CONST title		= 0x13;
 		
-		protected static $__format =
-		[
-			'format'	=> '{:key}="{:value}"',
-			'delimeter'	=> ' '
-		];
-		
+		/**
+		 * global HTML attributes
+		 *
+		 * @see ILLI\Core\Util\Html\__type_WAI
+		 */
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{
 			parent::__construct(parent::mergeOffsetTypes($__defineOffsetType, [
@@ -150,21 +148,5 @@
 			}
 			
 			return $_;
-		}
-		
-		public function render()
-		{
-			return [] === ($_ = $this->toArray())
-				? NULL
-				: String::attribute($_, static::$__format, function($value, $key, $options)
-				{
-					if(FALSE === $value)
-						return NULL;
-						
-					if(TRUE === $value)
-						$value = $key;
-						
-					return String::insert($options['format'], ['key' => $key, 'value' => $value]);
-				});
 		}
 	}

@@ -3,23 +3,22 @@
 	USE ILLI\Core\Util\Html\__type_Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	
-	CLASS Ins EXTENDS \ILLI\Core\Util\Html\Element
+	CLASS Link EXTENDS \ILLI\Core\Util\Html\Element
 	IMPLEMENTS
 	\ILLI\Core\Util\Html\IContent\IFlow,
+	\ILLI\Core\Util\Html\IContent\IMetadata,
 	\ILLI\Core\Util\Html\IContent\IPhrasing
 	{
-		CONST close	= TRUE;
-		CONST name	= 'ins';
+		CONST close	= FALSE;
+		CONST name	= 'link';
 		
 		protected static $__tContent =
 		[
-			// 'ILLI\Core\Util\Html\IContent\ITransparent',
-			'ILLI\Core\Util\Html\IContent\IContent',
-			__const_Type::SPL_STRING
+			#! void element
 		];
 		
 		protected static $__tParent =
 		[
-			'ILLI\Core\Util\Html\IContent\IPhrasing'
+			'ILLI\Core\Util\Html\IContent\IMetadata'
 		];
 	}

@@ -1,10 +1,9 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html;
 	USE ILLI\Core\Std\Def\__const_Type;
-	USE ArrayAccess;
-	USE ILLI\Core\Std\Exception;
 	USE ILLI\Core\Std\Exception\ArgumentExpectedException;
 	USE ILLI\Core\Std\Exception\ArgumentOutOfRangeException;
+	USE ArrayAccess;
 	
 	CLASS ElementContent EXTENDS \ILLI\Core\Std\Def\ADVArrayStrict IMPLEMENTS ArrayAccess
 	{
