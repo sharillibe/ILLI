@@ -36,6 +36,11 @@
 		CONST value			= 0x31;
 		CONST width			= 0x32;
 		
+		protected static $__keywordAlias =
+		[
+			'list'	=> 'dataListId'
+		];
+		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{
 			parent::__construct(parent::mergeOffsetTypes($__defineOffsetType, [
