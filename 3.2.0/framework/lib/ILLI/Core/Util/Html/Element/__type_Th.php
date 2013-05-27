@@ -1,15 +1,16 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_Th EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST abbr		= 0x14;
-		CONST axis		= 0x15;
-		CONST colspan		= 0x16;
-		CONST headers		= 0x17;
-		CONST rowspan		= 0x18;
-		CONST scope		= 0x19;
+		CONST abbr		= __addr_Attributes::TH_abbr;
+		CONST axis		= __addr_Attributes::TH_axis;
+		CONST colspan		= __addr_Attributes::TH_colspan;
+		CONST headers		= __addr_Attributes::TH_headers;
+		CONST rowspan		= __addr_Attributes::TH_rowspan;
+		CONST scope		= __addr_Attributes::TH_scope;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{

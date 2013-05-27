@@ -1,14 +1,15 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_Style EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST disabled		= 0x14;
-		CONST media		= 0x15;
-		CONST scoped		= 0x16;
-		CONST title		= 0x17;
-		CONST type		= 0x18;
+		CONST disabled		= __addr_Attributes::STYLE_disabled;
+		CONST media		= __addr_Attributes::STYLE_media;
+		CONST scoped		= __addr_Attributes::STYLE_scoped;
+		CONST title		= __addr_Attributes::STYLE_title;
+		CONST type		= __addr_Attributes::STYLE_type;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{

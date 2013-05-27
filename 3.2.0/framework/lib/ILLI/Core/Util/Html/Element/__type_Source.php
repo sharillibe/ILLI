@@ -1,12 +1,13 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_Source EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST media		= 0x14;
-		CONST src		= 0x15;
-		CONST type		= 0x16;
+		CONST media		= __addr_Attributes::SOURCE_media;
+		CONST src		= __addr_Attributes::SOURCE_src;
+		CONST type		= __addr_Attributes::SOURCE_type;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{

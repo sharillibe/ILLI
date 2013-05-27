@@ -1,11 +1,12 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_Time EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST dateTime		= 0x14;
-		CONST pubDate		= 0x15;
+		CONST dateTime		= __addr_Attributes::TIME_dateTime;
+		CONST pubDate		= __addr_Attributes::TIME_pubDate;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{

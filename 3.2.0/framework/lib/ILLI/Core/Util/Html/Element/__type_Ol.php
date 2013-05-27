@@ -1,12 +1,13 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_Ol EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST reversed		= 0x14;
-		CONST start		= 0x15;
-		CONST type		= 0x16;
+		CONST reversed		= __addr_Attributes::OL_reversed;
+		CONST start		= __addr_Attributes::OL_start;
+		CONST type		= __addr_Attributes::OL_type;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{

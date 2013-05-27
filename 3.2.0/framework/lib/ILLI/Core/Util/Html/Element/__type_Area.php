@@ -1,19 +1,20 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_Area EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST alt		= 0x14;
-		CONST coords		= 0x15;
-		CONST download		= 0x16;
-		CONST href		= 0x17;
-		CONST hrefLang		= 0x18;
-		CONST media		= 0x19;
-		CONST shape		= 0x1A;
-		CONST rel		= 0x1B;
-		CONST target		= 0x1C;
-		CONST type		= 0x1D;
+		CONST alt		= __addr_Attributes::AREA_alt;
+		CONST coords		= __addr_Attributes::AREA_coords;
+		CONST download		= __addr_Attributes::AREA_download;
+		CONST href		= __addr_Attributes::AREA_href;
+		CONST hrefLang		= __addr_Attributes::AREA_hrefLang;
+		CONST media		= __addr_Attributes::AREA_media;
+		CONST shape		= __addr_Attributes::AREA_shape;
+		CONST rel		= __addr_Attributes::AREA_rel;
+		CONST target		= __addr_Attributes::AREA_target;
+		CONST type		= __addr_Attributes::AREA_type;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{

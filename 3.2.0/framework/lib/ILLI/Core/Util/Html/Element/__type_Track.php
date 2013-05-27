@@ -1,14 +1,15 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_Track EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST std		= 0x14;	// alias: default
-		CONST kind		= 0x15;
-		CONST label		= 0x16;
-		CONST src		= 0x17;
-		CONST srcLang		= 0x18;
+		CONST std		= __addr_Attributes::TRACK_default;
+		CONST kind		= __addr_Attributes::TRACK_kind;
+		CONST label		= __addr_Attributes::TRACK_label;
+		CONST src		= __addr_Attributes::TRACK_src;
+		CONST srcLang		= __addr_Attributes::TRACK_srcLang;
 		
 		protected static $__keywordAlias =
 		[

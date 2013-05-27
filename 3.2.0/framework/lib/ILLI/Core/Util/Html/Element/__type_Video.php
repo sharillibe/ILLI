@@ -1,21 +1,22 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_Video EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST autoPlay		= 0x14;
-		CONST buffered		= 0x15;
-		CONST controls		= 0x16;
-		CONST crossOrigin	= 0x17;
-		CONST height		= 0x18;
-		CONST loop		= 0x19;
-		CONST muted		= 0x1A;
-		CONST played		= 0x1B;
-		CONST preload		= 0x1C;
-		CONST poster		= 0x1D;
-		CONST src		= 0x1E;
-		CONST width		= 0x1F;
+		CONST autoPlay		= __addr_Attributes::VIDEO_autoPlay;
+		CONST buffered		= __addr_Attributes::VIDEO_buffered;
+		CONST controls		= __addr_Attributes::VIDEO_controls;
+		CONST crossOrigin	= __addr_Attributes::VIDEO_crossOrigin;
+		CONST height		= __addr_Attributes::VIDEO_height;
+		CONST loop		= __addr_Attributes::VIDEO_loop;
+		CONST muted		= __addr_Attributes::VIDEO_muted;
+		CONST played		= __addr_Attributes::VIDEO_played;
+		CONST preload		= __addr_Attributes::VIDEO_preload;
+		CONST poster		= __addr_Attributes::VIDEO_poster;
+		CONST src		= __addr_Attributes::VIDEO_src;
+		CONST width		= __addr_Attributes::VIDEO_width;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{

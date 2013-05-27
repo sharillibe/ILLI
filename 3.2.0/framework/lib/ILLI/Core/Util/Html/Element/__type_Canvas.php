@@ -1,11 +1,12 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_Canvas EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST height		= 0x14;
-		CONST width		= 0x15;
+		CONST height		= __addr_Attributes::CANVAS_height;
+		CONST width		= __addr_Attributes::CANVAS_width;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{

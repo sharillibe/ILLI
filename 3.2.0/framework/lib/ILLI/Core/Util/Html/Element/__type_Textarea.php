@@ -1,23 +1,24 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_Textarea EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST autoFocus			= 0x14;
-		CONST cols			= 0x15;
-		CONST disabled			= 0x16;
-		CONST form			= 0x17;
-		CONST maxLength			= 0x18;
-		CONST name			= 0x19;
-		CONST placeHolder		= 0x1A;
-		CONST readOnly			= 0x1B;
-		CONST required			= 0x1C;
-		CONST rows			= 0x1D;
-		CONST selectionDirection	= 0x1E;
-		CONST selectionEnd		= 0x1F;
-		CONST selectionStart		= 0x20;
-		CONST wrap			= 0x21;
+		CONST autoFocus			= __addr_Attributes::TEXTAREA_autoFocus;
+		CONST cols			= __addr_Attributes::TEXTAREA_cols;
+		CONST disabled			= __addr_Attributes::TEXTAREA_disabled;
+		CONST form			= __addr_Attributes::TEXTAREA_form;
+		CONST maxLength			= __addr_Attributes::TEXTAREA_maxLength;
+		CONST name			= __addr_Attributes::TEXTAREA_name;
+		CONST placeHolder		= __addr_Attributes::TEXTAREA_placeHolder;
+		CONST readOnly			= __addr_Attributes::TEXTAREA_readOnly;
+		CONST required			= __addr_Attributes::TEXTAREA_required;
+		CONST rows			= __addr_Attributes::TEXTAREA_rows;
+		CONST selectionDirection	= __addr_Attributes::TEXTAREA_selectionDirection;
+		CONST selectionEnd		= __addr_Attributes::TEXTAREA_selectionEnd;
+		CONST selectionStart		= __addr_Attributes::TEXTAREA_selectionStart;
+		CONST wrap			= __addr_Attributes::TEXTAREA_wrap;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{

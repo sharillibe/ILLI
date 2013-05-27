@@ -1,16 +1,17 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_Meter EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST form		= 0x14;
-		CONST high		= 0x15;
-		CONST low		= 0x16;
-		CONST max		= 0x17;
-		CONST min		= 0x18;
-		CONST optimum		= 0x19;
-		CONST value		= 0x1A;
+		CONST form		= __addr_Attributes::METER_form;
+		CONST high		= __addr_Attributes::METER_high;
+		CONST low		= __addr_Attributes::METER_low;
+		CONST max		= __addr_Attributes::METER_max;
+		CONST min		= __addr_Attributes::METER_min;
+		CONST optimum		= __addr_Attributes::METER_optimum;
+		CONST value		= __addr_Attributes::METER_value;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{

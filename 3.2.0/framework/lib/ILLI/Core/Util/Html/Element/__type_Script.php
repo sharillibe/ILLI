@@ -1,13 +1,14 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_Script EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST async		= 0x14;
-		CONST src		= 0x15;
-		CONST type		= 0x16;
-		CONST defer		= 0x17;
+		CONST async		= __addr_Attributes::SCRIPT_async;
+		CONST src		= __addr_Attributes::SCRIPT_src;
+		CONST type		= __addr_Attributes::SCRIPT_type;
+		CONST defer		= __addr_Attributes::SCRIPT_defer;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{

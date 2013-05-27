@@ -1,12 +1,13 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
 	
 	CLASS __type_Fieldset EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST disabled		= 0x14;
-		CONST form		= 0x15;
-		CONST name		= 0x16;
+		CONST disabled		= __addr_Attributes::FIELDSET_disabled;
+		CONST form		= __addr_Attributes::FIELDSET_form;
+		CONST name		= __addr_Attributes::FIELDSET_name;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{
