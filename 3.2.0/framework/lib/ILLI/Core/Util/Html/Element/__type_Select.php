@@ -4,7 +4,7 @@
 	
 	CLASS __type_Select EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST autofocus		= 0x14;
+		CONST autoFocus		= 0x14;
 		CONST disabled		= 0x15;
 		CONST form		= 0x16;
 		CONST multiple		= 0x17;
@@ -16,7 +16,7 @@
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{
 			parent::__construct(parent::mergeOffsetTypes($__defineOffsetType, [
-				self::autofocus		=> __const_Type::SPL_BOOLEAN,
+				self::autoFocus		=> __const_Type::SPL_BOOLEAN,
 				self::disabled		=> __const_Type::SPL_BOOLEAN,
 				self::form		=> __const_Type::SPL_STRING,
 				self::multiple		=> __const_Type::SPL_BOOLEAN,
@@ -40,17 +40,17 @@
 					continue;
 				
 				switch($k):
-					case self::autofocus:
-						$_['autofocus'] = $v === TRUE ? 'true' : 'false';
+					case self::autoFocus:
+						$_['autofocus'] = $v;
 						break;
 					case self::disabled:
-						$_['disabled'] = $v === TRUE ? 'true' : 'false';
+						$_['disabled'] = $v;
 						break;
 					case self::form:
 						$_['form'] = $v;
 						break;
 					case self::multiple:
-						$_['multiple'] = $v === TRUE ? 'true' : 'false';
+						$_['multiple'] = $v;
 						break;
 					case self::selectedIndex:
 						$_['selectedIndex'] = $v;
@@ -59,7 +59,7 @@
 						$_['name'] = $v;
 						break;
 					case self::required:
-						$_['required'] = $v === TRUE ? 'true' : 'false';
+						$_['required'] = $v;
 						break;
 					case self::size:
 						$_['size'] = $v;

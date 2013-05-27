@@ -33,16 +33,17 @@
 				
 				switch($k):
 					case self::disabled:
-						$_['disabled'] = $v === TRUE ? 'true' : 'false';
+						$_['disabled'] = $v;
 						break;
 					case self::label:
 						$_['label'] = $v;
 						break;
 					case self::selected:
-						$_['selected'] = $v === TRUE ? 'true' : 'false';
+						$_['selected'] = $v;
 						break;
 					case self::value:
 						$_['value'] = $v;
+						break;
 				endswitch;
 			}
 			
