@@ -2,10 +2,11 @@
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	
-	CLASS __type_Label EXTENDS \ILLI\Core\Util\Html\__type_Attributes
+	CLASS __type_Output EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
 		CONST forId		= 0x14; // for
 		CONST form		= 0x15;
+		CONST name		= 0x16;
 		
 		protected static $__keywordAlias =
 		[
@@ -16,7 +17,8 @@
 		{
 			parent::__construct(parent::mergeOffsetTypes($__defineOffsetType, [
 				self::forId		=> __const_Type::SPL_STRING,
-				self::form		=> __const_Type::SPL_STRING
+				self::form		=> __const_Type::SPL_STRING,
+				self::name		=> __const_Type::SPL_STRING
 			]));
 		}
 		
@@ -38,6 +40,9 @@
 						break;
 					case self::form:
 						$_['form'] = $v;
+						break;
+					case self::name:
+						$_['name'] = $v;
 						break;
 				endswitch;
 			}

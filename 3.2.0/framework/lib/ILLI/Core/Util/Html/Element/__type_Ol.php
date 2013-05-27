@@ -2,21 +2,18 @@
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	
-	CLASS __type_Label EXTENDS \ILLI\Core\Util\Html\__type_Attributes
+	CLASS __type_Ol EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST forId		= 0x14; // for
-		CONST form		= 0x15;
-		
-		protected static $__keywordAlias =
-		[
-			'for'	=> 'forId'
-		];
+		CONST reversed		= 0x14;
+		CONST start		= 0x15;
+		CONST type		= 0x16;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{
 			parent::__construct(parent::mergeOffsetTypes($__defineOffsetType, [
-				self::forId		=> __const_Type::SPL_STRING,
-				self::form		=> __const_Type::SPL_STRING
+				self::reversed		=> __const_Type::SPL_BOOLEAN,
+				self::start		=> __const_Type::SPL_LONG,
+				self::type		=> __const_Type::SPL_STRING
 			]));
 		}
 		
@@ -33,11 +30,17 @@
 					continue;
 				
 				switch($k):
-					case self::forId:
-						$_['for'] = $v;
+					case self::reversed:
+						$_['reversed'] = $v;
 						break;
-					case self::form:
-						$_['form'] = $v;
+					case self::start:
+						$_['start'] = $v;
+						break;
+					case self::type:
+						if(FALSE === in_array($v, ['a', 'A', 'i', 'I', '1']))
+							continue;
+						
+						$_['type'] = $v;
 						break;
 				endswitch;
 			}
