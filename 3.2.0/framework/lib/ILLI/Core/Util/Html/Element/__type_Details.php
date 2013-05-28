@@ -2,6 +2,7 @@
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Util\Html\__addr_Attributes;
+	USE ILLI\Core\Util\Html\__name_Attributes;
 	
 	CLASS __type_Details EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
@@ -28,7 +29,7 @@
 				
 				switch($k):
 					case self::open:
-						$_['open'] = $v;
+						$_[__name_Attributes::DOM_open] = $v;
 						break;
 				endswitch;
 			}

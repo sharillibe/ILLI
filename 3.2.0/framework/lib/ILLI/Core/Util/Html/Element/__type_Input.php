@@ -2,6 +2,7 @@
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Util\Html\__addr_Attributes;
+	USE ILLI\Core\Util\Html\__name_Attributes;
 	
 	CLASS __type_Input EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
@@ -39,7 +40,7 @@
 		
 		protected static $__keywordAlias =
 		[
-			'list'	=> 'dataListId'
+			__name_Attributes::DOM_list => 'dataListId'
 		];
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
@@ -93,94 +94,94 @@
 				
 				switch($k):
 					case self::accept:
-						$_['accept'] = $v;
+						$_[__name_Attributes::DOM_accept] = $v;
 						break;
 					case self::autoComplete:
 						if(FALSE === in_array($v, ['on', 'off']))
 							continue;
 							
-						$_['autocomplete'] = $v;
+						$_[__name_Attributes::DOM_autoComplete] = $v;
 						break;
 					case self::autoFocus:
-						$_['autofocus'] = $v;
+						$_[__name_Attributes::DOM_autoFocus] = $v;
 						break;
 					case self::autoSave:
-						$_['autosave'] = $v;
+						$_[__name_Attributes::DOM_autoSave] = $v;
 						break;
 					case self::checked:
-						$_['checked'] = $v;
+						$_[__name_Attributes::DOM_checked] = $v;
 						break;
 					case self::disabled:
-						$_['disabled'] = $v;
+						$_[__name_Attributes::DOM_disabled] = $v;
 						break;
 					case self::form:
-						$_['form'] = $v;
+						$_[__name_Attributes::DOM_form] = $v;
 						break;
 					case self::formAction:
-						$_['formaction'] = $v;
+						$_[__name_Attributes::DOM_formAction] = $v;
 						break;
 					case self::formEncType:
-						$_['formenctype'] = $v;
+						$_[__name_Attributes::DOM_formEncType] = $v;
 						break;
 					case self::formMethod:
 						if(FALSE === in_array($v, ['post', 'get']))
 							continue;
 						
-						$_['formmethod'] = $v;
+						$_[__name_Attributes::DOM_formMethod] = $v;
 						break;
 					case self::formNoValidate:
-						$_['formnovalidate'] = $v;
+						$_[__name_Attributes::DOM_formNoValidate] = $v;
 						break;
 					case self::formTarget:
-						$_['formtarget'] = $v;
+						$_[__name_Attributes::DOM_formTarget] = $v;
 						break;
 					case self::height:
-						$_['height'] = $v;
+						$_[__name_Attributes::DOM_height] = $v;
 						break;
 					case self::inputMode:
-						$_['inputmode'] = $v;
+						$_[__name_Attributes::DOM_inputMode] = $v;
 						break;
 					case self::dataListId:
-						$_['list'] = $v;
+						$_[__name_Attributes::DOM_list] = $v;
 						break;
 					case self::max:
-						$_['max'] = $v;
+						$_[__name_Attributes::DOM_max] = $v;
 						break;
 					case self::maxLength:
-						$_['maxlength'] = $v;
+						$_[__name_Attributes::DOM_maxLength] = $v;
 						break;
 					case self::min:
-						$_['min'] = $v;
+						$_[__name_Attributes::DOM_min] = $v;
 						break;
 					case self::multiple:
-						$_['multiple'] = $v;
+						$_[__name_Attributes::DOM_multiple] = $v;
 						break;
 					case self::name:
-						$_['name'] = $v;
+						$_[__name_Attributes::DOM_name] = $v;
 						break;
 					case self::pattern:
-						$_['pattern'] = $v;
+						$_[__name_Attributes::DOM_pattern] = $v;
 						break;
 					case self::placeHolder:
-						$_['placeholder'] = $v;
+						$_[__name_Attributes::DOM_placeHolder] = $v;
 						break;
 					case self::readOnly:
-						$_['readonly'] = $v;
+						$_[__name_Attributes::DOM_readOnly] = $v;
 						break;
 					case self::required:
-						$_['required'] = $v;
+						$_[__name_Attributes::DOM_required] = $v;
 						break;
 					case self::selectionDirection:
-						$_['selectionDirection'] = $v;
+						$_[__name_Attributes::DOM_selectionDirection] = $v;
 						break;
 					case self::size:
-						$_['size'] = $v;
+						$_[__name_Attributes::DOM_size] = $v;
 						break;
 					case self::src:
-						$_['src'] = $v;
+						$_[__name_Attributes::DOM_src] = $v;
 						break;
 					case self::step:
-						$_['step'] = $v;
+						$_[__name_Attributes::DOM_step] = $v;
 						break;
 					case self::type:
 						if(FALSE === in_array($v, [
@@ -208,13 +209,13 @@
 							'url',
 							'week'])) continue;
 							
-						$_['type'] = $v;
+						$_[__name_Attributes::DOM_type] = $v;
 						break;
 					case self::value:
-						$_['value'] = $v;
+						$_[__name_Attributes::DOM_value] = $v;
 						break;
 					case self::width:
-						$_['width'] = $v;
+						$_[__name_Attributes::DOM_width] = $v;
 						break;
 				endswitch;
 			}

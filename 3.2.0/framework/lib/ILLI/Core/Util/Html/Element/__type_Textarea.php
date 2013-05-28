@@ -2,6 +2,7 @@
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Util\Html\__addr_Attributes;
+	USE ILLI\Core\Util\Html\__name_Attributes;
 	
 	CLASS __type_Textarea EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
@@ -54,46 +55,46 @@
 				
 				switch($k):
 					case self::autoFocus:
-						$_['autofocus'] = $v;
+						$_[__name_Attributes::DOM_autoFocus] = $v;
 						break;
 					case self::cols:
-						$_['cols'] = $v;
+						$_[__name_Attributes::DOM_cols] = $v;
 						break;
 					case self::disabled:
-						$_['disabled'] = $v;
+						$_[__name_Attributes::DOM_disabled] = $v;
 						break;
 					case self::form:
-						$_['form'] = $v;
+						$_[__name_Attributes::DOM_form] = $v;
 						break;
 					case self::maxLength:
-						$_['maxlength'] = $v;
+						$_[__name_Attributes::DOM_maxLength] = $v;
 						break;
 					case self::name:
-						$_['name'] = $v;
+						$_[__name_Attributes::DOM_name] = $v;
 						break;
 					case self::placeHolder:
-						$_['placeholder'] = $v;
+						$_[__name_Attributes::DOM_placeHolder] = $v;
 						break;
 					case self::readOnly:
-						$_['readonly'] = $v;
+						$_[__name_Attributes::DOM_readOnly] = $v;
 						break;
 					case self::required:
-						$_['required'] = $v;
+						$_[__name_Attributes::DOM_required] = $v;
 						break;
 					case self::rows:
-						$_['rows'] = $v;
+						$_[__name_Attributes::DOM_rows] = $v;
 						break;
 					case self::selectionDirection:
-						$_['selectionDirection'] = $v;
+						$_[__name_Attributes::DOM_selectionDirection] = $v;
 						break;
 					case self::selectionEnd:
-						$_['selectionEnd'] = $v;
+						$_[__name_Attributes::DOM_selectionEnd] = $v;
 						break;
 					case self::selectionStart:
-						$_['selectionStart'] = $v;
+						$_[__name_Attributes::DOM_selectionStart] = $v;
 						break;
 					case self::wrap:
-						$_['wrap'] = $v;
+						$_[__name_Attributes::DOM_wrap] = $v;
 						break;
 				endswitch;
 			}

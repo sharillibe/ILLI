@@ -1,11 +1,14 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html;
+	USE ILLI\Core\Util\Html\__addr_WAI;
+	USE ILLI\Core\Util\Html\__name_WAI;
+	USE ILLI\Core\Util\String;
 	USE ILLI\Core\Std\Def\__const_Type;
 	
 	CLASS __type_WAI EXTENDS ElementAttributes
 	{
-		CONST aria		= 0x00;
-		CONST role		= 0x01;
+		CONST aria		= __addr_WAI::GLOB_aria;
+		CONST role		= __addr_WAI::GLOB_role;
 		
 		/**
 		 * global WAI attributes
@@ -43,11 +46,11 @@
 							continue;
 						
 						foreach($v as $l => $w)
-							$_['aria-'.$l] = $w;
+							$_[String::insert(__name_WAI::DOM_aria__, ['key' => $l])] = $w;
 						
 						break;
 					case self::role:
-						$_['role'] = $v;
+						$_[__name_WAI::DOM_role] = $v;
 						break;
 				endswitch;
 			}

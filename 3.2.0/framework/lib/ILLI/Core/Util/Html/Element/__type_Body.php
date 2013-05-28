@@ -2,6 +2,7 @@
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Util\Html\__addr_Attributes;
+	USE ILLI\Core\Util\Html\__name_Attributes;
 	
 	CLASS __type_Body EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
@@ -60,55 +61,55 @@
 				
 				switch($k):
 					case self::onAfterPrint:
-						$_['onafterprint'] = $v;
+						$_[__name_Attributes::DOM_onAfterPrint] = $v;
 						break;
 					case self::onBeforePrint:
-						$_['onbeforeprint'] = $v;
+						$_[__name_Attributes::DOM_onBeforePrint] = $v;
 						break;
 					case self::onBeforeUnload:
-						$_['onbeforeunload'] = $v;
+						$_[__name_Attributes::DOM_onBeforeUnload] = $v;
 						break;
 					case self::onBlur:
-						$_['onblur'] = $v;
+						$_[__name_Attributes::DOM_onBlur] = $v;
 						break;
 					case self::onError:
-						$_['onerror'] = $v;
+						$_[__name_Attributes::DOM_onError] = $v;
 						break;
 					case self::onFocus:
-						$_['onfocus'] = $v;
+						$_[__name_Attributes::DOM_onFocus] = $v;
 						break;
 					case self::onHashChange:
-						$_['onhashchange'] = $v;
+						$_[__name_Attributes::DOM_onHashChange] = $v;
 						break;
 					case self::onLoad:
-						$_['onload'] = $v;
+						$_[__name_Attributes::DOM_onLoad] = $v;
 						break;
 					case self::onMessage:
-						$_['onmessage'] = $v;
+						$_[__name_Attributes::DOM_onMessage] = $v;
 						break;
 					case self::onOffline:
-						$_['onoffline'] = $v;
+						$_[__name_Attributes::DOM_onOffline] = $v;
 						break;
 					case self::onOnline:
-						$_['ononline'] = $v;
+						$_[__name_Attributes::DOM_onOnline] = $v;
 						break;
 					case self::onPopState:
-						$_['onpopstate'] = $v;
+						$_[__name_Attributes::DOM_onPopState] = $v;
 						break;
 					case self::onRedo:
-						$_['onredo'] = $v;
+						$_[__name_Attributes::DOM_onRedo] = $v;
 						break;
 					case self::onResize:
-						$_['onresize'] = $v;
+						$_[__name_Attributes::DOM_onResize] = $v;
 						break;
 					case self::onStorage:
-						$_['onstorage'] = $v;
+						$_[__name_Attributes::DOM_onStorage] = $v;
 						break;
 					case self::onUndo:
-						$_['onundo'] = $v;
+						$_[__name_Attributes::DOM_onUndo] = $v;
 						break;
 					case self::onUnload:
-						$_['onunload'] = $v;
+						$_[__name_Attributes::DOM_onUnload] = $v;
 						break;
 				endswitch;
 			}

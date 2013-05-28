@@ -2,6 +2,7 @@
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Util\Html\__addr_Attributes;
+	USE ILLI\Core\Util\Html\__name_Attributes;
 	
 	CLASS __type_Form EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
@@ -42,34 +43,34 @@
 				
 				switch($k):
 					case self::acceptCharset:
-						$_['accept-charset'] = $v;
+						$_[__name_Attributes::DOM_acceptCharset] = $v;
 						break;
 					case self::action:
-						$_['action'] = $v;
+						$_[__name_Attributes::DOM_action] = $v;
 						break;
 					case self::autoComplete:
 						if(FALSE === in_array($v, ['on', 'off']))
 							continue;
 						
-						$_['autocomplete'] = $v;
+						$_[__name_Attributes::DOM_autoComplete] = $v;
 						break;
 					case self::encType:
-						$_['enctype'] = $v;
+						$_[__name_Attributes::DOM_encType] = $v;
 						break;
 					case self::method:
 						if(FALSE === in_array($v, ['post', 'get']))
 							continue;
 						
-						$_['method'] = $v;
+						$_[__name_Attributes::DOM_method] = $v;
 						break;
 					case self::name:
-						$_['name'] = $v;
+						$_[__name_Attributes::DOM_name] = $v;
 						break;
 					case self::noValidate:
-						$_['novalidate'] = $v;
+						$_[__name_Attributes::DOM_novalidate] = $v;
 						break;
 					case self::target:
-						$_['target'] = $v;
+						$_[__name_Attributes::DOM_target] = $v;
 						break;
 				endswitch;
 			}

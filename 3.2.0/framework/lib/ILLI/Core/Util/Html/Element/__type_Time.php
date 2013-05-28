@@ -2,6 +2,7 @@
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Util\Html\__addr_Attributes;
+	USE ILLI\Core\Util\Html\__name_Attributes;
 	
 	CLASS __type_Time EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
@@ -30,10 +31,10 @@
 				
 				switch($k):
 					case self::dateTime:
-						$_['datetime'] = $v;
+						$_[__name_Attributes::DOM_dateTime] = $v;
 						break;
 					case self::pubDate:
-						$_['pubdate'] = $v;
+						$_[__name_Attributes::DOM_pubDate] = $v;
 						break;
 				endswitch;
 			}
