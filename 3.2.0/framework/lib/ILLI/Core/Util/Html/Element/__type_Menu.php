@@ -12,8 +12,8 @@
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{
 			parent::__construct(parent::mergeOffsetTypes($__defineOffsetType, [
-				self::type		=> __const_Type::SPL_STRING, // enum: context, toolbar, list
-				self::label		=> __const_Type::SPL_STRING
+				self::type		=> [__const_Type::SPL_STRING], // enum: context, toolbar, list
+				self::label		=> [__const_Type::SPL_STRING]
 			]));
 		}
 		

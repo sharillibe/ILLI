@@ -24,20 +24,20 @@
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{
 			parent::__construct(parent::mergeOffsetTypes($__defineOffsetType, [
-				self::autoFocus			=> __const_Type::SPL_BOOLEAN,
-				self::cols			=> __const_Type::SPL_LONG,
-				self::disabled			=> __const_Type::SPL_BOOLEAN,
-				self::form			=> __const_Type::SPL_STRING,
-				self::maxLength			=> __const_Type::SPL_LONG,
-				self::name			=> __const_Type::SPL_STRING,
-				self::placeHolder		=> __const_Type::SPL_STRING,
-				self::readOnly			=> __const_Type::SPL_BOOLEAN,
-				self::required			=> __const_Type::SPL_BOOLEAN,
-				self::rows			=> __const_Type::SPL_LONG,
-				self::selectionDirection	=> __const_Type::SPL_BOOLEAN,
-				self::selectionEnd		=> __const_Type::SPL_LONG,
-				self::selectionStart		=> __const_Type::SPL_LONG,
-				self::wrap			=> __const_Type::SPL_STRING // enum: hard, soft
+				self::autoFocus			=> [__const_Type::SPL_BOOLEAN],
+				self::cols			=> [__const_Type::SPL_LONG],
+				self::disabled			=> [__const_Type::SPL_BOOLEAN],
+				self::form			=> [__const_Type::SPL_STRING],
+				self::maxLength			=> [__const_Type::SPL_LONG],
+				self::name			=> [__const_Type::SPL_STRING],
+				self::placeHolder		=> [__const_Type::SPL_STRING],
+				self::readOnly			=> [__const_Type::SPL_BOOLEAN],
+				self::required			=> [__const_Type::SPL_BOOLEAN],
+				self::rows			=> [__const_Type::SPL_LONG],
+				self::selectionDirection	=> [__const_Type::SPL_BOOLEAN],
+				self::selectionEnd		=> [__const_Type::SPL_LONG],
+				self::selectionStart		=> [__const_Type::SPL_LONG],
+				self::wrap			=> [__const_Type::SPL_STRING] // enum: hard, soft
 			]));
 		}
 		

@@ -12,8 +12,8 @@
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{
 			parent::__construct(parent::mergeOffsetTypes($__defineOffsetType, [
-				self::href		=> __const_Type::SPL_STRING,
-				self::target		=> __const_Type::SPL_STRING,
+				self::href		=> [__const_Type::SPL_STRING],
+				self::target		=> [__const_Type::SPL_STRING]
 			]));
 		}
 		

@@ -46,37 +46,37 @@
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{
 			parent::__construct(parent::mergeOffsetTypes($__defineOffsetType, [
-				self::accept			=> __const_Type::SPL_STRING,
-				self::autoComplete		=> __const_Type::SPL_STRING, // enum: on, off
-				self::autoFocus			=> __const_Type::SPL_BOOLEAN,
-				self::autoSave			=> __const_Type::SPL_STRING,
-				self::checked			=> __const_Type::SPL_BOOLEAN,
-				self::disabled			=> __const_Type::SPL_BOOLEAN,
-				self::form			=> __const_Type::SPL_STRING,
-				self::formAction		=> __const_Type::SPL_STRING,
-				self::formEncType		=> __const_Type::SPL_STRING,
-				self::formMethod		=> __const_Type::SPL_STRING, // enum: post, get
-				self::formNoValidate		=> __const_Type::SPL_BOOLEAN,
-				self::formTarget		=> __const_Type::SPL_STRING,
-				self::height			=> __const_Type::SPL_LONG,
-				self::inputMode			=> __const_Type::SPL_STRING,
-				self::dataListId		=> __const_Type::SPL_STRING,
-				self::max			=> __const_Type::SPL_LONG,
-				self::maxLength			=> __const_Type::SPL_LONG,
-				self::min			=> __const_Type::SPL_LONG,
-				self::multiple			=> __const_Type::SPL_BOOLEAN,
-				self::name			=> __const_Type::SPL_STRING,
-				self::pattern			=> __const_Type::SPL_STRING,
-				self::placeHolder		=> __const_Type::SPL_STRING,
-				self::readOnly			=> __const_Type::SPL_BOOLEAN,
-				self::required			=> __const_Type::SPL_BOOLEAN,
-				self::selectionDirection	=> __const_Type::SPL_STRING,
-				self::size			=> __const_Type::SPL_LONG,
-				self::src			=> __const_Type::SPL_STRING,
-				self::step			=> __const_Type::SPL_LONG,
-				self::type			=> __const_Type::SPL_STRING,
-				self::value			=> __const_Type::SPL_STRING,
-				self::width			=> __const_Type::SPL_LONG
+				self::accept			=> [__const_Type::SPL_STRING],
+				self::autoComplete		=> [__const_Type::SPL_STRING], // enum: on, off
+				self::autoFocus			=> [__const_Type::SPL_BOOLEAN],
+				self::autoSave			=> [__const_Type::SPL_STRING],
+				self::checked			=> [__const_Type::SPL_BOOLEAN],
+				self::disabled			=> [__const_Type::SPL_BOOLEAN],
+				self::form			=> [__const_Type::SPL_STRING],
+				self::formAction		=> [__const_Type::SPL_STRING],
+				self::formEncType		=> [__const_Type::SPL_STRING],
+				self::formMethod		=> [__const_Type::SPL_STRING], // enum: post, get
+				self::formNoValidate		=> [__const_Type::SPL_BOOLEAN],
+				self::formTarget		=> [__const_Type::SPL_STRING],
+				self::height			=> [__const_Type::SPL_LONG],
+				self::inputMode			=> [__const_Type::SPL_STRING],
+				self::dataListId		=> [__const_Type::SPL_STRING],
+				self::max			=> [__const_Type::SPL_LONG],
+				self::maxLength			=> [__const_Type::SPL_LONG],
+				self::min			=> [__const_Type::SPL_LONG],
+				self::multiple			=> [__const_Type::SPL_BOOLEAN],
+				self::name			=> [__const_Type::SPL_STRING],
+				self::pattern			=> [__const_Type::SPL_STRING],
+				self::placeHolder		=> [__const_Type::SPL_STRING],
+				self::readOnly			=> [__const_Type::SPL_BOOLEAN],
+				self::required			=> [__const_Type::SPL_BOOLEAN],
+				self::selectionDirection	=> [__const_Type::SPL_STRING],
+				self::size			=> [__const_Type::SPL_LONG],
+				self::src			=> [__const_Type::SPL_STRING],
+				self::step			=> [__const_Type::SPL_LONG],
+				self::type			=> [__const_Type::SPL_STRING],
+				self::value			=> [__const_Type::SPL_STRING],
+				self::width			=> [__const_Type::SPL_LONG]
 			]));
 		}
 		

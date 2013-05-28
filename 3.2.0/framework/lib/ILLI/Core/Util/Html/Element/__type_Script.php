@@ -14,10 +14,10 @@
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{
 			parent::__construct(parent::mergeOffsetTypes($__defineOffsetType, [
-				self::async		=> __const_Type::SPL_BOOLEAN,
-				self::src		=> __const_Type::SPL_STRING,
-				self::type		=> __const_Type::SPL_STRING,
-				self::defer		=> __const_Type::SPL_BOOLEAN
+				self::async		=> [__const_Type::SPL_BOOLEAN],
+				self::src		=> [__const_Type::SPL_STRING],
+				self::type		=> [__const_Type::SPL_STRING],
+				self::defer		=> [__const_Type::SPL_BOOLEAN]
 			]));
 		}
 		

@@ -18,14 +18,14 @@
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{
 			parent::__construct(parent::mergeOffsetTypes($__defineOffsetType, [
-				self::autoFocus		=> __const_Type::SPL_BOOLEAN,
-				self::disabled		=> __const_Type::SPL_BOOLEAN,
-				self::form		=> __const_Type::SPL_STRING,
-				self::multiple		=> __const_Type::SPL_BOOLEAN,
-				self::selectedIndex	=> __const_Type::SPL_STRING,
-				self::name		=> __const_Type::SPL_STRING,
-				self::required		=> __const_Type::SPL_BOOLEAN,
-				self::size		=> __const_Type::SPL_LONG
+				self::autoFocus		=> [__const_Type::SPL_BOOLEAN],
+				self::disabled		=> [__const_Type::SPL_BOOLEAN],
+				self::form		=> [__const_Type::SPL_STRING],
+				self::multiple		=> [__const_Type::SPL_BOOLEAN],
+				self::selectedIndex	=> [__const_Type::SPL_STRING],
+				self::name		=> [__const_Type::SPL_STRING],
+				self::required		=> [__const_Type::SPL_BOOLEAN],
+				self::size		=> [__const_Type::SPL_LONG]
 			]));
 		}
 		

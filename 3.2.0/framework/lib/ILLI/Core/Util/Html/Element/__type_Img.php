@@ -17,13 +17,13 @@
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{
 			parent::__construct(parent::mergeOffsetTypes($__defineOffsetType, [
-				self::alt		=> __const_Type::SPL_STRING,
-				self::crossOrigin	=> __const_Type::SPL_STRING, // enum: anonymous, use-credentials
-				self::height		=> __const_Type::SPL_LONG,
-				self::isMap		=> __const_Type::SPL_BOOLEAN,
-				self::src		=> __const_Type::SPL_STRING,
-				self::width		=> __const_Type::SPL_LONG,
-				self::useMap		=> __const_Type::SPL_STRING
+				self::alt		=> [__const_Type::SPL_STRING],
+				self::crossOrigin	=> [__const_Type::SPL_STRING], // enum: anonymous, use-credentials
+				self::height		=> [__const_Type::SPL_LONG],
+				self::isMap		=> [__const_Type::SPL_BOOLEAN],
+				self::src		=> [__const_Type::SPL_STRING],
+				self::width		=> [__const_Type::SPL_LONG],
+				self::useMap		=> [__const_Type::SPL_STRING]
 			]));
 		}
 		

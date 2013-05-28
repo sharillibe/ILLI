@@ -50,7 +50,7 @@
 		 *
 		 * @var __type_Element
 		 */
-		protected $__Type = NULL;
+		protected $__Element = NULL;
 		
 		/**
 		 * Instantiate a new HTML Element
@@ -132,7 +132,7 @@
 			};
 			
 			#~ define __type_Element
-			$this->__Type = $inv #! invoke virtual .\__type_Element as .\Element\__type_{:type}Element
+			$this->__Element = $inv #! invoke virtual .\__type_Element as .\Element\__type_{:type}Element
 			(
 				__NAMESPACE__,
 				'__type_Element',
@@ -201,8 +201,8 @@
 		 */
 		public function __get($__constantName)
 		{
-			$t = $this->__Type->get();
-			return $t[constant(get_class($this->__Type).'::'.$__constantName)];
+			$t = $this->__Element->get();
+			return $t[constant(get_class($this->__Element).'::'.$__constantName)];
 		}
 		
 		/**
@@ -215,12 +215,12 @@
 		 */
 		public function __set($__constantName, $__value)
 		{
-			if(constant(get_class($this->__Type).'::'.$__constantName) === __type_Element::content)
+			if(constant(get_class($this->__Element).'::'.$__constantName) === __type_Element::content)
 			{
-				$this->__Type->get()[__type_Element::content]->set($__value);
+				$this->__Element->get()[__type_Element::content]->set($__value);
 				
 				if($__value instanceOf Element)
-					$__value->__Type->parent = $this;
+					$__value->__Element->parent = $this;
 			}
 		}
 		
@@ -242,7 +242,7 @@
 		 */
 		public function render()
 		{
-			$t = $this->__Type->get();
+			$t = $this->__Element->get();
 			$r = $t[__type_Element::content] instanceOf ElementContent ? $t[__type_Element::content]->render() : NULL;
 			$a = $t[__type_Element::attribute]->render();
 			$w = $t[__type_Element::wai]->render();

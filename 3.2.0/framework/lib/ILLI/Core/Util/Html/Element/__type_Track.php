@@ -20,11 +20,11 @@
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{
 			parent::__construct(parent::mergeOffsetTypes($__defineOffsetType, [
-				self::std		=> __const_Type::SPL_BOOLEAN,
-				self::kind		=> __const_Type::SPL_STRING, // enum: subtitles, captions, descriptions, chapters, metadata
-				self::label		=> __const_Type::SPL_STRING,
-				self::src		=> __const_Type::SPL_STRING,
-				self::srcLang		=> __const_Type::SPL_STRING
+				self::std		=> [__const_Type::SPL_BOOLEAN],
+				self::kind		=> [__const_Type::SPL_STRING], // enum: subtitles, captions, descriptions, chapters, metadata
+				self::label		=> [__const_Type::SPL_STRING],
+				self::src		=> [__const_Type::SPL_STRING],
+				self::srcLang		=> [__const_Type::SPL_STRING]
 			]));
 		}
 		
