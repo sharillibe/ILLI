@@ -2,6 +2,7 @@
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Util\Html\__addr_Attributes;
+	USE ILLI\Core\Util\Html\__name_Attributes;
 	
 	CLASS __type_Style EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
@@ -36,19 +37,19 @@
 				
 				switch($k):
 					case self::disabled:
-						$_['disabled'] = $v;
+						$_[__name_Attributes::DOM_disabled] = $v;
 						break;
 					case self::media:
-						$_['media'] = $v;
+						$_[__name_Attributes::DOM_media] = $v;
 						break;
 					case self::scoped:
-						$_['scoped'] = $v;
+						$_[__name_Attributes::DOM_scoped] = $v;
 						break;
 					case self::title:
-						$_['title'] = $v;
+						$_[__name_Attributes::DOM_title] = $v;
 						break;
 					case self::type:
-						$_['type'] = $v;
+						$_[__name_Attributes::DOM_type] = $v;
 						break;
 				endswitch;
 			}

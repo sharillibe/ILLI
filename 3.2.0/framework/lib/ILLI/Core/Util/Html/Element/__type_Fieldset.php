@@ -2,6 +2,7 @@
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Util\Html\__addr_Attributes;
+	USE ILLI\Core\Util\Html\__name_Attributes;
 	
 	CLASS __type_Fieldset EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
@@ -32,13 +33,13 @@
 				
 				switch($k):
 					case self::disabled:
-						$_['disabled'] = $v;
+						$_[__name_Attributes::DOM_disabled] = $v;
 						break;
 					case self::form:
-						$_['form'] = $v;
+						$_[__name_Attributes::DOM_form] = $v;
 						break;
 					case self::name:
-						$_['name'] = $v;
+						$_[__name_Attributes::DOM_name] = $v;
 						break;
 				endswitch;
 			}

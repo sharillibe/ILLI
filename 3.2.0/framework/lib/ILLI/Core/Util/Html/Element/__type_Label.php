@@ -2,6 +2,7 @@
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Util\Html\__addr_Attributes;
+	USE ILLI\Core\Util\Html\__name_Attributes;
 	
 	CLASS __type_Label EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
@@ -10,7 +11,7 @@
 		
 		protected static $__keywordAlias =
 		[
-			'for'	=> 'forId'
+			__name_Attributes::DOM_for => 'forId'
 		];
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
@@ -35,10 +36,10 @@
 				
 				switch($k):
 					case self::forId:
-						$_['for'] = $v;
+						$_[__name_Attributes::DOM_for] = $v;
 						break;
 					case self::form:
-						$_['form'] = $v;
+						$_[__name_Attributes::DOM_form] = $v;
 						break;
 				endswitch;
 			}

@@ -1,5 +1,6 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html\Element;
+	USE ILLI\Core\Util\Html\__name_Element;
 	USE ILLI\Core\Util\Html\__type_Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	
@@ -9,7 +10,7 @@
 	\ILLI\Core\Util\Html\IContent\IPalpable
 	{
 		CONST close	= TRUE;
-		CONST name	= 'main';
+		CONST name	= __name_Element::DOM_main;
 		
 		protected static $__tContent =
 		[

@@ -2,6 +2,7 @@
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Util\Html\__addr_Attributes;
+	USE ILLI\Core\Util\Html\__name_Attributes;
 	
 	CLASS __type_Iframe EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
@@ -40,25 +41,25 @@
 				
 				switch($k):
 					case self::allowFullScreen:
-						$_['allowfullscreen'] = $v;
+						$_[__name_Attributes::DOM_allowFullScreen] = $v;
 						break;
 					case self::height:
-						$_['height'] = $v;
+						$_[__name_Attributes::DOM_height] = $v;
 						break;
 					case self::name:
-						$_['name'] = $v;
+						$_[__name_Attributes::DOM_name] = $v;
 						break;
 					case self::sandbox:
-						$_['sandbox'] = $v;
+						$_[__name_Attributes::DOM_sandbox] = $v;
 						break;
 					case self::seamless:
-						$_['seamless'] = $v;
+						$_[__name_Attributes::DOM_seamless] = $v;
 						break;
 					case self::src:
-						$_['src'] = $v;
+						$_[__name_Attributes::DOM_src] = $v;
 						break;
 					case self::width:
-						$_['width'] = $v;
+						$_[__name_Attributes::DOM_width] = $v;
 						break;
 				endswitch;
 			}

@@ -2,6 +2,7 @@
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Util\Html\__addr_Attributes;
+	USE ILLI\Core\Util\Html\__name_Attributes;
 	
 	CLASS __type_Command EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
@@ -38,25 +39,25 @@
 				
 				switch($k):
 					case self::checked:
-						$_['checked'] = $v;
+						$_[__name_Attributes::DOM_checked] = $v;
 						break;
 					case self::disabled:
-						$_['disabled'] = $v;
+						$_[__name_Attributes::DOM_disabled] = $v;
 						break;
 					case self::icon:
-						$_['icon'] = $v;
+						$_[__name_Attributes::DOM_icon] = $v;
 						break;
 					case self::label:
-						$_['label'] = $v;
+						$_[__name_Attributes::DOM_label] = $v;
 						break;
 					case self::radioGroup:
-						$_['radiogroup'] = $v;
+						$_[__name_Attributes::DOM_radioGroup] = $v;
 						break;
 					case self::type:
 						if(FALSE === in_array($v, ['command', 'checkbox', 'radio']))
 							continue;
 							
-						$_['type'] = $v;
+						$_[__name_Attributes::DOM_type] = $v;
 						break;
 				endswitch;
 			}

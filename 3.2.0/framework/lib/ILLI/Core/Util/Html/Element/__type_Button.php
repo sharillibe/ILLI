@@ -2,6 +2,7 @@
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Util\Html\__addr_Attributes;
+	USE ILLI\Core\Util\Html\__name_Attributes;
 	
 	CLASS __type_Button EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
@@ -48,43 +49,43 @@
 				
 				switch($k):
 					case self::autoFocus:
-						$_['autofocus'] = $v;
+						$_[__name_Attributes::DOM_autoFocus] = $v;
 						break;
 					case self::disabled:
-						$_['disabled'] = $v;
+						$_[__name_Attributes::DOM_disabled] = $v;
 						break;
 					case self::form:
-						$_['form'] = $v;
+						$_[__name_Attributes::DOM_form] = $v;
 						break;
 					case self::formAction:
-						$_['formaction'] = $v;
+						$_[__name_Attributes::DOM_formAction] = $v;
 						break;
 					case self::formEncType:
-						$_['formenctype'] = $v;
+						$_[__name_Attributes::DOM_formEncType] = $v;
 						break;
 					case self::formMethod:
 						if(FALSE === in_array($v, ['post', 'get']))
 							continue;
 						
-						$_['formmethod'] = $v;
+						$_[__name_Attributes::DOM_formMethod] = $v;
 						break;
 					case self::formNoValidate:
-						$_['formnovalidate'] = $v;
+						$_[__name_Attributes::DOM_formNoValidate] = $v;
 						break;
 					case self::formTarget:
-						$_['formtarget'] = $v;
+						$_[__name_Attributes::DOM_formTarget] = $v;
 						break;
 					case self::name:
-						$_['name'] = $v;
+						$_[__name_Attributes::DOM_name] = $v;
 						break;
 					case self::type:
 						if(FALSE === in_array($v, ['button', 'submit', 'reset']))
 							continue;
 							
-						$_['type'] = $v;
+						$_[__name_Attributes::DOM_type] = $v;
 						break;
 					case self::value:
-						$_['value'] = $v;
+						$_[__name_Attributes::DOM_value] = $v;
 						break;
 				endswitch;
 			}

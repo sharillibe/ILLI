@@ -2,6 +2,7 @@
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Util\Html\__addr_Attributes;
+	USE ILLI\Core\Util\Html\__name_Attributes;
 	
 	CLASS __type_Link EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
@@ -43,25 +44,25 @@
 						if(FALSE === in_array($v, ['anonymous', 'use-credentials']))
 							continue;
 						
-						$_['crossorigin'] = $v;
+						$_[__name_Attributes::DOM_crossOrigin] = $v;
 						break;
 					case self::href:
-						$_['href'] = $v;
+						$_[__name_Attributes::DOM_href] = $v;
 						break;
 					case self::hrefLang:
-						$_['hreflang'] = $v;
+						$_[__name_Attributes::DOM_hrefLang] = $v;
 						break;
 					case self::media:
-						$_['media'] = $v;
+						$_[__name_Attributes::DOM_media] = $v;
 						break;
 					case self::rel:
-						$_['rel'] = $v;
+						$_[__name_Attributes::DOM_rel] = $v;
 						break;
 					case self::sizes:
-						$_['sizes'] = $v;
+						$_[__name_Attributes::DOM_sizes] = $v;
 						break;
 					case self::type:
-						$_['type'] = $v;
+						$_[__name_Attributes::DOM_type] = $v;
 						break;
 				endswitch;
 			}

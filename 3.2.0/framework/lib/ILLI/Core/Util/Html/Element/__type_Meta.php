@@ -2,6 +2,7 @@
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Util\Html\__addr_Attributes;
+	USE ILLI\Core\Util\Html\__name_Attributes;
 	
 	CLASS __type_Meta EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
@@ -34,16 +35,16 @@
 				
 				switch($k):
 					case self::charset:
-						$_['charset'] = $v;
+						$_[__name_Attributes::DOM_charset] = $v;
 						break;
 					case self::content:
-						$_['content'] = $v;
+						$_[__name_Attributes::DOM_content] = $v;
 						break;
 					case self::httpEquiv:
-						$_['http-equiv'] = $v;
+						$_[__name_Attributes::DOM_httpEquiv] = $v;
 						break;
 					case self::name:
-						$_['name'] = $v;
+						$_[__name_Attributes::DOM_name] = $v;
 						break;
 				endswitch;
 			}
@@ -51,7 +52,12 @@
 			$r = [];
 			
 			// 'http-equiv', 'name' before 'content'
-			foreach(['charset', 'http-equiv', 'name', 'content'] as $k)
+			foreach([
+				__name_Attributes::DOM_charset,
+				__name_Attributes::DOM_httpEquiv,
+				__name_Attributes::DOM_name,
+				__name_Attributes::DOM_content
+			] as $k)
 				FALSE === isset($_[$k]) ?: $r[$k] = $_[$k];
 			
 			return $r;

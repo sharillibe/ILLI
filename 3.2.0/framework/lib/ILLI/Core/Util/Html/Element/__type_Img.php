@@ -2,6 +2,7 @@
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Util\Html\__addr_Attributes;
+	USE ILLI\Core\Util\Html\__name_Attributes;
 	
 	CLASS __type_Img EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
@@ -40,28 +41,28 @@
 				
 				switch($k):
 					case self::alt:
-						$_['alt'] = $v;
+						$_[__name_Attributes::DOM_alt] = $v;
 						break;
 					case self::crossOrigin:
 						if(FALSE === in_array($v, ['anonymous', 'use-credentials']))
 							continue;
 						
-						$_['crossorigin'] = $v;
+						$_[__name_Attributes::DOM_crossOrigin] = $v;
 						break;
 					case self::height:
-						$_['height'] = $v;
+						$_[__name_Attributes::DOM_height] = $v;
 						break;
 					case self::isMap:
-						$_['isMap'] = $v;
+						$_[__name_Attributes::DOM_isMap] = $v;
 						break;
 					case self::src:
-						$_['src'] = $v;
+						$_[__name_Attributes::DOM_src] = $v;
 						break;
 					case self::width:
-						$_['width'] = $v;
+						$_[__name_Attributes::DOM_width] = $v;
 						break;
 					case self::useMap:
-						$_['useMap'] = $v;
+						$_[__name_Attributes::DOM_useMap] = $v;
 						break;
 				endswitch;
 			}
