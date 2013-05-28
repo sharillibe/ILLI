@@ -13,9 +13,9 @@
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{
 			parent::__construct(parent::mergeOffsetTypes($__defineOffsetType, [
-				self::colspan		=> __const_Type::SPL_LONG,
+				self::colspan		=> [__const_Type::SPL_LONG],
 				self::headers		=> [__const_Type::SPL_STRING, __const_Type::SPL_ARRAY],
-				self::rowspan		=> __const_Type::SPL_LONG
+				self::rowspan		=> [__const_Type::SPL_LONG]
 			]));
 		}
 		

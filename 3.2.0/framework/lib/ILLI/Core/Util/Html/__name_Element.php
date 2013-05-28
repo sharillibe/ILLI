@@ -110,6 +110,7 @@
 		CONST DOM_track		= 'track';
 		CONST DOM_u		= 'u';
 		CONST DOM_ul		= 'ul';
+		CONST DOM_var		= 'var';
 		CONST DOM_video		= 'video';
 		CONST DOM_wbr		= 'wbr';
 	}

@@ -18,14 +18,14 @@
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{
 			parent::__construct(parent::mergeOffsetTypes($__defineOffsetType, [
-				self::autoPlay		=> __const_Type::SPL_BOOLEAN,
-				self::buffered		=> __const_Type::SPL_STRING,
-				self::controls		=> __const_Type::SPL_BOOLEAN,
-				self::loop		=> __const_Type::SPL_BOOLEAN,
-				self::muted		=> __const_Type::SPL_BOOLEAN,
-				self::played		=> __const_Type::SPL_STRING,
-				self::preload		=> __const_Type::SPL_STRING,  // enum: none, metadata, auto
-				self::src		=> __const_Type::SPL_STRING
+				self::autoPlay		=> [__const_Type::SPL_BOOLEAN],
+				self::buffered		=> [__const_Type::SPL_STRING],
+				self::controls		=> [__const_Type::SPL_BOOLEAN],
+				self::loop		=> [__const_Type::SPL_BOOLEAN],
+				self::muted		=> [__const_Type::SPL_BOOLEAN],
+				self::played		=> [__const_Type::SPL_STRING],
+				self::preload		=> [__const_Type::SPL_STRING],  // enum: none, metadata, auto
+				self::src		=> [__const_Type::SPL_STRING]
 			]));
 		}
 		

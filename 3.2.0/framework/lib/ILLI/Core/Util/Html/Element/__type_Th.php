@@ -16,12 +16,12 @@
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{
 			parent::__construct(parent::mergeOffsetTypes($__defineOffsetType, [
-				self::abbr		=> __const_Type::SPL_STRING,
+				self::abbr		=> [__const_Type::SPL_STRING],
 				self::axis		=> [__const_Type::SPL_STRING, __const_Type::SPL_ARRAY],
-				self::colspan		=> __const_Type::SPL_LONG,
+				self::colspan		=> [__const_Type::SPL_LONG],
 				self::headers		=> [__const_Type::SPL_STRING, __const_Type::SPL_ARRAY],
-				self::rowspan		=> __const_Type::SPL_LONG,
-				self::scope		=> __const_Type::SPL_STRING // enum: row, col, rowgroup, colgroup, auto
+				self::rowspan		=> [__const_Type::SPL_LONG],
+				self::scope		=> [__const_Type::SPL_STRING] // enum: row, col, rowgroup, colgroup, auto
 			]));
 		}
 		

@@ -18,14 +18,14 @@
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{
 			parent::__construct(parent::mergeOffsetTypes($__defineOffsetType, [
-				self::acceptCharset	=> __const_Type::SPL_STRING,
-				self::action		=> __const_Type::SPL_STRING,
-				self::autoComplete	=> __const_Type::SPL_STRING, // enum; on, off
-				self::encType		=> __const_Type::SPL_STRING,
-				self::method		=> __const_Type::SPL_STRING, // enum: post, get
-				self::name		=> __const_Type::SPL_STRING,
-				self::noValidate	=> __const_Type::SPL_BOOLEAN,
-				self::target		=> __const_Type::SPL_STRING
+				self::acceptCharset	=> [__const_Type::SPL_STRING],
+				self::action		=> [__const_Type::SPL_STRING],
+				self::autoComplete	=> [__const_Type::SPL_STRING], // enum; on, off
+				self::encType		=> [__const_Type::SPL_STRING],
+				self::method		=> [__const_Type::SPL_STRING], // enum: post, get
+				self::name		=> [__const_Type::SPL_STRING],
+				self::noValidate	=> [__const_Type::SPL_BOOLEAN],
+				self::target		=> [__const_Type::SPL_STRING]
 			]));
 		}
 		

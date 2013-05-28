@@ -21,17 +21,17 @@
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{
 			parent::__construct(parent::mergeOffsetTypes($__defineOffsetType, [
-				self::autoFocus		=> __const_Type::SPL_BOOLEAN,
-				self::disabled		=> __const_Type::SPL_BOOLEAN,
-				self::form		=> __const_Type::SPL_STRING,
-				self::formAction	=> __const_Type::SPL_STRING,
-				self::formEncType	=> __const_Type::SPL_STRING,
-				self::formMethod	=> __const_Type::SPL_STRING,	// enum: post, get
-				self::formNoValidate	=> __const_Type::SPL_BOOLEAN,
-				self::formTarget	=> __const_Type::SPL_STRING,
-				self::name		=> __const_Type::SPL_STRING,
-				self::type		=> __const_Type::SPL_STRING,	// enum: submit, reset, button
-				self::value		=> __const_Type::SPL_STRING
+				self::autoFocus		=> [__const_Type::SPL_BOOLEAN],
+				self::disabled		=> [__const_Type::SPL_BOOLEAN],
+				self::form		=> [__const_Type::SPL_STRING],
+				self::formAction	=> [__const_Type::SPL_STRING],
+				self::formEncType	=> [__const_Type::SPL_STRING],
+				self::formMethod	=> [__const_Type::SPL_STRING],	// enum: post, get
+				self::formNoValidate	=> [__const_Type::SPL_BOOLEAN],
+				self::formTarget	=> [__const_Type::SPL_STRING],
+				self::name		=> [__const_Type::SPL_STRING],
+				self::type		=> [__const_Type::SPL_STRING],	// enum: submit, reset, button
+				self::value		=> [__const_Type::SPL_STRING]
 			]));
 		}
 		
