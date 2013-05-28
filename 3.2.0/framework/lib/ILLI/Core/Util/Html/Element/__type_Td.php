@@ -2,6 +2,7 @@
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Util\Html\__addr_Attributes;
+	USE ILLI\Core\Util\Html\__name_Attributes;
 	
 	CLASS __type_Td EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
@@ -32,13 +33,13 @@
 				
 				switch($k):
 					case self::colspan:
-						$_['colspan'] = $v;
+						$_[__name_Attributes::DOM_colspan] = $v;
 						break;
 					case self::headers:
-						$_['headers'] = TRUE === is_array($v) ? implode(',', $v) : $v;
+						$_[__name_Attributes::DOM_headers] = TRUE === is_array($v) ? implode(',', $v) : $v;
 						break;
 					case self::rowspan:
-						$_['rowspan'] = $v;
+						$_[__name_Attributes::DOM_rowspan] = $v;
 						break;
 				endswitch;
 			}

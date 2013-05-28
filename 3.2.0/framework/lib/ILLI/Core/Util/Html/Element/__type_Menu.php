@@ -2,6 +2,7 @@
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Util\Html\__addr_Attributes;
+	USE ILLI\Core\Util\Html\__name_Attributes;
 	
 	CLASS __type_Menu EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
@@ -33,10 +34,10 @@
 						if(FALSE === in_array($v, ['context', 'toolbar', 'list']))
 							continue;
 						
-						$_['type'] = $v;
+						$_[__name_Attributes::DOM_type] = $v;
 						break;
 					case self::label:
-						$_['label'] = $v;
+						$_[__name_Attributes::DOM_label] = $v;
 						break;
 				endswitch;
 			}

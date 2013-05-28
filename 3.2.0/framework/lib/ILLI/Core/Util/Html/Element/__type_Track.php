@@ -2,6 +2,7 @@
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Util\Html\__addr_Attributes;
+	USE ILLI\Core\Util\Html\__name_Attributes;
 	
 	CLASS __type_Track EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
@@ -13,7 +14,7 @@
 		
 		protected static $__keywordAlias =
 		[
-			'default'	=> 'std'
+			__name_Attributes::DOM_default	=> 'std'
 		];
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
@@ -41,22 +42,22 @@
 				
 				switch($k):
 					case self::std:
-						$_['default'] = $v;
+						$_[__name_Attributes::DOM_default] = $v;
 						break;
 					case self::kind:
 						if(FALSE === in_array($v, ['subtitles', 'captions', 'descriptions', 'chapters', 'metadata']))
 							continue;
 						
-						$_['kind'] = $v;
+						$_[__name_Attributes::DOM_kind] = $v;
 						break;
 					case self::label:
-						$_['label'] = $v;
+						$_[__name_Attributes::DOM_label] = $v;
 						break;
 					case self::src:
-						$_['src'] = $v;
+						$_[__name_Attributes::DOM_src] = $v;
 						break;
 					case self::srcLang:
-						$_['srclang'] = $v;
+						$_[__name_Attributes::DOM_srclang] = $v;
 						break;
 				endswitch;
 			}

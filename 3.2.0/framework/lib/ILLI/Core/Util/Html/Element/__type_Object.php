@@ -2,6 +2,7 @@
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Util\Html\__addr_Attributes;
+	USE ILLI\Core\Util\Html\__name_Attributes;
 	
 	CLASS __type_Object EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
@@ -40,25 +41,25 @@
 				
 				switch($k):
 					case self::data:
-						$_['data'] = $v;
+						$_[__name_Attributes::DOM_data] = $v;
 						break;
 					case self::form:
-						$_['form'] = $v;
+						$_[__name_Attributes::DOM_form] = $v;
 						break;
 					case self::height:
-						$_['height'] = $v;
+						$_[__name_Attributes::DOM_height] = $v;
 						break;
 					case self::name:
-						$_['name'] = $v;
+						$_[__name_Attributes::DOM_name] = $v;
 						break;
 					case self::type:
-						$_['type'] = $v;
+						$_[__name_Attributes::DOM_type] = $v;
 						break;
 					case self::useMap:
-						$_['useMap'] = $v;
+						$_[__name_Attributes::DOM_useMap] = $v;
 						break;
 					case self::width:
-						$_['width'] = $v;
+						$_[__name_Attributes::DOM_width] = $v;
 						break;
 				endswitch;
 			}

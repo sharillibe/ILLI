@@ -1,7 +1,9 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html;
 	USE ILLI\Core\Std\Def\__const_Type;
-	USE ILLI\Core\Util\Html\__const_AttrIndex;
+	USE ILLI\Core\Util\Html\__addr_Attributes;
+	USE ILLI\Core\Util\Html\__name_Attributes;
+	USE ILLI\Core\Util\String;
 	
 	CLASS __type_Attributes EXTENDS ElementAttributes
 	{
@@ -71,26 +73,26 @@
 				
 				switch($k):
 					case self::accessKey:
-						$_['accesskey'] = $v;
+						$_[__name_Attributes::DOM_accessKey] = $v;
 						break;
 					case self::cssClass:
 						if([] === $v)
 							continue;
 						
-						$_['class'] = implode(' ', array_unique($v));
+						$_[__name_Attributes::DOM_class] = implode(' ', array_unique($v));
 						break;
 					case self::contentEditable:
-						$_['contenteditable'] = $v;
+						$_[__name_Attributes::DOM_contentEditable] = $v;
 						break;
 					case self::contextMenu:
-						$_['contextmenu'] = $v;
+						$_[__name_Attributes::DOM_contextMenu] = $v;
 						break;
 					case self::data:
 						if([] === $v)
 							continue;
 						
 						foreach($v as $l => $w)
-							$_['data-'.$l] = $w;
+							$_[String::insert(__name_Attributes::DOM_data__, ['key' => $l])] = $w;
 						
 						continue;
 						break;
@@ -98,52 +100,52 @@
 						if(FALSE === in_array($v, ['ltr', 'rtl', 'auto']))
 							continue;
 							
-						$_['dir'] = $v;
+						$_[__name_Attributes::DOM_dir] = $v;
 						break;
 					case self::draggable:
-						$_['draggable'] = $v;
+						$_[__name_Attributes::DOM_draggable] = $v;
 						break;
 					case self::dropzone:
 						if(FALSE === in_array($v, ['copy', 'move', 'link']))
 							continue;
 							
-						$_['dropzone'] = $v;
+						$_[__name_Attributes::DOM_dropzone] = $v;
 						break;
 					case self::hidden:
-						$_['hidden'] = $v;
+						$_[__name_Attributes::DOM_hidden] = $v;
 						break;
 					case self::id:
-						$_['id'] = $v;
+						$_[__name_Attributes::DOM_id] = $v;
 						break;
 					case self::itemId:
-						$_['itemid'] = $v;
+						$_[__name_Attributes::DOM_itemId] = $v;
 						break;
 					case self::itemProp:
-						$_['itemprop'] = $v;
+						$_[__name_Attributes::DOM_itemProp] = $v;
 						break;
 					case self::itemRef:
-						$_['itemref'] = $v;
+						$_[__name_Attributes::DOM_itemRef] = $v;
 						break;
 					case self::itemScope:
-						$_['itemscope'] = $v;
+						$_[__name_Attributes::DOM_itemScope] = $v;
 						break;
 					case self::itemType:
-						$_['itemtype'] = $v;
+						$_[__name_Attributes::DOM_itemType] = $v;
 						break;
 					case self::lang:
-						$_['lang'] = $v;
+						$_[__name_Attributes::DOM_itemLang] = $v;
 						break;
 					case self::spellCheck:
-						$_['spellcheck'] = $v;
+						$_[__name_Attributes::DOM_spellCheck] = $v;
 						break;
 					case self::style:
-						$_['style'] = $v;
+						$_[__name_Attributes::DOM_style] = $v;
 						break;
 					case self::tabIndex:
-						$_['tabindex'] = $v;
+						$_[__name_Attributes::DOM_tabIndex] = $v;
 						break;
 					case self::title:
-						$_['title'] = $v;
+						$_[__name_Attributes::DOM_title] = $v;
 						break;
 				endswitch;
 			}

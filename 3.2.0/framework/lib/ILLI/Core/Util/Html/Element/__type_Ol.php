@@ -2,6 +2,7 @@
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Util\Html\__addr_Attributes;
+	USE ILLI\Core\Util\Html\__name_Attributes;
 	
 	CLASS __type_Ol EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
@@ -32,16 +33,16 @@
 				
 				switch($k):
 					case self::reversed:
-						$_['reversed'] = $v;
+						$_[__name_Attributes::DOM_reversed] = $v;
 						break;
 					case self::start:
-						$_['start'] = $v;
+						$_[__name_Attributes::DOM_start] = $v;
 						break;
 					case self::type:
 						if(FALSE === in_array($v, ['a', 'A', 'i', 'I', '1']))
 							continue;
 						
-						$_['type'] = $v;
+						$_[__name_Attributes::DOM_type] = $v;
 						break;
 				endswitch;
 			}

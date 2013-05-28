@@ -2,6 +2,7 @@
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Util\Html\__addr_Attributes;
+	USE ILLI\Core\Util\Html\__name_Attributes;
 	
 	CLASS __type_Meter EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
@@ -40,25 +41,25 @@
 				
 				switch($k):
 					case self::form:
-						$_['form'] = $v;
+						$_[__name_Attributes::DOM_form] = $v;
 						break;
 					case self::high:
-						$_['high'] = $v;
+						$_[__name_Attributes::DOM_high] = $v;
 						break;
 					case self::low:
-						$_['low'] = $v;
+						$_[__name_Attributes::DOM_low] = $v;
 						break;
 					case self::max:
-						$_['max'] = $v;
+						$_[__name_Attributes::DOM_max] = $v;
 						break;
 					case self::min:
-						$_['min'] = $v;
+						$_[__name_Attributes::DOM_min] = $v;
 						break;
 					case self::optimum:
-						$_['optimum'] = $v;
+						$_[__name_Attributes::DOM_optimum] = $v;
 						break;
 					case self::value:
-						$_['value'] = $v;
+						$_[__name_Attributes::DOM_value] = $v;
 						break;
 				endswitch;
 			}

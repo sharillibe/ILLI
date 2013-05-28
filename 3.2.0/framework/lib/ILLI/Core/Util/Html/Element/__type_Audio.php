@@ -2,6 +2,7 @@
 	NAMESPACE ILLI\Core\Util\Html\Element;
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Util\Html\__addr_Attributes;
+	USE ILLI\Core\Util\Html\__name_Attributes;
 	
 	CLASS __type_Audio EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
@@ -42,31 +43,31 @@
 				
 				switch($k):
 					case self::autoPlay:
-						$_['autoplay'] = $v;
+						$_[__name_Attributes::DOM_autoPlay] = $v;
 						break;
 					case self::buffered:
-						$_['buffered'] = $v;
+						$_[__name_Attributes::DOM_buffered] = $v;
 						break;
 					case self::controls:
-						$_['controls'] = $v;
+						$_[__name_Attributes::DOM_controls] = $v;
 						break;
 					case self::loop:
-						$_['loop'] = $v;
+						$_[__name_Attributes::DOM_loop] = $v;
 						break;
 					case self::muted:
-						$_['muted'] = $v;
+						$_[__name_Attributes::DOM_muted] = $v;
 						break;
 					case self::played:
-						$_['played'] = $v;
+						$_[__name_Attributes::DOM_played] = $v;
 						break;
 					case self::preload:
 						if(FALSE === in_array($v, ['none', 'metadata', 'auto', '']))
 							continue;
 							
-						$_['preload'] = $v;
+						$_[__name_Attributes::DOM_preload] = $v;
 						break;
 					case self::src:
-						$_['src'] = $v;
+						$_[__name_Attributes::DOM_src] = $v;
 						break;
 				endswitch;
 			}
