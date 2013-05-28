@@ -27,23 +27,23 @@
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{
 			parent::__construct(parent::mergeOffsetTypes($__defineOffsetType, [
-				self::onAfterPrint	=> __const_Type::SPL_STRING,
-				self::onBeforePrint	=> __const_Type::SPL_STRING,
-				self::onBeforeUnload	=> __const_Type::SPL_STRING,
-				self::onBlur		=> __const_Type::SPL_STRING,
-				self::onError		=> __const_Type::SPL_STRING,
-				self::onFocus		=> __const_Type::SPL_STRING,
-				self::onHashChange	=> __const_Type::SPL_STRING,
-				self::onLoad		=> __const_Type::SPL_STRING,
-				self::onMessage		=> __const_Type::SPL_STRING,
-				self::onOffline		=> __const_Type::SPL_STRING,
-				self::onOnline		=> __const_Type::SPL_STRING,
-				self::onPopState	=> __const_Type::SPL_STRING,
-				self::onRedo		=> __const_Type::SPL_STRING,
-				self::onResize		=> __const_Type::SPL_STRING,
-				self::onStorage		=> __const_Type::SPL_STRING,
-				self::onUndo		=> __const_Type::SPL_STRING,
-				self::onUnload		=> __const_Type::SPL_STRING
+				self::onAfterPrint	=> [__const_Type::SPL_STRING],
+				self::onBeforePrint	=> [__const_Type::SPL_STRING],
+				self::onBeforeUnload	=> [__const_Type::SPL_STRING],
+				self::onBlur		=> [__const_Type::SPL_STRING],
+				self::onError		=> [__const_Type::SPL_STRING],
+				self::onFocus		=> [__const_Type::SPL_STRING],
+				self::onHashChange	=> [__const_Type::SPL_STRING],
+				self::onLoad		=> [__const_Type::SPL_STRING],
+				self::onMessage		=> [__const_Type::SPL_STRING],
+				self::onOffline		=> [__const_Type::SPL_STRING],
+				self::onOnline		=> [__const_Type::SPL_STRING],
+				self::onPopState	=> [__const_Type::SPL_STRING],
+				self::onRedo		=> [__const_Type::SPL_STRING],
+				self::onResize		=> [__const_Type::SPL_STRING],
+				self::onStorage		=> [__const_Type::SPL_STRING],
+				self::onUndo		=> [__const_Type::SPL_STRING],
+				self::onUnload		=> [__const_Type::SPL_STRING]
 			]));
 		}
 		

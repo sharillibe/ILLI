@@ -11,7 +11,7 @@
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{
 			parent::__construct(parent::mergeOffsetTypes($__defineOffsetType, [
-				self::span		=> __const_Type::SPL_LONG
+				self::span		=> [__const_Type::SPL_LONG]
 			]));
 		}
 		
