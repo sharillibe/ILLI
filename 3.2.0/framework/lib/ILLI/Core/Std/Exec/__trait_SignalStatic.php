@@ -4,7 +4,7 @@
 	USE ILLI\Core\Std\Exec\__type_Signal;
 	USE ILLI\Core\Std\Reflection\SplMethod;
 	USE ILLI\Core\Std\Invoke;
-
+	
 	/**
 	 * 		class Order { public function plist() {return 'list of ordered products.'; } }
 	 * 		
@@ -28,26 +28,26 @@
 	 * 		{
 	 * 			protected $__order = NULL;
 	 * 			
-	 * 			USE ILLI\Core\Std\Exec\__trait_Signal
+	 * 			USE ILLI\Core\Std\Exec\__trait_SignalStatic
 	 * 			{
-	 * 				Core_Std_Exec___trait_Signal_register as public regSignal;
+	 * 				Core_Std_Exec___trait_SignalStatic_register as public regSignalStatic;
 	 * 			}
 	 * 			
 	 * 			public function setOrder(Order $__Order)
 	 * 			{
-	 * 				$this->Core_Std_Exec___trait_Signal_emit(__METHOD__, 'init', [$__Order]);
-	 * 				$this->Core_Std_Exec___trait_Signal_emit(__METHOD__, 'save', [$__Order]);
+	 * 				static::Core_Std_Exec___trait_SignalStatic_emit(__METHOD__, 'init', [$__Order]);
+	 * 				static::Core_Std_Exec___trait_SignalStatic_emit(__METHOD__, 'save', [$__Order]);
 	 * 			}
 	 * 			
 	 * 			public function updateOrder(Order $__Order)
 	 * 			{
-	 * 				$this->Core_Std_Exec___trait_Signal_emit(__METHOD__, 'init', [$__Order]);
-	 * 				$this->Core_Std_Exec___trait_Signal_emit(__METHOD__, 'save', [$__Order]);
+	 * 				static::Core_Std_Exec___trait_SignalStatic_emit(__METHOD__, 'init', [$__Order]);
+	 * 				static::Core_Std_Exec___trait_SignalStatic_emit(__METHOD__, 'save', [$__Order]);
 	 * 			}
 	 * 			
-	 * 			public function results()
+	 * 			public static function results()
 	 * 			{
-	 * 				return $this->__Core_Std_Exec___trait_Signal_results;
+	 * 				return static::$__Core_Std_Exec___trait_SignalStatic_results;
 	 * 			}
 	 * 		}
 	 * 		
@@ -55,35 +55,42 @@
 	 * 		$Inventory	= new Inventory;
 	 * 		$Dropshipper	= new Dropshipper;
 	 * 		
-	 * 		$Manager	= new Manager;
 	 * 		
-	 * 		$Manager->regSignal(new __type_Signal([
+	 * 		Manager::regSignalStatic(new __type_Signal([
 	 * 			__type_Signal::event	=> ['Manager::setOrder'], 	
 	 * 			__type_Signal::slot	=> ['save'],
 	 * 			__type_Signal::priority	=> 399.1,
 	 * 			__type_Signal::hook	=> new ADVArrayCallable([[$Service, 'updateSession']])
 	 * 		]));
 	 * 		
-	 * 		$Manager->regSignal(new __type_Signal([
+	 * 		Manager::regSignalStatic(new __type_Signal([
 	 * 			__type_Signal::event	=> ['Manager::setOrder', 'Manager::updateOrder'],	// multi event
 	 * 			__type_Signal::slot	=> ['init'],						
 	 * 			__type_Signal::priority	=> -722.7,
 	 * 			__type_Signal::hook	=> new ADVArrayCallable([[$Inventory, 'update'], [$Service, 'sendMail']])
 	 * 		]));
 	 * 		
-	 * 		$Manager->regSignal(new __type_Signal([
+	 * 		Manager::regSignalStatic(new __type_Signal([
 	 * 			__type_Signal::event	=> ['Manager::setOrder', 'Manager::updateOrder'],	// multi event
 	 * 			__type_Signal::slot	=> ['init', 'save'],					// multi slot
 	 * 			__type_Signal::priority	=> 800,
 	 * 			__type_Signal::hook	=> new ADVArrayCallable([[$Dropshipper, 'notify']])
 	 * 		]));
 	 * 		
-	 * 		$Manager->setOrder(new Order);
-	 * 		$Manager->updateOrder(new Order);
 	 * 		
-	 * 		var_dump($Manager->results());
+	 * 		Class Sub Extends Manager
+	 * 		{
+	 * 		}
+	 * 		
+	 * 		$Manager1	= new Manager;
+	 * 		$Manager1->setOrder(new Order);
+	 * 		
+	 * 		$Manager2	= new Sub;
+	 * 		$Manager2->updateOrder(new Order);
+	 * 		
+	 * 		var_dump(Manager::results());
 	 * 
-	 * 	result
+	 * 	result:
 	 * 		array(2) {
 	 * 		  ["Manager::setOrder"]=>
 	 * 		  array(2) {
@@ -143,23 +150,24 @@
 	 * 		    }
 	 * 		  }
 	 * 		}
- 	*/
-	TRAIT __trait_Signal
+	 *
+	 * @todo eventname: __METHOD__ -> get_called_class() -> __FUNCTION__
+	 */
+	TRAIT __trait_SignalStatic
 	{
-		protected $__Core_Std_Exec___trait_Signal_hook		= [];
-		protected $__Core_Std_Exec___trait_Signal_results	= [];
+		protected static $__Core_Std_Exec___trait_SignalStatic_hook		= [];
+		protected static $__Core_Std_Exec___trait_SignalStatic_results		= [];
 		
-		protected function Core_Std_Exec___trait_Signal_register(__type_Signal $__Signal)
+		protected static function Core_Std_Exec___trait_SignalStatic_register(__type_Signal $__Signal)
 		{
-			$this->__Core_Std_Exec___trait_Signal_hook[] = $__Signal;
-			return $this;
+			static::$__Core_Std_Exec___trait_SignalStatic_hook[] = $__Signal;
 		}
 		
-		protected function Core_Std_Exec___trait_Signal_emit($__eventName, $__slotName, array $__arguments = [], array $__options = [])
+		protected static function Core_Std_Exec___trait_SignalStatic_emit($__eventName, $__slotName, array $__arguments = [], array $__options = [])
 		{
 			$run = [];
 			
-			foreach($this->__Core_Std_Exec___trait_Signal_hook as $t)
+			foreach(static::$__Core_Std_Exec___trait_SignalStatic_hook as $t)
 				foreach((array) $t->get()[__type_Signal::event] as $event)
 					foreach((array) $t->get()[__type_Signal::slot] as $slot)
 						if($slot === $__slotName && $event === $__eventName)
@@ -174,7 +182,7 @@
 					{
 						$r = Invoke::emitMethod($signal, 'emit', $__arguments);
 						if(TRUE === $signal->get()[__type_Signal::collect])
-							$this->__Core_Std_Exec___trait_Signal_results[$__eventName][$__slotName][$offset] = $r;
+							static::$__Core_Std_Exec___trait_SignalStatic_results[$__eventName][$__slotName][$offset] = $r;
 					}
 					catch(\Exception $E)
 					{
