@@ -60,21 +60,21 @@
 	 * 		$Manager->regSignal(new __type_Signal([
 	 * 			__type_Signal::event	=> ['Manager::setOrder'], 	
 	 * 			__type_Signal::slot	=> ['save'],
-	 * 			__type_Signal::index	=> 399.1,
+	 * 			__type_Signal::priority	=> 399.1,
 	 * 			__type_Signal::hook	=> new ADVArrayCallable([[$Service, 'updateSession']])
 	 * 		]));
 	 * 		
 	 * 		$Manager->regSignal(new __type_Signal([
 	 * 			__type_Signal::event	=> ['Manager::setOrder', 'Manager::updateOrder'],	// multi event
 	 * 			__type_Signal::slot	=> ['init'],						
-	 * 			__type_Signal::index	=> -722.7,
+	 * 			__type_Signal::priority	=> -722.7,
 	 * 			__type_Signal::hook	=> new ADVArrayCallable([[$Inventory, 'update'], [$Service, 'sendMail']])
 	 * 		]));
 	 * 		
 	 * 		$Manager->regSignal(new __type_Signal([
 	 * 			__type_Signal::event	=> ['Manager::setOrder', 'Manager::updateOrder'],	// multi event
 	 * 			__type_Signal::slot	=> ['init', 'save'],					// multi slot
-	 * 			__type_Signal::index	=> 800,
+	 * 			__type_Signal::priority	=> 800,
 	 * 			__type_Signal::hook	=> new ADVArrayCallable([[$Dropshipper, 'notify']])
 	 * 		]));
 	 * 		
@@ -164,7 +164,7 @@
 					foreach((array) $t->get()[__type_Signal::slot] as $slot)
 						if($slot === $__slotName && $event === $__eventName)
 							#! strval @see https://bugs.php.net/bug.php?id=32671
-							$run[strval($t->get()[__type_Signal::index])][] = $t;
+							$run[strval($t->get()[__type_Signal::priority])][] = $t;
 			
 			ksort($run);
 			

@@ -10,7 +10,7 @@
 		CONST enabled		= 0x00;
 		CONST event		= 0x01;
 		CONST slot		= 0x02;
-		CONST index		= 0x03;
+		CONST priority		= 0x03;
 		CONST hook		= 0x04;
 		CONST collect		= 0x05;
 		
@@ -24,7 +24,7 @@
 					self::enabled	=> [__const_Type::SPL_BOOLEAN],
 					self::event	=> [__const_Type::SPL_STRING, __const_Type::SPL_ARRAY],
 					self::slot	=> [__const_Type::SPL_STRING, __const_Type::SPL_ARRAY],
-					self::index	=> [__const_Type::SPL_DOUBLE, __const_Type::SPL_LONG, __const_Type::SPL_NULL],
+					self::priority	=> [__const_Type::SPL_DOUBLE, __const_Type::SPL_LONG, __const_Type::SPL_NULL],
 					self::hook	=> ['ILLI\Core\Std\Def\ADVArrayCallable'],
 					self::collect	=> [__const_Type::SPL_BOOLEAN]
 				],
