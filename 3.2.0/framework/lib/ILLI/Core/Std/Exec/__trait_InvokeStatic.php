@@ -3,7 +3,7 @@
 	USE ILLI\Core\Exception;
 	USE ILLI\Core\Std\Reflection\SplMethod;
 	
-	TRAIT __trait_StaticInvoke
+	TRAIT __trait_InvokeStatic
 	{
 		protected function Core_Std_Exec___trait_StaticInvoke_emit($__functionName, array $__arguments = [])
 		{

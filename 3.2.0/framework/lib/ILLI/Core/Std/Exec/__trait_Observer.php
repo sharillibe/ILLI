@@ -5,7 +5,7 @@
 	USE ILLI\Core\Std\Reflection\SplMethod;
 	USE ILLI\Core\Std\Invoke;
 
-	/**	
+	/**
 	 * 		class bar
 	 * 		{
 	 * 			USE ILLI\Core\Std\Exec\__trait_Observer
@@ -15,12 +15,14 @@
 	 * 			
 	 * 			function hello($__name)
 	 * 			{
+	 * 				var_dump(__METHOD__);
 	 * 				$this->Core_Std_Exec___trait_Observer_emit(__METHOD__, [$__name]);
 	 * 				return $this;
 	 * 			}
 	 * 			
 	 * 			function bye($__name)
 	 * 			{
+	 * 				var_dump(__METHOD__);
 	 * 				$this->Core_Std_Exec___trait_Observer_emit(__METHOD__, [$__name]);
 	 * 				return $this;
 	 * 			}
@@ -54,28 +56,34 @@
 	 * 			->reg($c)
 	 * 			->hello('icro')
 	 * 			->bye('icro');
-	 *
-	 *	// result
-	 *		string(10) "Hello icro"
+	 * 			
+	 * 		(new bar)->hello('foo')->bye('foo');
+	 * 
+	 * 
+	 * 		string(10) "bar::hello"
+	 * 		string(10) "Hello icro"
 	 * 		string(7) "Hi icro"
 	 * 		string(27) "Wooooooooooooooorld of icro"
+	 * 		string(8) "bar::bye"
 	 * 		string(27) "Wooooooooooooooorld of icro"
 	 * 		string(17) "kind regards icro"
 	 * 		string(8) "bye icro"
+	 * 		string(10) "bar::hello"
+	 * 		string(8) "bar::bye"
 	 */
 	TRAIT __trait_Observer
 	{
-		protected $__Core_Std_Exec___trait_Observer = [];
+		protected $__Core_Std_Exec___trait_Observer_hook = [];
 		
 		protected function Core_Std_Exec___trait_Observer_register(__type_Observer $__Observer)
 		{
-			$this->__Core_Std_Exec___trait_Observer[] = $__Observer;
+			$this->__Core_Std_Exec___trait_Observer_hook[] = $__Observer;
 			return $this;
 		}
 		
 		protected function Core_Std_Exec___trait_Observer_emit($__eventName, array $__arguments = [], array $__options = [])
 		{
-			foreach($this->__Core_Std_Exec___trait_Observer as $t)
+			foreach($this->__Core_Std_Exec___trait_Observer_hook as $t)
 			{
 				foreach((array) $t->get()[__type_Observer::event] as $event)
 					if($event === $__eventName)

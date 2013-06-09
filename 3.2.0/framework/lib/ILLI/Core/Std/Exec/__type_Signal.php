@@ -34,7 +34,7 @@
 			);
 		}
 		
-		public function __invoke()
+		public function emit()
 		{
 			if(FALSE === $this->get()[self::enabled])
 				return NULL;
