@@ -57,6 +57,8 @@
 				self::tabIndex		=> __const_Type::SPL_LONG,
 				self::title		=> __const_Type::SPL_STRING,
 			]), $__data);
+			
+			$this->registerAlias(__name_Attributes::DOM_class, 'cssClass');
 		}
 		
 		public function toArray()

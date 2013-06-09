@@ -38,11 +38,6 @@
 		CONST value			= __addr_Attributes::INPUT_value;
 		CONST width			= __addr_Attributes::INPUT_width;
 		
-		protected static $__keywordAlias =
-		[
-			__name_Attributes::DOM_list => 'dataListId'
-		];
-		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{
 			parent::__construct(parent::mergeOffsetTypes($__defineOffsetType, [
@@ -78,6 +73,8 @@
 				self::value			=> [__const_Type::SPL_STRING],
 				self::width			=> [__const_Type::SPL_LONG]
 			]));
+			
+			$this->registerAlias(__name_Attributes::DOM_list, 'dataListId');
 		}
 		
 		public function toArray()
