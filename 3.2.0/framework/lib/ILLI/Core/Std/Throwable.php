@@ -546,7 +546,7 @@
 				
 					static $__STATIC_shutdown;
 					
-					$__STATIC_shutdown ?: $__STATIC_shutdown = Invoke::emitCallable(function() use ($c)
+					$__STATIC_shutdown ?: $__STATIC_shutdown = Invoke::emitInvokable(function() use ($c)
 					{
 						$f = &static::$__handle['fatal'];
 						$t = &static::$__handle['trap'];
@@ -556,9 +556,9 @@
 						register_shutdown_function(function() use (&$f, &$s, &$t, &$u)
 						{
 							if(NULL !== ($e = error_get_last()))
-								Invoke::emitCallable(TRUE === $u ? $t : $f, [$e['type'], $e['message'], $e['file'], $e['line']]);
+								Invoke::emitInvokable(TRUE === $u ? $t : $f, [$e['type'], $e['message'], $e['file'], $e['line']]);
 							
-							Invoke::emitCallable($s);
+							Invoke::emitInvokable($s);
 						});
 						
 						return TRUE;

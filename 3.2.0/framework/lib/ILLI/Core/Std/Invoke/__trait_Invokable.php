@@ -3,9 +3,9 @@
 	USE ILLI\Core\Exception;
 	USE ILLI\Core\Std\Reflection\SplMethod;
 	
-	TRAIT __trait_Callable
+	TRAIT __trait_Invokable
 	{
-		protected static function Core_Std_Invoke___trait_Callable_emit($__Instance, array $__arguments = [])
+		protected static function Core_Std_Invoke___trait_Invokable_emit($__Instance, array $__arguments = [])
 		{
 			$arguments = array_values($__arguments);
 			

@@ -1,7 +1,7 @@
 <?PHP
 	NAMESPACE ILLI\Core\Std;
 	USE ILLI\Core\Std\Def\__const_Type;
-	USE ILLI\Core\Std\Invoke\__trait_Callable;
+	USE ILLI\Core\Std\Invoke\__trait_Invokable;
 	USE ILLI\Core\Std\Invoke\__trait_Class;
 	USE ILLI\Core\Std\Invoke\__trait_Function;
 	USE ILLI\Core\Std\Invoke\__trait_Method;
@@ -10,17 +10,18 @@
 	USE ILLI\Core\Std\Exception\InvocationTargetException;
 	USE ILLI\Core\Std\Exception\ArgumentNotFoundException;
 	USE ILLI\Core\Std\Exception;
+	USE ILLI\Core\Util\Spl;
 	USE Closure;
 	
 	CLASS Invoke
 	{
-		USE	__trait_Callable,
+		USE	__trait_Invokable,
 			__trait_Class,
 			__trait_Function,
 			__trait_Method,
 			__trait_Static;
 		
-		public static function emitCallable($__Instance, $__arguments = [])
+		public static function emitInvokable($__Instance, $__arguments = [])
 		{
 			if(FALSE === is_object($__Instance))
 				throw new ArgumentExpectedException
@@ -42,11 +43,11 @@
 			
 			try
 			{
-				return static::Core_Std_Invoke___trait_Callable_emit($__Instance, $__arguments);
+				return static::Core_Std_Invoke___trait_Invokable_emit($__Instance, $__arguments);
 			}
 			catch(\Exception $E)
 			{
-				throw new InvocationTargetException($E);
+				throw new InvocationTargetException(['target' => Spl::inspectableClosure($__Instance)], $E);
 			}
 		}
 		
@@ -76,7 +77,7 @@
 			}
 			catch(\Exception $E)
 			{
-				throw new InvocationTargetException($E);
+				throw new InvocationTargetException(['target' => Spl::inspectableClass($__Instance)], $E);
 			}
 		}
 		
@@ -115,7 +116,7 @@
 			}
 			catch(\Exception $E)
 			{
-				throw new InvocationTargetException($E);
+				throw new InvocationTargetException(['target' => Spl::inspectableMethod($__Instance, $__methodName)], $E);
 			}
 		}
 		
@@ -154,7 +155,7 @@
 			}
 			catch(\Exception $E)
 			{
-				throw new InvocationTargetException($E);
+				throw new InvocationTargetException(['target' => Spl::inspectableMethod($__className, $__methodName)], $E);
 			}
 		}
 		
@@ -184,7 +185,7 @@
 			}
 			catch(\Exception $E)
 			{
-				throw new InvocationTargetException($E);
+				throw new InvocationTargetException(['target' => Spl::inspectableFunction($__functionName)], $E);
 			}
 		}
 		
@@ -230,7 +231,7 @@
 							return static::emitFunction($args[0]);
 							
 						case is_object($args[0]):
-							return static::emitCallable($args[0]);
+							return static::emitInvokable($args[0]);
 					endswitch;
 					break;
 				case 2:
@@ -247,7 +248,7 @@
 								
 						case is_object($args[0])
 						&& is_array($args[1]):
-							return static::emitCallable($args[0], $args[1]);
+							return static::emitInvokable($args[0], $args[1]);
 							
 						case is_object($args[0])
 						&& is_string($args[1]):
@@ -259,11 +260,11 @@
 							
 						case is_object($args[0])
 						&& is_object($args[1]):
-							return static::emitCallable($args[1]);
+							return static::emitInvokable($args[1]);
 							
 						case is_string($args[0])
 						&& is_object($args[1]):
-							return static::emitCallable($args[1]);
+							return static::emitInvokable($args[1]);
 					endswitch;
 					break;
 				case 3:
@@ -281,12 +282,12 @@
 						case is_object($args[0])
 						&& is_object($args[1])
 						&& is_array($args[2]):
-							return static::emitCallable($args[1], $args[2]);
+							return static::emitInvokable($args[1], $args[2]);
 								
 						case is_string($args[0])
 						&& is_object($args[1])
 						&& is_array($args[2]):
-							return static::emitCallable($args[1], $args[2]);
+							return static::emitInvokable($args[1], $args[2]);
 					endswitch;
 					break;
 			endswitch;

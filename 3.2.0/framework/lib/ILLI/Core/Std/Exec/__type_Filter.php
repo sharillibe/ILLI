@@ -55,7 +55,7 @@
 			{	
 				switch(TRUE):
 					case $this->isVal(self::handle, __const_Type::SPL_CLOSURE):
-						$r = Invoke::emitCallable($f, $a);
+						$r = Invoke::emitInvokable($f, $a);
 						break;
 					case $this->isVal(self::handle, __const_Type::SPL_FUNCTION):
 						$r = Invoke::emitFunction($f, $a);

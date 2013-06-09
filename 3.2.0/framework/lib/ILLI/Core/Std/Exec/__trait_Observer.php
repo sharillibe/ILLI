@@ -1,6 +1,6 @@
 <?PHP
 	NAMESPACE ILLI\Core\Std\Exec;
-	USE ILLI\Core\Exception;
+	USE ILLI\Core\Std\Exception;
 	USE ILLI\Core\Std\Exec\__type_Observer;
 	USE ILLI\Core\Std\Reflection\SplMethod;
 	USE ILLI\Core\Std\Invoke;
@@ -10,66 +10,71 @@
 	 * 		{
 	 * 			USE ILLI\Core\Std\Exec\__trait_Observer
 	 * 			{
-	 * 				Core_Std_Exec___trait_Observer_register as public reg;
+	 * 				Core_Std_Exec___trait_Observer_register as public regObserver;
 	 * 			}
 	 * 			
 	 * 			function hello($__name)
 	 * 			{
-	 * 				var_dump(__METHOD__);
-	 * 				$this->Core_Std_Exec___trait_Observer_emit(__METHOD__, [$__name]);
-	 * 				return $this;
+	 * 				$this->Core_Std_Exec___trait_Observer_emit(__METHOD__, func_get_args());
 	 * 			}
 	 * 			
 	 * 			function bye($__name)
 	 * 			{
-	 * 				var_dump(__METHOD__);
-	 * 				$this->Core_Std_Exec___trait_Observer_emit(__METHOD__, [$__name]);
-	 * 				return $this;
+	 * 				$this->Core_Std_Exec___trait_Observer_emit(__METHOD__, func_get_args());
 	 * 			}
 	 * 		}
-	 * 	
-	 * 		$a = new __type_Observer([
-	 * 			__type_Observer::hook => new ADVArrayCallable(
-	 * 			[
-	 * 				function($f) { var_dump('Hello '.$f); },
-	 * 				function($f) { var_dump('Hi '.$f); }
+	 * 		
+	 * 		class foo EXTENDS bar
+	 * 		{
+	 * 		}
+	 * 		
+	 * 		$t = new bar;
+	 * 		
+	 * 		$t->regObserver(new __type_Observer([
+	 * 			__type_Observer::hook => new ADVArrayCallable([
+	 * 				function($f) { print '->called 1 '.$f.PHP_EOL; },
+	 * 				function($f) { print '->called 2 '.$f.PHP_EOL; },
 	 * 			]),
-	 * 			__type_Observer::event => 'bar::hello'
+	 * 			__type_Observer::event => 'bar::hello',
+	 * 		]));
+	 * 		
+	 * 		$t->hello('bob');	// ->called 1 bob
+	 * 					// ->called 2 bob
+	 * 		
+	 * 		$second = new __type_Observer([
+	 * 			__type_Observer::hook => new ADVArrayCallable([
+	 * 				function($f) { print '->called 3 '.$f.PHP_EOL; },
+	 * 				function($f) { print '->called 4 '.$f.PHP_EOL; },
+	 * 			]),
+	 * 			__type_Observer::event => ['bar::hello', 'bar::bye'],
 	 * 		]);
 	 * 		
-	 * 		$b = new __type_Observer([
-	 * 			__type_Observer::hook => new ADVArrayCallable(
-	 * 			[
-	 * 				function($f) { var_dump('Wooooooooooooooorld of '.$f); }
+	 * 		$t->regObserver($second);
+	 * 		
+	 * 		$t->regObserver(new __type_Observer([
+	 * 			__type_Observer::hook => new ADVArrayCallable([
+	 * 				function($f) { print '->called A '.$f.PHP_EOL; },
+	 * 				function($f) { print '->called B '.$f.PHP_EOL; },
 	 * 			]),
-	 * 			__type_Observer::event => ['bar::hello', 'bar::bye']
-	 * 		]);
+	 * 			__type_Observer::event => ['bar::hello', 'bar::bye'],
+	 * 		]));
 	 * 		
-	 * 		$c = new __type_Observer;
-	 * 		$c->hook[] = function($f) { var_dump('kind regards '.$f); };
-	 * 		$c->hook[] = function($f) { var_dump('bye '.$f); };
-	 * 		$c->event = 'bar::bye';
+	 * 		$t->hello('foobar');	// ->called 1 foobar
+	 * 					// ->called 2 foobar
+	 * 					// ->called 3 foobar
+	 * 					// ->called 4 foobar
+	 * 					// ->called A foobar
+	 * 					// ->called B foobar
+	 * 				
+	 * 		$t->bye('alice');	// ->called 3 alice
+	 * 					// ->called 4 alice
+	 * 					// ->called A alice
+	 * 					// ->called B alice
 	 * 		
-	 * 		(new bar)
-	 * 			->reg($a)
-	 * 			->reg($b)
-	 * 			->reg($c)
-	 * 			->hello('icro')
-	 * 			->bye('icro');
-	 * 			
-	 * 		(new bar)->hello('foo')->bye('foo');
-	 * 
-	 * 
-	 * 		string(10) "bar::hello"
-	 * 		string(10) "Hello icro"
-	 * 		string(7) "Hi icro"
-	 * 		string(27) "Wooooooooooooooorld of icro"
-	 * 		string(8) "bar::bye"
-	 * 		string(27) "Wooooooooooooooorld of icro"
-	 * 		string(17) "kind regards icro"
-	 * 		string(8) "bye icro"
-	 * 		string(10) "bar::hello"
-	 * 		string(8) "bar::bye"
+	 * 		$second->enabled = false;
+	 * 		
+	 * 		$t->bye('baz');		// ->called A baz
+	 * 					// ->called B baz
 	 */
 	TRAIT __trait_Observer
 	{

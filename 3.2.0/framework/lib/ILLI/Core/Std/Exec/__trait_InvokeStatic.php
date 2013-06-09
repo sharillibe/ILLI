@@ -1,6 +1,6 @@
 <?PHP
 	NAMESPACE ILLI\Core\Std\Exec;
-	USE ILLI\Core\Exception;
+	USE ILLI\Core\Std\Exception;
 	USE ILLI\Core\Std\Reflection\SplMethod;
 	
 	TRAIT __trait_InvokeStatic

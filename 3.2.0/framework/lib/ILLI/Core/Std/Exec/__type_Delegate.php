@@ -64,7 +64,7 @@
 			{
 				switch(TRUE):
 					case $this->isVal($i, __const_Type::SPL_CLOSURE):
-						$r = Invoke::emitCallable($f, $a);
+						$r = Invoke::emitInvokable($f, $a);
 						break;
 					case $this->isVal($i, __const_Type::SPL_CLASS):
 						$r = Invoke::emitClass($f, $a);

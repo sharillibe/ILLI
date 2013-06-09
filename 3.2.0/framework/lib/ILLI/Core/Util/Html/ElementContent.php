@@ -42,7 +42,7 @@
 						break;
 						/*
 					case $e->isVal($e, __const_Type::SPL_CLOSURE):
-						$r[] = Invoke::emitCallable($e);
+						$r[] = Invoke::emitInvokable($e);
 						break;
 					case $e->isVal($e, __const_Type::SPL_FUNCTION):
 						$r[] = Invoke::emitFunction($e);
