@@ -72,6 +72,11 @@
 	 * 					// ->called B alice
 	 * 		
 	 * 		$second->enabled = false;
+	 *	
+	 *		$t->hello('bar');	// ->called 1 bar
+	 *					// ->called 2 bar
+	 *					// ->called A bar
+	 *					// ->called B bar
 	 * 		
 	 * 		$t->bye('baz');		// ->called A baz
 	 * 					// ->called B baz
