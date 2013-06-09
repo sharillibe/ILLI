@@ -10,11 +10,6 @@
 		CONST form		= __addr_Attributes::OUTPUT_form;
 		CONST name		= __addr_Attributes::OUTPUT_name;
 		
-		protected static $__keywordAlias =
-		[
-			__name_Attributes::DOM_for	=> 'forId'
-		];
-		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{
 			parent::__construct(parent::mergeOffsetTypes($__defineOffsetType, [
@@ -22,6 +17,8 @@
 				self::form		=> [__const_Type::SPL_STRING],
 				self::name		=> [__const_Type::SPL_STRING]
 			]));
+			
+			$this->registerAlias(__name_Attributes::DOM_for, 'forId');
 		}
 		
 		public function toArray()

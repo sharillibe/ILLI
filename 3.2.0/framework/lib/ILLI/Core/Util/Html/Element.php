@@ -108,7 +108,7 @@
 		 *
 		 *		tmp fix: use $__tContent[IContent] instead of $__tContent[IContent\ITransparent]
 		 */
-		public function __construct(array $__setup = [])
+		public function __construct(array $__content = [], array $__attributes = [])
 		{
 			static $inv;
 			
@@ -178,12 +178,52 @@
 									static::$__tContent,
 									
 								#+ ElementContent setup
-									$__setup
+									$__content
 							]
 						)
 					]
 				]
 			);
+		}
+		
+		public function attr($__name, $__value = NULL)
+		{
+			is_array($__name)
+				? array_walk($__name, function(&$v, $k) { $this->__Element->get()[__type_Element::attribute]->$k = $v; })
+				: $this->__Element->get()[__type_Element::attribute]->$__name = $__value;
+			
+			return $this;
+		}
+		
+		public function wai($__name, $__value = NULL)
+		{
+			is_array($__name)
+				? array_walk($__name, function(&$v, $k) { $this->__Element->get()[__type_Element::wai]->$k = $v; })
+				: $this->__Element->get()[__type_Element::wai]->$__name = $__value;
+			
+			return $this;
+		}
+		
+		public function content($__value)
+		{
+			is_array($__value) ?: $__value = [$__value];
+			$this->__Element->get()[__type_Element::content]->set($__value);
+			array_map(function($v){ FALSE === $v instanceOf Element ?: $v->__Element->parent = $this; }, $__value);
+			return $this;
+		}
+		
+		public function append($__value)
+		{
+			$this->content(array_merge($this->__Element->get()[__type_Element::content]->get(), is_array($__value) ?: $__value = [$__value]));
+			array_map(function($v){ FALSE === $v instanceOf Element ?: $v->__Element->parent = $this; }, $__value);
+			return $this;
+		}
+		
+		public function prepend($__value)
+		{
+			$this->content(array_merge(is_array($__value) ?: $__value = [$__value], $this->__Element->get()[__type_Element::content]->get()));
+			array_map(function($v){ FALSE === $v instanceOf Element ?: $v->__Element->parent = $this; }, $__value);
+			return $this;
 		}
 		
 		/**
@@ -216,12 +256,7 @@
 		public function __set($__constantName, $__value)
 		{
 			if(constant(get_class($this->__Element).'::'.$__constantName) === __type_Element::content)
-			{
-				$this->__Element->get()[__type_Element::content]->set($__value);
-				
-				if($__value instanceOf Element)
-					$__value->__Element->parent = $this;
-			}
+				$this->content($__value);
 		}
 		
 		/**
@@ -258,5 +293,18 @@
 					'attributes'	=> NULL === $a ? '' : ' '.$a,
 					'wai'		=> NULL === $w ? '' : ' '.$w
 				]);
+		}
+		
+		public static function create($__name, $__content = [], $__attributes = [])
+		{
+			static $__STATIC_c;
+			
+			isset($__STATIC_c) ?: $__STATIC_c = [];
+			
+			$t = strtolower($__name);
+			$c = &$__STATIC_c[$t];
+			
+			isset($c) ?: $c = __CLASS__.'\\DOM'.$t;
+			return new $c($__content, $__attributes);
 		}
 	}

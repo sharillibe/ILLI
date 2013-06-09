@@ -3,4 +3,5 @@
 	
 	CLASS InvocationTargetException EXTENDS \ILLI\Core\Std\Exception\ExternalException
 	{
+		CONST CONSTRUCT = 'Error invoke {:target}';
 	}
