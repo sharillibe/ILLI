@@ -8,10 +8,11 @@
 	CLASS __type_Signal EXTENDS \ILLI\Core\Std\Def\ADVTuple
 	{
 		CONST enabled		= 0x00;
-		CONST slot		= 0x01;
-		CONST index		= 0x02;
-		CONST hook		= 0x03;
-		CONST collect		= 0x04;
+		CONST event		= 0x01;
+		CONST slot		= 0x02;
+		CONST index		= 0x03;
+		CONST hook		= 0x04;
+		CONST collect		= 0x05;
 		
 		protected $__results	= [];
 		
@@ -21,8 +22,9 @@
 			(
 				[
 					self::enabled	=> [__const_Type::SPL_BOOLEAN],
-					self::slot	=> [__const_Type::SPL_STRING],
-					self::index	=> [__const_Type::SPL_NULL, __const_Type::SPL_DOUBLE, __const_Type::SPL_LONG],
+					self::event	=> [__const_Type::SPL_STRING, __const_Type::SPL_ARRAY],
+					self::slot	=> [__const_Type::SPL_STRING, __const_Type::SPL_ARRAY],
+					self::index	=> [__const_Type::SPL_DOUBLE, __const_Type::SPL_LONG, __const_Type::SPL_NULL],
 					self::hook	=> ['ILLI\Core\Std\Def\ADVArrayCallable'],
 					self::collect	=> [__const_Type::SPL_BOOLEAN]
 				],
