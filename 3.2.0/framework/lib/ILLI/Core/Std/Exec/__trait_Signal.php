@@ -83,13 +83,13 @@
 	 * 		
 	 * 		var_dump($Manager->results());
 	 * 
-	 * 	result:
+	 * 	result
 	 * 		array(2) {
 	 * 		  ["Manager::setOrder"]=>
 	 * 		  array(2) {
 	 * 		    ["init"]=>
 	 * 		    array(2) {
-	 * 		      [-722]=>
+	 * 		      ["-722.7"]=>
 	 * 		      array(2) {
 	 * 		        [0]=>
 	 * 		        string(44) "Inventory updated: list of ordered products."
@@ -104,7 +104,7 @@
 	 * 		    }
 	 * 		    ["save"]=>
 	 * 		    array(2) {
-	 * 		      [399]=>
+	 * 		      ["399.1"]=>
 	 * 		      array(1) {
 	 * 		        [0]=>
 	 * 		        string(49) "session has been saved: list of ordered products."
@@ -120,7 +120,7 @@
 	 * 		  array(2) {
 	 * 		    ["init"]=>
 	 * 		    array(2) {
-	 * 		      [-722]=>
+	 * 		      ["-722.7"]=>
 	 * 		      array(2) {
 	 * 		        [0]=>
 	 * 		        string(44) "Inventory updated: list of ordered products."
@@ -174,7 +174,7 @@
 				{
 					$r = Invoke::emitMethod($signal, 'emit', $__arguments);
 					if(TRUE === $signal->get()[__type_Signal::collect])
-						$this->__Core_Std_Exec___trait_Signal_results[$__eventName][$__slotName][$signal->get()[__type_Signal::index]] = $r;
+						$this->__Core_Std_Exec___trait_Signal_results[$__eventName][$__slotName][$offset] = $r;
 				}
 				catch(\Exception $E)
 				{
