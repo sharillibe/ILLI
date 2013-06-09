@@ -12,11 +12,6 @@
 		CONST src		= __addr_Attributes::TRACK_src;
 		CONST srcLang		= __addr_Attributes::TRACK_srcLang;
 		
-		protected static $__keywordAlias =
-		[
-			__name_Attributes::DOM_default	=> 'std'
-		];
-		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{
 			parent::__construct(parent::mergeOffsetTypes($__defineOffsetType, [
@@ -26,6 +21,8 @@
 				self::src		=> [__const_Type::SPL_STRING],
 				self::srcLang		=> [__const_Type::SPL_STRING]
 			]));
+			
+			$this->registerAlias(__name_Attributes::DOM_default, 'std');
 		}
 		
 		public function toArray()

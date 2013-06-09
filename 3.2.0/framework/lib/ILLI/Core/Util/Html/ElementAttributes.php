@@ -14,14 +14,9 @@
 		/**
 		 * constant name for php keywords
 		 *
-		 * [alias => constantName]
-		 * @see ILLI\Core\Util\Html\__type_Label::$__keywordAlias
-		 * @see ILLI\Core\Util\Html\__type_Input::$__keywordAlias
+		 * [class => [constantName => alias]]
 		 */
-		protected static $__keywordAlias =
-		[
-			
-		];
+		private static $__keywordAlias = [];
 		
 		public function toArray()
 		{
@@ -48,13 +43,19 @@
 		
 		public function __set($__constantName, $__value)
 		{
-			$a = &static::$__keywordAlias[$__constantName];
+			$a = &self::$__keywordAlias[get_called_class()][$__constantName];
 			return parent::__set(isset($a) ? $a : $__constantName, $__value);
 		}
 		
 		public function __get($__constantName)
 		{
-			$a = &static::$__keywordAlias[$__constantName];
+			$a = &self::$__keywordAlias[get_called_class()][$__constantName];
 			return parent::__get(isset($a) ? $a : $__constantName);
+		}
+		
+		protected function registerAlias($__constantName, $__alias)
+		{
+			self::$__keywordAlias[get_called_class()][$__constantName] = $__alias;
+			return $this;
 		}
 	}

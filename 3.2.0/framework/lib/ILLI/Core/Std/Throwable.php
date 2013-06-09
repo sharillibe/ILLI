@@ -23,7 +23,7 @@
 		
 		CONST TRAP			= FALSE;
 		CONST SHUTDOWN			= FALSE;
-		CONST DISPLAY			= FALSE;
+		CONST DISPLAY			= TRUE;
 		
 		private $__hash			= NULL;
 		private $__addr			= NULL;
