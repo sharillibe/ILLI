@@ -12,16 +12,53 @@
 	
 	CLASS Element
 	{
-		CONST COPY_ATTR		= 1;
-		CONST COPY_WAI		= 2;
-		CONST COPY_CONTENT	= 4;
+		CONST COPY_NS		= 0b0001;
+		CONST COPY_ATTR		= 0b0010;
+		CONST COPY_WAI		= 0b0100;
+		CONST COPY_CONTENT	= 0b1000;
 		
-		CONST ns	= NULL;
-		CONST name	= 'stub';
-		CONST close	= TRUE;
+		/**
+		 * element inherit config: namespace
+		 */
+		CONST ns		= NULL;
+		
+		/**
+		 * element inherit config: name
+		 */
+		CONST name		= 'stub';
+		
+		/**
+		 * element inherit config: tag close
+		 */
+		CONST close		= TRUE;
+		
+		/**
+		 * element inherit config: default copy flag
+		 */
+		CONST copy		= 0b1111;
+		
+		/**
+		 * element setup cache
+		 *	[get_called_class() => [
+		 *		<string>ns			=> NULL,
+		 *		<string>name			=> DOM{:nodename}::name,
+		 *		<bool>close			=> DOM{:nodename}::close,
+		 *		<Element>parent			=> NULL,
+		 *		<class>Content			=> ILLI\Core\Util\Html\Element\{:Nodename}Content,
+		 *		<class>__type_Attributes	=> ILLI\Core\Util\Html\Element\__type_{:Nodename},
+		 *		<class>__type_WAI		=> ILLI\Core\Util\Html\Element\__type_{:Nodename}WAI,
+		 *	]]
+		 *
+		 * @see ::__construct()
+		 * @see ::__clone()
+		 * @see ::copy()
+		 */
+		private static $__GC		= [];
 		
 		/**
 		 * ADT __type_Element::content
+		 *
+		 * declaration of acceptable content
 		 *
 		 * @var array
 		 * @see ILLI\Core\Util\Html\__type_Element
@@ -31,6 +68,8 @@
 		
 		/**
 		 * ADT __type_Element::parent
+		 *
+		 * declaration of acceptable parent
 		 *
 		 * @var array
 		 * @see ILLI\Core\Util\Html\__type_Element
@@ -50,8 +89,6 @@
 			0 => '<{:ns}{:name}{:wai}{:attributes} />',
 			1 => '<{:ns}{:name}{:wai}{:attributes}>{:content}</{:ns}{:name}>'
 		];
-		
-		private $__ElementSetup = [];
 		
 		/**
 		 * element def
@@ -115,7 +152,7 @@
 			
 			isset($__STATIC_createMock) ?: $__STATIC_createMock = function($__baseNs, $__base, $__typeNs, $__type)
 			{
-				#! performance: use ADV static GC; create a sub class for each element
+				#! performance: use ADV::$__GC; create a sub class for each element
 				#+ @see ILLI\Core\Std\Def\ADV::__GC
 				
 				$pattern	= 'NAMESPACE {:typeNs}; CLASS {:type} EXTENDS \{:baseNs}\{:base} {}';
@@ -133,56 +170,62 @@
 				return $load;
 			};
 			
-			$type = Inflector::camelize(static::name);
 			
-			$this->__ElementSetup = 
+			$t	= &self::$__GC[get_called_class()];
+			$type	= Inflector::camelize(static::name);
+			
+			isset($t) ?: $t = 
 			[
-				__type_Element::ns		=> static::ns,
-				__type_Element::name		=> static::name,
-				__type_Element::close		=> static::close,
-				__type_Element::parent		=> NULL,
-				
-				#! static ArrayStrict cache: .\ElementContent as .\Element\{:type}Content
+				#! static ADVArrayStrict::$__GC: .\ElementContent as .\Element\{:type}Content
 				__type_Element::content		=> $__STATIC_createMock(__NAMESPACE__, 'ElementContent', __CLASS__, String::insert('{:type}Content', ['type' => $type])),
 				
-				#! static Tuple cache: .\__type_Attributes as .\Element\__type_{:type}
+				#! static ADVTuple::$__GC: .\__type_Attributes as .\Element\__type_{:type}
 				__type_Element::attribute	=> $__STATIC_createMock(__NAMESPACE__, '__type_Attributes', __CLASS__, String::insert('__type_{:type}', ['type' => $type])),
 				
-				#! static Tuple cache: .\__type_WAI as .\Element\__type_{:type}WAI
+				#! static ADVTuple::$__GC: .\__type_WAI as .\Element\__type_{:type}WAI
 				__type_Element::wai		=> $__STATIC_createMock(__NAMESPACE__, '__type_WAI', __CLASS__, String::insert('__type_{:type}WAI', ['type' => $type])),
 			];
 			
 			#~ define __type_Element
 			$this->__Element = Invoke::emitClass
 			(
-				#! static Tuple cache: .\__type_Element as .\Element\__type_{:type}Element
+				#! static ADVTuple::$__GC: .\__type_Element as .\Element\__type_{:type}Element
 				$__STATIC_createMock(__NAMESPACE__, '__type_Element', __CLASS__, String::insert('__type_{:type}Element', ['type' => $type])),
+				#! setup __type_Element
 				[
 					#+ extend .\__type_Element ADT,
 						[
 							#! extend ADT::parent via ::$__tParent
 							__type_Element::parent		=> static::$__tParent,
 							#! extend ADT::attribute with virtual class .\Element\__type_{:type}
-							__type_Element::attribute	=> $this->__ElementSetup[__type_Element::attribute],
+							__type_Element::attribute	=> $t[__type_Element::attribute],
 							#! extend ADT::wai with virtual class .\Element\__type_{:type}WAI
-							__type_Element::wai		=> $this->__ElementSetup[__type_Element::wai]
+							__type_Element::wai		=> $t[__type_Element::wai]
 						],
 					#+ .\__type_Element initial data
 						[
 							#~ invoke node attribute Tuple: .\Element\__type_{:type}
-							__type_Element::attribute	=> Invoke::emitClass($this->__ElementSetup[__type_Element::attribute]),
+							__type_Element::attribute	=> Invoke::emitClass($t[__type_Element::attribute]),
 							#~ invoke node wai Tuple: .\Element\__type_{:type}WAI
-							__type_Element::wai		=> Invoke::emitClass($this->__ElementSetup[__type_Element::wai]),
+							__type_Element::wai		=> Invoke::emitClass($t[__type_Element::wai]),
 							#~ invoke node content StrictArray: .\Element\{:type}Content
 							#! extend .\Element\{:type}Content ADT via ::$__tContent; set initial data via $__content
-							__type_Element::content		=> Invoke::emitClass($this->__ElementSetup[__type_Element::content], [static::$__tContent]),
+							__type_Element::content		=> Invoke::emitClass($t[__type_Element::content], [static::$__tContent]),
 						]
 						#! use element defaults: ns, name, close, parent
-						+ $this->__ElementSetup
+						+
+						[
+							__type_Element::ns		=> static::ns,
+							__type_Element::name		=> static::name,
+							__type_Element::close		=> static::close,
+							__type_Element::copy		=> static::copy,
+							__type_Element::parent		=> NULL
+						]
 				]
 			);
 			
 			$this->content($__content)->attr($__attributes);
+			var_dump($t);
 		}
 		
 		/**
@@ -204,7 +247,7 @@
 		 * @see		::COPY_WAI
 		 * @see		::COPY_CONTENT
 		 */
-		public function copy($__flag)
+		public function copy($__flag = NULL)
 		{
 			static $__STATIC_map;
 			
@@ -213,34 +256,45 @@
 				return is_object($__value) ? clone $__value : $__value;
 			};
 			
-			$Copy = new $this;
+			$t	= &self::$__GC[get_called_class()];
+			$Copy	= new $this;
+			
+			NULL === $__flag ?: $__flag = static::copy;
 			
 			$Copy->__Element = new $this->__Element
 			(
-				#! copy ADT attribute/wai/content
+				#! copy ADT attribute/wai/content (late state setup)
+				#+ @see __type_Element::__construct()
 				$this->__Element->getTupleGC([__type_Element::parent, __type_Element::attribute, __type_Element::wai]),
 				#! clone or create empty __type_Element sub tuple
 				[
-					__type_Element::attribute	=> self::COPY_ATTR === ($__flag & self::COPY_ATTR) ? clone $this->__Element->get()[__type_Element::attribute] : Invoke::emitClass($this->__ElementSetup[__type_Element::attribute]),
-					__type_Element::wai		=> self::COPY_WAI === ($__flag & self::COPY_WAI) ? clone $this->__Element->get()[__type_Element::wai] : Invoke::emitClass($this->__ElementSetup[__type_Element::wai]),
-					__type_Element::content		=> Invoke::emitClass($this->__ElementSetup[__type_Element::content], [static::$__tContent, self::COPY_CONTENT === ($__flag & self::COPY_CONTENT) ? FsbCollection::fromArray($this->__Element->get()[__type_Element::content]->get())->map($__STATIC_map, ['collect' => FALSE]) : []])
+					__type_Element::ns		=> self::COPY_NS === ($__flag & self::COPY_NS) ? $this->__Element->get()[__type_Element::ns] : NULL,
+					__type_Element::attribute	=> self::COPY_ATTR === ($__flag & self::COPY_ATTR) ? clone $this->__Element->get()[__type_Element::attribute] : Invoke::emitClass($t[__type_Element::attribute]),
+					__type_Element::wai		=> self::COPY_WAI === ($__flag & self::COPY_WAI) ? clone $this->__Element->get()[__type_Element::wai] : Invoke::emitClass($t[__type_Element::wai]),
+					__type_Element::content		=> Invoke::emitClass($t[__type_Element::content], [static::$__tContent, self::COPY_CONTENT === ($__flag & self::COPY_CONTENT) ? FsbCollection::fromArray($this->__Element->get()[__type_Element::content]->get())->map($__STATIC_map, ['collect' => FALSE]) : []])
 					
 				]
-				#! use element defaults
-				+ $this->__ElementSetup
+				#! use element defaults: name, close, parent
+				+
+				[
+					__type_Element::name		=> static::name,
+					__type_Element::close		=> static::close,
+					__type_Element::copy		=> static::copy,
+					__type_Element::parent		=> NULL
+				]
 			);
 			
 			return $Copy;
 		}
 		
 		/**
-		 * clone element including content, attributes, wai
+		 * clone element including ns, content, attributes, wai
 		 *
 		 * @see ::copy()
 		 */
 		public function __clone()
 		{
-			$this->__Element = $this->copy(self::COPY_ATTR | self::COPY_WAI | self::COPY_CONTENT)->__Element;
+			$this->__Element = $this->copy(static::copy)->__Element;
 		}
 		
 		/**
@@ -381,6 +435,7 @@
 		 *	$l->attribute		= ['id' => 'yolo']; 	-> $l->attr(['id' => 'yolo']);
 		 *	$l->attribute->id	= 'yolo2';		-> $l->attr('id', 'yolo2');
 		 *
+		 * @write	ILLI\Core\Util\Html\__type_Element::ns
 		 * @write	ILLI\Core\Util\Html\__type_Element::content
 		 * @write	ILLI\Core\Util\Html\__type_Element::attribute
 		 * @write	ILLI\Core\Util\Html\__type_Element::wai
@@ -394,6 +449,7 @@
 				case __type_Element::content:	return $this->content($__value);
 				case __type_Element::attribute:	return $this->attr($__value);
 				case __type_Element::wai:	return $this->wai($__value);
+				case __type_Element::ns:	$this->__Element->get()[__type_Element::ns] = $__value; break;
 			endswitch;
 		}
 		

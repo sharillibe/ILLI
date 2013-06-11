@@ -30,6 +30,7 @@
 			__const_Type::SPL_DIRECTORY		=> __const_ADVClass::SPL_DIRECTORY,
 			__const_Type::SPL_DOUBLE		=> __const_ADVClass::SPL_DOUBLE,
 			__const_Type::SPL_FILE			=> __const_ADVClass::SPL_FILE,
+			__const_Type::SPL_FLAG			=> __const_ADVClass::SPL_FLAG,
 			__const_Type::SPL_FLOAT			=> __const_ADVClass::SPL_DOUBLE,
 			__const_Type::SPL_FUNCTION		=> __const_ADVClass::SPL_FUNCTION,
 			__const_Type::SPL_INTERFACE		=> __const_ADVClass::SPL_INTERFACE,

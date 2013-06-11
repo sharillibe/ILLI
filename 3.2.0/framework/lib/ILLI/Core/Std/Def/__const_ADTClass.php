@@ -14,6 +14,7 @@
 		CONST SPL_DIRECTORY	= 'ILLI\Core\Std\Def\ADTDirectory';
 		CONST SPL_DOUBLE	= 'ILLI\Core\Std\Def\ADTDouble';
 		CONST SPL_FILE		= 'ILLI\Core\Std\Def\ADTFile';
+		CONST SPL_FLAG		= 'ILLI\Core\Std\Def\ADTFlag';
 		CONST SPL_FUNCTION	= 'ILLI\Core\Std\Def\ADTFunction';
 		CONST SPL_INSTANCE	= 'ILLI\Core\Std\Def\ADTInstance';
 		CONST SPL_INTERFACE	= 'ILLI\Core\Std\Def\ADTInterface';
