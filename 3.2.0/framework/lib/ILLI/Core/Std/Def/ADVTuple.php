@@ -94,11 +94,6 @@
 			$this->set((array) $__data);
 		}
 		
-		public function __clone()
-		{
-			$this->__data = clone $this->__data;
-		}
-		
 		public function validate($__value = NULL)
 		{
 			NULL !== $__value ?: $__value = $this->__data;

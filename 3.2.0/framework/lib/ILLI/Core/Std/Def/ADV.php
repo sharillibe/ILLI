@@ -10,6 +10,7 @@
 	USE ILLI\Core\Std\Spl\FsbCollection;
 	USE ILLI\Core\Util\Spl;
 	USE Exception;
+	USE Closure;
 
 	CLASS ADV
 	{
@@ -78,6 +79,33 @@
 			
 			if(FALSE === isset($t))
 				$t = FsbCollection::fromArray(ADT::define($d));
+		}
+		
+		public function __clone()
+		{
+			static $__STATIC_map;
+			
+			isset($__STATIC_map) ? $__STATIC_map : $__STATIC_map = function($__value)
+			{
+				if(FALSE === is_object($__value))
+					return $__value;
+				
+				if($__value instanceOf Closure)
+					$__value->bindTo($this);
+				
+				return clone $__value;
+			};
+			
+			if(is_array($this->__data))
+			{
+				foreach($this->__data as $k => $v)
+					$this->__data[$k] = $__STATIC_map($v);
+			}
+			else
+			if(is_object($this->__data))
+			{
+				$this->__data = clone $__STATIC_map($this->__data);
+			}
 		}
 		
 		public function validate($__value = NULL)
