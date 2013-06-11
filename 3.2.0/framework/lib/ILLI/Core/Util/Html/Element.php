@@ -305,8 +305,7 @@
 					__type_Element::ns		=> self::COPY_NS === ($__flag & self::COPY_NS) ? $this->__Element->get()[__type_Element::ns] : NULL,
 					__type_Element::attribute	=> self::COPY_ATTR === ($__flag & self::COPY_ATTR) ? clone $this->__Element->get()[__type_Element::attribute] : Invoke::emitClass($t[__type_Element::attribute]),
 					__type_Element::wai		=> self::COPY_WAI === ($__flag & self::COPY_WAI) ? clone $this->__Element->get()[__type_Element::wai] : Invoke::emitClass($t[__type_Element::wai]),
-					__type_Element::content		=> self::COPY_CONTENT === ($__flag & self::COPY_CONTENT) ? clone $this->__Element->get()[__type_Element::content] : Invoke::emitClass($t[__type_Element::content]),
-					
+					__type_Element::content		=> self::COPY_CONTENT === ($__flag & self::COPY_CONTENT) ? clone $this->__Element->get()[__type_Element::content] : Invoke::emitClass($t[__type_Element::content], [static::$__tContent]),
 				]
 			);
 			
