@@ -64,32 +64,25 @@
 		 * Instantiate a new HTML Element
 		 *
 		 *	required:
-		 *		Name EXTENDS Element
-		 *		__type_AttributesName EXTENDS __type_Attributes
+		 *		DOM{:nodename} EXTENDS Element
+		 *		__type_{:Nodename} EXTENDS __type_Attributes
+		 *		__type_{:Nodename}WAI EXTENDS __type_WAI
 		 *
-		 *	optional (bypass ADV internal GC):
-		 *		ElementContentName EXTENDS ElementContent
-		 *		__type_ElementName EXTENDS __type_Element
+		 *	extend element GC:
+		 *		{:nodename}Content EXTENDS ElementContent
+		 *		__type_{:nodename}Element EXTENDS __type_Element
+		 *
+		 *	basic:
+		 *		print Element::create('span', 'text', ['class' => ['icon', 'foo'], 'id' => 'test']);
+		 *			// <span class="icon foo" id="test">text</span>
 		 *
 		 *	usage:
-		 *	 	$a = new Select;
-		 *	 	$a->attribute->cssClass = (array) 'my';
-		 *	 	$a->attribute->required = TRUE;
-		 *	 		$g = new Optgroup;
-		 *	 		$g->attribute->label = 'foobar';
-		 *	 			$o1 = new Option;
-		 *	 			$o1->attribute->value = 'foo';
-		 *	 			$o1->attribute->label = 'foo';
-		 *	 			$o1->content[] = 'foo';
-		 *	 		$g->content[] = $o1;
-		 *	 	$a->content[] = $g;
-		 *	 		$o2 = new Option;
-		 *	 		$o2->attribute->value = 'bar';
-		 *	 		$o2->attribute->label = 'bar';
-		 *	 		$o2->content[] = 'bar';
-		 *	 	$a->content[] = $o2;
-		 *
-		 *		$a->content[] = new P; // error
+		 *		print Element::create('a')
+		 *			->attr('href', 'http://google.de')
+		 *			->attr('id', 'google-link')
+		 *			->wai('role', 'button')
+		 *			->content(Element::create('span')->content('link'));
+		 *			// <a role="button" id="google-link" href="http://google.de"><span>link</span></a>
 		 *
 		 * @see		ILLI\Core\Util\Html\__type_Element::__construct()
 		 * @see		ILLI\Core\Util\Html\__type_Attributes::__construct()
@@ -107,7 +100,7 @@
 		 *
 		 * @todo adaptable types
 		 *
-		 * @fixed transparent model
+		 * @todo transparent model
 		 *		For instance, an ins element inside a ruby element cannot contain an rt element,
 		 *		because the part of the ruby element's content model that allows ins elements
 		 *		is the part that allows phrasing content, and the rt element is not phrasing content.
@@ -116,7 +109,7 @@
 		 *
 		 *		tmp fix: use $__tContent[IContent] instead of $__tContent[IContent\ITransparent]
 		 */
-		public function __construct(array $__content = [], array $__attributes = [])
+		public function __construct($__content = [], array $__attributes = [])
 		{
 			static $__STATIC_createMock;
 			
@@ -182,12 +175,14 @@
 							__type_Element::wai		=> Invoke::emitClass($this->__ElementSetup[__type_Element::wai]),
 							#~ invoke node content StrictArray: .\Element\{:type}Content
 							#! extend .\Element\{:type}Content ADT via ::$__tContent; set initial data via $__content
-							__type_Element::content		=> Invoke::emitClass($this->__ElementSetup[__type_Element::content], [static::$__tContent, $__content]),
+							__type_Element::content		=> Invoke::emitClass($this->__ElementSetup[__type_Element::content], [static::$__tContent]),
 						]
 						#! use element defaults: ns, name, close, parent
 						+ $this->__ElementSetup
 				]
 			);
+			
+			$this->content($__content)->attr($__attributes);
 		}
 		
 		/**
@@ -204,11 +199,15 @@
 		 *		string(94) "<a role="button" id="google-link" href="http://google.de"><span>Gooooooooooooooogle</span></a>"
 		 *		string(38) "<a role="button"><span>link</span></a>"
 		 *
+		 * @param	long	$__flag	subjects to clone
+		 * @see		::COPY_ATTR
+		 * @see		::COPY_WAI
+		 * @see		::COPY_CONTENT
 		 */
 		public function copy($__flag)
 		{
-		
 			static $__STATIC_map;
+			
 			isset($__STATIC_map) ?: $__STATIC_map = function($__value)
 			{
 				return is_object($__value) ? clone $__value : $__value;
@@ -234,11 +233,23 @@
 			return $Copy;
 		}
 		
+		/**
+		 * clone element including content, attributes, wai
+		 *
+		 * @see ::copy()
+		 */
 		public function __clone()
 		{
 			$this->__Element = $this->copy(self::COPY_ATTR | self::COPY_WAI | self::COPY_CONTENT)->__Element;
 		}
 		
+		/**
+		 * seed attributes or set attribute
+		 *
+		 * @param	array $__name	attributes [name => value]
+		 * @param	string $__name	attribute name
+		 * @param	string $__value	attribute value
+		 */
 		public function attr($__name, $__value = NULL)
 		{
 			is_array($__name)
@@ -248,6 +259,13 @@
 			return $this;
 		}
 		
+		/**
+		 * seed wai or set wai
+		 *
+		 * @param	array $__name	wai [name => value]
+		 * @param	string $__name	wai name
+		 * @param	string $__value	wai value
+		 */
 		public function wai($__name, $__value = NULL)
 		{
 			is_array($__name)
@@ -257,6 +275,12 @@
 			return $this;
 		}
 		
+		/**
+		 * seed wai or set wai
+		 *
+		 * @param	Element $__value	type defined in ::$__tContent
+		 * @param	string	$__value	when defined in ::$__tContent
+		 */
 		public function content($__value)
 		{
 			is_array($__value) ?: $__value = [$__value];
@@ -265,6 +289,21 @@
 			return $this;
 		}
 		
+		/**
+		 *	usage:
+		 *		$div = Element::create('div')
+		 *			->attr('id', 'outer')
+		 *			->content(Element::create('div')->attr('id', 'inner'));
+		 *			// <div id="outer"><div id="inner"></div></div>
+		 *
+		 *		$div->wrapAll(Element::create('div')->attr('id', 'container'));
+		 *			// <div id="outer"><div id="container"><div id="inner"></div></div></div>
+		 *
+		 *	@param 	string	$__value	create new Element <$__value />
+		 *	@param 	Element	$__value	use Element <Element::name />.
+		 *	@param 	$this	$__value	clone current Instance <$this::name />.
+		 *	@return	$this
+		 */
 		public function wrapAll($__value)
 		{
 			if(is_string($__value))
@@ -285,6 +324,13 @@
 			return $this;
 		}
 		
+		/**
+		 *	append element content
+		 *
+		 *	@param 	mixed	$__value	defined in ::$__tContent
+		 *	@param 	array	$__value	an array of content elements; type defined in ::$__tContent
+		 *	@return	$this
+		 */
 		public function append($__value)
 		{
 			is_array($__value) ?: $__value = [$__value];
@@ -293,6 +339,13 @@
 			return $this;
 		}
 		
+		/**
+		 *	prepend element content
+		 *
+		 *	@param 	mixed	$__value	defined in ::$__tContent
+		 *	@param 	array	$__value	an array of content elements; type defined in ::$__tContent
+		 *	@return	$this
+		 */
 		public function prepend($__value)
 		{
 			is_array($__value) ?: $__value = [$__value];
@@ -345,7 +398,7 @@
 		}
 		
 		/**
-		 * convert element to string (magic)
+		 * convert element to string
 		 *
 		 * @return string DOM node
 		 * @see ::render()
@@ -380,6 +433,13 @@
 				]);
 		}
 		
+		/**
+		 * create new element
+		 *
+		 * @param 	mixed	$__value	defined in ::$__tContent
+		 * @param 	array	$__value	an array of content elements; type defined in ::$__tContent
+		 * @return	Element
+		 */
 		public static function create($__name, $__content = [], $__attributes = [])
 		{
 			static $__STATIC_c;
