@@ -7,6 +7,7 @@
 	USE ILLI\Core\Util\Html\ElementContent;
 	USE ILLI\Core\Util\Inflector;
 	USE ILLI\Core\Util\String;
+	USE ILLI\Core\Util\Spl;
 	
 	CLASS Element
 	{
@@ -244,21 +245,31 @@
 		public function __get($__constantName)
 		{
 			$t = $this->__Element->get();
-			return $t[constant(get_class($this->__Element).'::'.$__constantName)];
+			return $t[constant(Spl::inspectableConstant(get_class($this->__Element), $__constantName))];
 		}
 		
 		/**
-		 * direct access write by constant name
+		 * direct access write by constant name;
+		 *
+		 * alias ::attr(), ::wai(), ::content():
+		 *
+		 *	$l->attribute		= ['id' => 'yolo']; 	-> $l->attr(['id' => 'yolo']);
+		 *	$l->attribute->id	= 'yolo2';		-> $l->attr('id', 'yolo2');
 		 *
 		 * @write	ILLI\Core\Util\Html\__type_Element::content
+		 * @write	ILLI\Core\Util\Html\__type_Element::attribute
+		 * @write	ILLI\Core\Util\Html\__type_Element::wai
 		 * @param 	string 	$__constantName		constant with defined tuple index
 		 * @param	mixed	$__value		type based on ADT
 		 * @see		ILLI\Core\Util\Html\__type_Element::content
 		 */
 		public function __set($__constantName, $__value)
 		{
-			if(constant(get_class($this->__Element).'::'.$__constantName) === __type_Element::content)
-				$this->content($__value);
+			switch(constant(Spl::inspectableConstant(get_class($this->__Element), $__constantName))):
+				case __type_Element::content:	return $this->content($__value);
+				case __type_Element::attribute:	return $this->attr($__value);
+				case __type_Element::wai:	return $this->wai($__value);
+			endswitch;
 		}
 		
 		/**
