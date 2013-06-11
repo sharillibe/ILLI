@@ -240,28 +240,20 @@
 				[
 					#+ extend .\__type_Element ADT,
 					[
-						#! extend ADT::parent via ::$__tParent
 						__type_Element::parent		=> static::$__tParent,
-						#! extend ADT::attribute with virtual class .\Element\__type_{:type}
 						__type_Element::attribute	=> $t[__type_Element::attribute],
-						#! extend ADT::wai with virtual class .\Element\__type_{:type}WAI
 						__type_Element::wai		=> $t[__type_Element::wai]
 					],
 					#+ .\__type_Element initial data
 					[
-						#~ invoke node attribute Tuple: .\Element\__type_{:type}
-						__type_Element::attribute	=> Invoke::emitClass($t[__type_Element::attribute]),
-						#~ invoke node wai Tuple: .\Element\__type_{:type}WAI
-						__type_Element::wai		=> Invoke::emitClass($t[__type_Element::wai]),
-						#~ invoke node content StrictArray: .\Element\{:type}Content
-						#! extend .\Element\{:type}Content ADT via ::$__tContent
-						__type_Element::content		=> Invoke::emitClass($t[__type_Element::content], [static::$__tContent]),
-					] + [
 						__type_Element::ns		=> static::ns,
 						__type_Element::name		=> static::name,
 						__type_Element::close		=> static::close,
 						__type_Element::copy		=> static::copy,
-						__type_Element::parent		=> NULL
+						__type_Element::parent		=> NULL,
+						__type_Element::attribute	=> Invoke::emitClass($t[__type_Element::attribute]),
+						__type_Element::wai		=> Invoke::emitClass($t[__type_Element::wai]),
+						__type_Element::content		=> Invoke::emitClass($t[__type_Element::content], [static::$__tContent])
 					]
 				]
 			);
@@ -306,20 +298,15 @@
 				$this->__Element->getTupleGC([__type_Element::parent, __type_Element::attribute, __type_Element::wai]),
 				#! clone or create empty __type_Element sub tuple
 				[
-					__type_Element::ns		=> self::COPY_NS === ($__flag & self::COPY_NS) ? $this->__Element->get()[__type_Element::ns] : NULL,
-					__type_Element::attribute	=> self::COPY_ATTR === ($__flag & self::COPY_ATTR) ? clone $this->__Element->get()[__type_Element::attribute] : Invoke::emitClass($t[__type_Element::attribute]),
-					__type_Element::wai		=> self::COPY_WAI === ($__flag & self::COPY_WAI) ? clone $this->__Element->get()[__type_Element::wai] : Invoke::emitClass($t[__type_Element::wai]),
-					//__type_Element::content		=> Invoke::emitClass($t[__type_Element::content], [static::$__tContent, self::COPY_CONTENT === ($__flag & self::COPY_CONTENT) ? FsbCollection::fromArray($this->__Element->get()[__type_Element::content]->get())->map($__STATIC_map, ['collect' => FALSE]) : []])
-					__type_Element::content		=> self::COPY_CONTENT === ($__flag & self::COPY_CONTENT) ? clone $this->__Element->get()[__type_Element::content] : Invoke::emitClass($t[__type_Element::content]),
-					
-				]
-				#! use element defaults: name, close, parent
-				+
-				[
 					__type_Element::name		=> static::name,
 					__type_Element::close		=> static::close,
 					__type_Element::copy		=> static::copy,
-					__type_Element::parent		=> NULL
+					__type_Element::parent		=> NULL,
+					__type_Element::ns		=> self::COPY_NS === ($__flag & self::COPY_NS) ? $this->__Element->get()[__type_Element::ns] : NULL,
+					__type_Element::attribute	=> self::COPY_ATTR === ($__flag & self::COPY_ATTR) ? clone $this->__Element->get()[__type_Element::attribute] : Invoke::emitClass($t[__type_Element::attribute]),
+					__type_Element::wai		=> self::COPY_WAI === ($__flag & self::COPY_WAI) ? clone $this->__Element->get()[__type_Element::wai] : Invoke::emitClass($t[__type_Element::wai]),
+					__type_Element::content		=> self::COPY_CONTENT === ($__flag & self::COPY_CONTENT) ? clone $this->__Element->get()[__type_Element::content] : Invoke::emitClass($t[__type_Element::content]),
+					
 				]
 			);
 			
