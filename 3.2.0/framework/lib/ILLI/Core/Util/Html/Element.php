@@ -40,10 +40,6 @@
 		/**
 		 * element setup cache
 		 *	[get_called_class() => [
-		 *		<string>ns			=> NULL,
-		 *		<string>name			=> DOM{:nodename}::name,
-		 *		<bool>close			=> DOM{:nodename}::close,
-		 *		<Element>parent			=> NULL,
 		 *		<class>Content			=> ILLI\Core\Util\Html\Element\{:Nodename}Content,
 		 *		<class>__type_Attributes	=> ILLI\Core\Util\Html\Element\__type_{:Nodename},
 		 *		<class>__type_WAI		=> ILLI\Core\Util\Html\Element\__type_{:Nodename}WAI,
