@@ -214,14 +214,16 @@
 		
 		public function append($__value)
 		{
-			$this->content(array_merge($this->__Element->get()[__type_Element::content]->get(), is_array($__value) ?: $__value = [$__value]));
+			is_array($__value) ?: $__value = [$__value];
+			$this->__Element->get()[__type_Element::content]->set(array_merge($this->__Element->get()[__type_Element::content]->get(), $__value));
 			array_map(function($v){ FALSE === $v instanceOf Element ?: $v->__Element->parent = $this; }, $__value);
 			return $this;
 		}
 		
 		public function prepend($__value)
 		{
-			$this->content(array_merge(is_array($__value) ?: $__value = [$__value], $this->__Element->get()[__type_Element::content]->get()));
+			is_array($__value) ?: $__value = [$__value];
+			$this->__Element->get()[__type_Element::content]->set(array_merge($__value, $this->__Element->get()[__type_Element::content]->get()));
 			array_map(function($v){ FALSE === $v instanceOf Element ?: $v->__Element->parent = $this; }, $__value);
 			return $this;
 		}
