@@ -77,7 +77,7 @@
 			}
 			catch(\Exception $E)
 			{
-				throw new InvocationTargetException(['target' => Spl::inspectableClass($__Instance)], $E);
+				throw new InvocationTargetException(['target' => Spl::inspectableClass($__className)], $E);
 			}
 		}
 		

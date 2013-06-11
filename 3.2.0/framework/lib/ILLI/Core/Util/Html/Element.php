@@ -2,6 +2,7 @@
 	NAMESPACE ILLI\Core\Util\Html;
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Std\Invoke;
+	USE ILLI\Core\Std\Spl\FsbCollection;
 	USE ILLI\Core\Util\Html\__type_Element;
 	USE ILLI\Core\Util\Html\Attributes;
 	USE ILLI\Core\Util\Html\ElementContent;
@@ -11,6 +12,10 @@
 	
 	CLASS Element
 	{
+		CONST COPY_ATTR		= 1;
+		CONST COPY_WAI		= 2;
+		CONST COPY_CONTENT	= 4;
+		
 		CONST ns	= NULL;
 		CONST name	= 'stub';
 		CONST close	= TRUE;
@@ -45,6 +50,8 @@
 			0 => '<{:ns}{:name}{:wai}{:attributes} />',
 			1 => '<{:ns}{:name}{:wai}{:attributes}>{:content}</{:ns}{:name}>'
 		];
+		
+		private $__ElementSetup = [];
 		
 		/**
 		 * element def
@@ -111,16 +118,17 @@
 		 */
 		public function __construct(array $__content = [], array $__attributes = [])
 		{
-			static $inv;
+			static $__STATIC_createMock;
 			
-			isset($inv) ?: $inv = function($__baseNs, $__base, $__typeNs, $__type, $__args = [])
+			isset($__STATIC_createMock) ?: $__STATIC_createMock = function($__baseNs, $__base, $__typeNs, $__type)
 			{
+				#! performance: use ADV static GC; create a sub class for each element
+				#+ @see ILLI\Core\Std\Def\ADV::__GC
+				
 				$pattern	= 'NAMESPACE {:typeNs}; CLASS {:type} EXTENDS \{:baseNs}\{:base} {}';
 				$load		= $__typeNs.'\\'.$__type;
 				
 				if(FALSE === class_exists($load, TRUE))
-					#! performance: use ADV static GC; create a sub class for each element
-					#+ @see ILLI\Core\Std\Def\ADV::__GC
 					eval(String::insert($pattern,
 					[
 						'typeNs'	=> $__typeNs,
@@ -129,62 +137,106 @@
 						'base'		=> $__base
 					]));
 				
-				return Invoke::emitClass($load, $__args);
+				return $load;
 			};
 			
+			$type = Inflector::camelize(static::name);
+			
+			$this->__ElementSetup = 
+			[
+				__type_Element::ns		=> static::ns,
+				__type_Element::name		=> static::name,
+				__type_Element::close		=> static::close,
+				__type_Element::parent		=> NULL,
+				
+				#! static ArrayStrict cache: .\ElementContent as .\Element\{:type}Content
+				__type_Element::content		=> $__STATIC_createMock(__NAMESPACE__, 'ElementContent', __CLASS__, String::insert('{:type}Content', ['type' => $type])),
+				
+				#! static Tuple cache: .\__type_Attributes as .\Element\__type_{:type}
+				__type_Element::attribute	=> $__STATIC_createMock(__NAMESPACE__, '__type_Attributes', __CLASS__, String::insert('__type_{:type}', ['type' => $type])),
+				
+				#! static Tuple cache: .\__type_WAI as .\Element\__type_{:type}WAI
+				__type_Element::wai		=> $__STATIC_createMock(__NAMESPACE__, '__type_WAI', __CLASS__, String::insert('__type_{:type}WAI', ['type' => $type])),
+			];
+			
 			#~ define __type_Element
-			$this->__Element = $inv #! invoke virtual .\__type_Element as .\Element\__type_{:type}Element
+			$this->__Element = Invoke::emitClass
 			(
-				__NAMESPACE__,
-				'__type_Element',
-				__CLASS__,
-				String::insert('__type_{:type}Element', ['type' => $type = Inflector::camelize(static::name)]),
-				#~ __type_Element args:
+				#! static Tuple cache: .\__type_Element as .\Element\__type_{:type}Element
+				$__STATIC_createMock(__NAMESPACE__, '__type_Element', __CLASS__, String::insert('__type_{:type}Element', ['type' => $type])),
 				[
-					#+ __type_Element ADT
-					[
-						__type_Element::parent		=> static::$__tParent,
-						__type_Element::attribute	=> get_class($attr = $inv #! invoke virtual .\__type_Attributes as .\Element\__type_{:type}
-						(
-							__NAMESPACE__,
-							'__type_Attributes',
-							__CLASS__,
-							String::insert('__type_{:type}', ['type' => $type])
-						)),
-						__type_Element::wai		=> get_class($wai = $inv #! invoke virtual .\__type_WAI as .\Element\__type_{:type}WAI
-						(
-							__NAMESPACE__,
-							'__type_WAI',
-							__CLASS__,
-							String::insert('__type_{:type}WAI', ['type' => $type])
-						))
-					],
-					#+ __type_Element setup
-					[
-						__type_Element::ns		=> static::ns,
-						__type_Element::name		=> static::name,
-						__type_Element::close		=> static::close,
-						__type_Element::parent		=> NULL,
-						__type_Element::attribute	=> $attr,
-						__type_Element::wai		=> $wai,
-						__type_Element::content		=> $inv #! invoke virtual .\ElementContent as .\Element\{:type}Content
-						(
-							__NAMESPACE__,
-							'ElementContent',
-							__CLASS__,
-							String::insert('{:type}Content', ['type' => $type]),
-							#~ ElementContent args:
-							[
-								#+ ElementContent ADT
-									static::$__tContent,
-									
-								#+ ElementContent setup
-									$__content
-							]
-						)
-					]
+					#+ extend .\__type_Element ADT,
+						[
+							#! extend ADT::parent via ::$__tParent
+							__type_Element::parent		=> static::$__tParent,
+							#! extend ADT::attribute with virtual class .\Element\__type_{:type}
+							__type_Element::attribute	=> $this->__ElementSetup[__type_Element::attribute],
+							#! extend ADT::wai with virtual class .\Element\__type_{:type}WAI
+							__type_Element::wai		=> $this->__ElementSetup[__type_Element::wai]
+						],
+					#+ .\__type_Element initial data
+						[
+							#~ invoke node attribute Tuple: .\Element\__type_{:type}
+							__type_Element::attribute	=> Invoke::emitClass($this->__ElementSetup[__type_Element::attribute]),
+							#~ invoke node wai Tuple: .\Element\__type_{:type}WAI
+							__type_Element::wai		=> Invoke::emitClass($this->__ElementSetup[__type_Element::wai]),
+							#~ invoke node content StrictArray: .\Element\{:type}Content
+							#! extend .\Element\{:type}Content ADT via ::$__tContent; set initial data via $__content
+							__type_Element::content		=> Invoke::emitClass($this->__ElementSetup[__type_Element::content], [static::$__tContent, $__content]),
+						]
+						#! use element defaults: ns, name, close, parent
+						+ $this->__ElementSetup
 				]
 			);
+		}
+		
+		/**
+		 * copy element including content, wai, attributes
+		 *
+		 *	$a = Element::create('a')->attr('href', 'http://google.de')->attr('id', 'google-link')->wai('role', 'button')
+		 *		->content($span = Element::create('span')->content('link'));
+		 *
+		 *	$copy = $a->copy(Element::COPY_WAI | Element::COPY_CONTENT);
+		 *
+		 *	$span->content = 'Gooooooooooooooogle';
+		 *
+		 *	var_dump($a->render(), $copy->render());
+		 *		string(94) "<a role="button" id="google-link" href="http://google.de"><span>Gooooooooooooooogle</span></a>"
+		 *		string(38) "<a role="button"><span>link</span></a>"
+		 *
+		 */
+		public function copy($__flag)
+		{
+		
+			static $__STATIC_map;
+			isset($__STATIC_map) ?: $__STATIC_map = function($__value)
+			{
+				return is_object($__value) ? clone $__value : $__value;
+			};
+			
+			$Copy = new $this;
+			
+			$Copy->__Element = new $this->__Element
+			(
+				#! copy ADT attribute/wai/content
+				$this->__Element->getTupleGC([__type_Element::parent, __type_Element::attribute, __type_Element::wai]),
+				#! clone or create empty __type_Element sub tuple
+				[
+					__type_Element::attribute	=> self::COPY_ATTR === ($__flag & self::COPY_ATTR) ? clone $this->__Element->get()[__type_Element::attribute] : Invoke::emitClass($this->__ElementSetup[__type_Element::attribute]),
+					__type_Element::wai		=> self::COPY_WAI === ($__flag & self::COPY_WAI) ? clone $this->__Element->get()[__type_Element::wai] : Invoke::emitClass($this->__ElementSetup[__type_Element::wai]),
+					__type_Element::content		=> Invoke::emitClass($this->__ElementSetup[__type_Element::content], [static::$__tContent, self::COPY_CONTENT === ($__flag & self::COPY_CONTENT) ? FsbCollection::fromArray($this->__Element->get()[__type_Element::content]->get())->map($__STATIC_map, ['collect' => FALSE]) : []])
+					
+				]
+				#! use element defaults
+				+ $this->__ElementSetup
+			);
+			
+			return $Copy;
+		}
+		
+		public function __clone()
+		{
+			$this->__Element = $this->copy(self::COPY_ATTR | self::COPY_WAI | self::COPY_CONTENT)->__Element;
 		}
 		
 		public function attr($__name, $__value = NULL)
@@ -210,6 +262,26 @@
 			is_array($__value) ?: $__value = [$__value];
 			$this->__Element->get()[__type_Element::content]->set($__value);
 			array_map(function($v){ FALSE === $v instanceOf Element ?: $v->__Element->parent = $this; }, $__value);
+			return $this;
+		}
+		
+		public function wrapAll($__value)
+		{
+			if(is_string($__value))
+			{
+				$__value = $this->create($__value);
+			}
+			else
+			if(FALSE === $__value instanceOf Element)
+			{
+				$__value = $this;
+			}
+			
+			if($__value === $this)
+				$__value = clone $this;
+			
+			$this->content($__value->content($this->__Element->get()[__type_Element::content]->get()));
+			
 			return $this;
 		}
 		
@@ -317,7 +389,6 @@
 			$t = strtolower($__name);
 			$c = &$__STATIC_c[$t];
 			
-			isset($c) ?: $c = __CLASS__.'\\DOM'.$t;
-			return new $c($__content, $__attributes);
+			return Invoke::emitClass(isset($c) ? $c : $c = __CLASS__.'\\DOM'.$t, [$__content, $__attributes]);
 		}
 	}

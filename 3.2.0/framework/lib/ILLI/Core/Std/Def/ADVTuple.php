@@ -94,6 +94,11 @@
 			$this->set((array) $__data);
 		}
 		
+		public function __clone()
+		{
+			$this->__data = clone $this->__data;
+		}
+		
 		public function validate($__value = NULL)
 		{
 			NULL !== $__value ?: $__value = $this->__data;
@@ -361,9 +366,16 @@
 			return FALSE;
 		}
 		
-		public function getTupleGC()
+		public function getTupleGC($__offset = NULL)
 		{
-			return self::$__gc[$this->getName()];
+			if(NULL === $__offset)
+				return self::$__gc[$this->getName()];
+			
+			$r = [];
+			foreach((array) $__offset as $o)
+				$r[$o] = self::$__gc[$this->getName()][$o];
+			
+			return $r;
 		}
 		
 		public function getValGC($__offset)
