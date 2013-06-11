@@ -221,7 +221,6 @@
 			);
 			
 			$this->content($__content)->attr($__attributes);
-			var_dump($t);
 		}
 		
 		/**
