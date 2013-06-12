@@ -2,7 +2,7 @@
 	NAMESPACE ILLI\Core\Util\Html;
 	USE ILLI\Core\Std\Def\__const_Type;
 	
-	CLASS __name_Element
+	CLASS __name_Element EXTENDS \ILLI\Core\Std\ConstantCollection
 	{
 		CONST DOM_a		= 'a';
 		CONST DOM_abbr		= 'abbr';

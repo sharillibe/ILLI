@@ -6,6 +6,9 @@
 	USE Exception;
 	USE Closure;
 	
+	/**
+	 * Primitive Fsb
+	 */
 	CLASS Fsb EXTENDS \SplFixedArray
 	{
 		#:SplFixedArray:

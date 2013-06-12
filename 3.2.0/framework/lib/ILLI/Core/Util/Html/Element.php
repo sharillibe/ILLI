@@ -250,10 +250,10 @@
 						__type_Element::name		=> static::name,
 						__type_Element::close		=> static::close,
 						__type_Element::copy		=> static::copy,
+						__type_Element::content		=> Invoke::emitClass($t[__type_Element::content], [static::$__tContent]),
 						__type_Element::parent		=> NULL,
 						__type_Element::attribute	=> Invoke::emitClass($t[__type_Element::attribute]),
-						__type_Element::wai		=> Invoke::emitClass($t[__type_Element::wai]),
-						__type_Element::content		=> Invoke::emitClass($t[__type_Element::content], [static::$__tContent])
+						__type_Element::wai		=> Invoke::emitClass($t[__type_Element::wai])
 					]
 				]
 			);
@@ -298,14 +298,14 @@
 				$this->__Element->getTupleGC([__type_Element::parent, __type_Element::attribute, __type_Element::wai]),
 				#! clone or create empty __type_Element sub tuple
 				[
+					__type_Element::ns		=> self::COPY_NS === ($__flag & self::COPY_NS) ? $this->__Element->get()[__type_Element::ns] : NULL,
 					__type_Element::name		=> static::name,
 					__type_Element::close		=> static::close,
 					__type_Element::copy		=> static::copy,
+					__type_Element::content		=> self::COPY_CONTENT === ($__flag & self::COPY_CONTENT) ? clone $this->__Element->get()[__type_Element::content] : Invoke::emitClass($t[__type_Element::content], [static::$__tContent]),
 					__type_Element::parent		=> NULL,
-					__type_Element::ns		=> self::COPY_NS === ($__flag & self::COPY_NS) ? $this->__Element->get()[__type_Element::ns] : NULL,
 					__type_Element::attribute	=> self::COPY_ATTR === ($__flag & self::COPY_ATTR) ? clone $this->__Element->get()[__type_Element::attribute] : Invoke::emitClass($t[__type_Element::attribute]),
 					__type_Element::wai		=> self::COPY_WAI === ($__flag & self::COPY_WAI) ? clone $this->__Element->get()[__type_Element::wai] : Invoke::emitClass($t[__type_Element::wai]),
-					__type_Element::content		=> self::COPY_CONTENT === ($__flag & self::COPY_CONTENT) ? clone $this->__Element->get()[__type_Element::content] : Invoke::emitClass($t[__type_Element::content], [static::$__tContent]),
 				]
 			);
 			
@@ -368,27 +368,25 @@
 				if(FALSE === $v instanceOf Element)
 					return;
 					
-				switch(TRUE):
-					#+ child accepts new adoptive parents by their face...
-					case $v->__Element->validateVal(__type_Element::parent, $this):
-						return $v->__Element->parent = $this;
-						
-					#! or not...
-					#~
-					#~ valid html: <li><span /></li>
-					#~
-					#~ LI implements no category -> validation by ADT is impossible:
-					#~
-					#~	SPAN::parent	html rules: "accepts any element that accepts iPhrasing or iFlow".
-					#~	LI::content	accepts iFlow
-					#~
-					#+ parenting without rules \o/
-					case [] === self::$__ic[get_called_class()]
-					#+ adult would adopt the new child... after face check...
-					&& $this->__Element->get()[__type_Element::content]->validateVal($v):
-						#+ new child will now love the adoptive parents
-						return $v->__Element->get()[__type_Element::parent] = $this;
-				endswitch;
+				#+ child accepts new adoptive parents by their face...
+				if($v->__Element->validateVal(__type_Element::parent, $this))
+					return $v->__Element->parent = $this;
+					
+				#! or not...
+				#~ valid html: <li><span /></li>
+				#~
+				#~ LI implements no category -> validation by ADT is impossible:
+				#~
+				#~	SPAN::parent	html rules: "accepts any element that accepts iPhrasing or iFlow".
+				#~	LI::content	accepts iFlow
+				
+				#+ parenting without rules \o/
+				if([] === self::$__ic[get_called_class()]
+				#+ adult would adopt the new child... after face check...
+				&& $this->__Element->get()[__type_Element::content]->validateVal($v))
+					#+ new child will now love the adoptive parents
+					return $v->__Element->get()[__type_Element::parent] = $this;
+				
 			}, $__value);
 			
 			return $this;

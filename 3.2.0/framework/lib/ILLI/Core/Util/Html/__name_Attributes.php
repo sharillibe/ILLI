@@ -1,7 +1,7 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html;
 	
-	CLASS __name_Attributes
+	CLASS __name_Attributes EXTENDS \ILLI\Core\Std\ConstantCollection
 	{
 		CONST DOM_abbr			= 'abbr';
 		CONST DOM_accept		= 'accept';
