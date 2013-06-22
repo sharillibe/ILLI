@@ -34,28 +34,26 @@
 		 */
 		public function render()
 		{
-			$r = [];
-			
-			foreach($this->__data as $e)
+			$r = $this->map(function($e)
 			{
 				switch(TRUE):
 					case $e instanceOf Element:
-						$r[] = $e->render();
+						return $e->render();
 						break;
 					case $this->isVal(__const_Type::SPL_CLOSURE, $e):
-						$r[] = Invoke::emitInvokable($e);
+						return Invoke::emitInvokable($e);
 						break;
 					case $this->isVal(__const_Type::SPL_FUNCTION, $e):
-						$r[] = Invoke::emitFunction($e);
+						return Invoke::emitFunction($e);
 						break;
 					case $this->isVal(__const_Type::SPL_METHOD, $e):
-						$r[] = Invoke::emit($e);
+						return Invoke::emit($e);
 						break;
 					case is_string($e):
-						$r[] = $e;
+						return $e;
 						break;
 				endswitch;
-			}
+			});
 			
 			return [] === $r
 				? NULL

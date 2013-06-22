@@ -10,10 +10,16 @@
 	USE ILLI\Core\Std\Exception\ClassConstantNotFoundException;
 	USE ILLI\Core\Std\Spl\Fsb;
 	USE ILLI\Core\Std\Spl\FsbCollection;
+	USE ArrayAccess;
+	USE Countable;
 	USE Exception;
+	USE Iterator;
 	
-	CLASS ADVTuple EXTENDS \ILLI\Core\Std\Def\ADV
+	CLASS ADVTuple EXTENDS \ILLI\Core\Std\Def\ADV IMPLEMENTS ArrayAccess, Countable, Iterator
 	{
+		USE \ILLI\Core\Std\Def\__trait_ADVCountableIterator;
+		USE \ILLI\Core\Std\Def\__trait_ADVIterableIterator;
+		
 		CONST __GC	= __CLASS__;
 		
 		private static $__gc = NULL;
@@ -377,4 +383,58 @@
 		{
 			return self::$__gc[$this->getName()]->offsetGet($__offset);
 		}
+		
+		public function offsetSet($k, $v)
+		{
+			if(FALSE === isset($this->__data[$k]))
+				throw new ArgumentOutOfRangeException([
+					'target'	=> $this->getName(),
+					'offset'	=> $k,
+					'detected'	=> $t = getType($k)
+				]);
+				
+			if(FALSE === $this->validateVal($k, $v))
+				throw new ArgumentExpectedException([
+					'target'	=> $this->getName().'['.$k.']',
+					'expected'	=> implode('|', array_unique($this->getValGC($k)->invoke('toString'))), 
+					'detected'	=> $t = getType($v),
+					'value'		=> is_object($v) ? get_class($v) : (is_scalar($v) ? $v : NULL)
+				]);
+			
+			$this->__data[$k] = $v;
+			
+			return $this;
+		}
+		
+		public function offsetGet($k)
+		{
+			if(FALSE === isset($this->__data[$k]))
+				throw new ArgumentOutOfRangeException([
+					'target'	=> $this->getName(),
+					'offset'	=> $k,
+					'detected'	=> $t = getType($k)
+				]);
+			
+			return $this->__data[$k];
+		}
+		
+		public function offsetUnset($k)
+		{
+			if(FALSE === isset($this->__data[$k]))
+				throw new ArgumentOutOfRangeException([
+					'target'	=> $this->getName(),
+					'offset'	=> $k,
+					'detected'	=> $t = getType($k)
+				]);
+			
+			$this->__data[$k] = NULL;
+			
+			return $this;
+		}
+		
+		public function offsetExists($k)
+		{
+			return isset($this->__data[$k]);
+		}
+		
 	}

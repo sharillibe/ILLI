@@ -18,23 +18,15 @@
 			if($t !==__const_Type::SPL_STRING && $t !==__const_Type::SPL_ARRAY)
 				return FALSE;
 			
-			$c = '';
-			$m = '';
-				
-			if($t === __const_Type::SPL_STRING)
-			{
-				String::explodeTo([&$c, &$m], $__value, '::');
-			}
-			else
-			if($t === __const_Type::SPL_ARRAY)
-			{
-				if(2 !== sizeOf($__value))
-					return FALSE;
-				
-				$c = &$__value[0];
-				$m = &$__value[1];
-			}
+			if(2 !== sizeOf($__value))
+				return FALSE;
 			
+			list($c, $m) = $__value;
+			
+			if(is_string($c)
+			&& FALSE === class_exists($c))
+				return FALSE;
+				
 			if(method_exists($c, $m))
 				return TRUE;
 			

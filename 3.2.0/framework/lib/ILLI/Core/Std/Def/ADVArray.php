@@ -6,8 +6,12 @@
 	USE Exception;
 	USE Iterator;
 	
-	CLASS ADVArray EXTENDS \ILLI\Core\Std\Def\ADV IMPLEMENTS ArrayAccess /*, ITERATOR, COUNTABLE */
+	CLASS ADVArray EXTENDS \ILLI\Core\Std\Def\ADV IMPLEMENTS ArrayAccess, Countable, Iterator
 	{
+		USE \ILLI\Core\Std\Def\__trait_ADVCollectable;
+		USE \ILLI\Core\Std\Def\__trait_ADVCountable;
+		USE \ILLI\Core\Std\Def\__trait_ADVIterable;
+		
 		public function __construct($__data = NULL)
 		{
 			parent::__construct([__const_Type::SPL_ARRAY]);

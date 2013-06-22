@@ -12,7 +12,7 @@
 	CLASS Fsb EXTENDS \SplFixedArray
 	{
 		#:SplFixedArray:
-		public function __construct($__size)
+		public function __construct($__size = 0)
 		{
 			if(FALSE === is_integer($__size))
 				throw new ArgumentExpectedException
@@ -197,6 +197,7 @@
 			$s = $this->getSize();
 			$this->setSize($s + 1);
 			$this[$s] = $__value;
+			return $this;
 		}
 		
 		public function end()

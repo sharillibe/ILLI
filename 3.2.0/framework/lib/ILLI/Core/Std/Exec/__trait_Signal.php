@@ -24,7 +24,7 @@
 	 * 	public function sendmail	(Order $order)	{ return 'receipt has been sent: '.$order->plist(); }
 	 * 	public function updateSession	(Order $order)	{ return 'session has been saved: '.$order->plist(); }
 	 * }
-	 *	 		
+	 * 
 	 * class Dropshipper
 	 * {
 	 * 	public function notify		(Order $order)	{ return 'dropshipper notify: '.$order->plist(); }

@@ -298,14 +298,14 @@
 				$this->__Element->getTupleGC([__type_Element::parent, __type_Element::attribute, __type_Element::wai]),
 				#! clone or create empty __type_Element sub tuple
 				[
-					__type_Element::ns		=> self::COPY_NS === ($__flag & self::COPY_NS) ? $this->__Element->get()[__type_Element::ns] : NULL,
+					__type_Element::ns		=> self::COPY_NS === ($__flag & self::COPY_NS) ? $this->__Element[__type_Element::ns] : NULL,
 					__type_Element::name		=> static::name,
 					__type_Element::close		=> static::close,
 					__type_Element::copy		=> static::copy,
-					__type_Element::content		=> self::COPY_CONTENT === ($__flag & self::COPY_CONTENT) ? clone $this->__Element->get()[__type_Element::content] : Invoke::emitClass($t[__type_Element::content], [static::$__tContent]),
+					__type_Element::content		=> self::COPY_CONTENT === ($__flag & self::COPY_CONTENT) ? clone $this->__Element[__type_Element::content] : Invoke::emitClass($t[__type_Element::content], [static::$__tContent]),
 					__type_Element::parent		=> NULL,
-					__type_Element::attribute	=> self::COPY_ATTR === ($__flag & self::COPY_ATTR) ? clone $this->__Element->get()[__type_Element::attribute] : Invoke::emitClass($t[__type_Element::attribute]),
-					__type_Element::wai		=> self::COPY_WAI === ($__flag & self::COPY_WAI) ? clone $this->__Element->get()[__type_Element::wai] : Invoke::emitClass($t[__type_Element::wai]),
+					__type_Element::attribute	=> self::COPY_ATTR === ($__flag & self::COPY_ATTR) ? clone $this->__Element[__type_Element::attribute] : Invoke::emitClass($t[__type_Element::attribute]),
+					__type_Element::wai		=> self::COPY_WAI === ($__flag & self::COPY_WAI) ? clone $this->__Element[__type_Element::wai] : Invoke::emitClass($t[__type_Element::wai]),
 				]
 			);
 			
@@ -332,8 +332,8 @@
 		public function attr($__name, $__value = NULL)
 		{
 			is_array($__name)
-				? array_walk($__name, function(&$v, $k) { $this->__Element->get()[__type_Element::attribute]->$k = $v; })
-				: $this->__Element->get()[__type_Element::attribute]->$__name = $__value;
+				? array_walk($__name, function(&$v, $k) { $this->__Element[__type_Element::attribute]->$k = $v; })
+				: $this->__Element[__type_Element::attribute]->$__name = $__value;
 			
 			return $this;
 		}
@@ -348,8 +348,8 @@
 		public function wai($__name, $__value = NULL)
 		{
 			is_array($__name)
-				? array_walk($__name, function(&$v, $k) { $this->__Element->get()[__type_Element::wai]->$k = $v; })
-				: $this->__Element->get()[__type_Element::wai]->$__name = $__value;
+				? array_walk($__name, function(&$v, $k) { $this->__Element[__type_Element::wai]->$k = $v; })
+				: $this->__Element[__type_Element::wai]->$__name = $__value;
 			
 			return $this;
 		}
@@ -363,7 +363,8 @@
 		public function content($__value)
 		{
 			is_array($__value) ?: $__value = [$__value];
-			$this->__Element->get()[__type_Element::content]->set($__value);
+			$this->__Element[__type_Element::content]->set($__value);
+			
 			array_map(function($v){
 				if(FALSE === $v instanceOf Element)
 					return;
@@ -383,10 +384,10 @@
 				#+ parenting without rules \o/
 				if([] === self::$__ic[get_called_class()]
 				#+ adult would adopt the new child... after face check...
-				&& $this->__Element->get()[__type_Element::content]->validateVal($v))
+				&& $this->__Element[__type_Element::content]->validateVal($v))
 					#+ new child will now love the adoptive parents
+					#! use ref xs 2 bypass validateVal()
 					return $v->__Element->get()[__type_Element::parent] = $this;
-				
 			}, $__value);
 			
 			return $this;
@@ -421,7 +422,7 @@
 				$__value = clone $this;
 			}
 			
-			$this->content($__value->content($this->__Element->get()[__type_Element::content]->get()));
+			$this->content($__value->content($this->__Element[__type_Element::content]));
 			
 			return $this;
 		}
@@ -436,7 +437,7 @@
 		public function append($__value)
 		{
 			is_array($__value) ?: $__value = [$__value];
-			$this->__Element->get()[__type_Element::content]->set(array_merge($this->__Element->get()[__type_Element::content]->get(), $__value));
+			$this->__Element[__type_Element::content]->set(array_merge($this->__Element[__type_Element::content]->get(), $__value));
 			array_map(function($v){ FALSE === $v instanceOf Element ?: $v->__Element->parent = $this; }, $__value);
 			return $this;
 		}
@@ -451,7 +452,7 @@
 		public function prepend($__value)
 		{
 			is_array($__value) ?: $__value = [$__value];
-			$this->__Element->get()[__type_Element::content]->set(array_merge($__value, $this->__Element->get()[__type_Element::content]->get()));
+			$this->__Element[__type_Element::content]->set(array_merge($__value, $this->__Element[__type_Element::content]->get()));
 			array_map(function($v){ FALSE === $v instanceOf Element ?: $v->__Element->parent = $this; }, $__value);
 			return $this;
 		}
@@ -497,7 +498,7 @@
 				case __type_Element::content:	return $this->content($__value);
 				case __type_Element::attribute:	return $this->attr($__value);
 				case __type_Element::wai:	return $this->wai($__value);
-				case __type_Element::ns:	$this->__Element->get()[__type_Element::ns] = $__value; break;
+				case __type_Element::ns:	$this->__Element[__type_Element::ns] = $__value; break;
 			endswitch;
 		}
 		

@@ -5,39 +5,37 @@
 	USE ILLI\Core\Std\Def\ADVResult;
 	USE ILLI\Core\Std\Exception;
 	
-	CLASS __type_Filter EXTENDS \ILLI\Core\Std\Def\ADVTuple
+	CLASS __type_Filter EXTENDS \ILLI\Core\Std\Def\ADVTuple IMPLEMENTS \ILLI\Core\Std\IEmitable
 	{
 		CONST enabled		= 0x00;
-		CONST name		= 0x01;
-		CONST event		= 0x02;
+		CONST event		= 0x01;
+		CONST slot		= 0x02;
 		CONST priority		= 0x03;
 		CONST argsNum		= 0x04;
 		CONST handle		= 0x05;
+		CONST arguments		= 0x06;
 		
 		protected $__tR	= [];
 		
-		public function __construct($__eR = [], array $__setup = [])
+		public function __construct(array $__setup = [], $__eR = [])
 		{
 			$this->__tR = (array) $__eR;
 			parent::__construct
 			(
 				[
-					self::enabled	=> [__const_Type::SPL_BOOLEAN],
-					self::name	=> [__const_Type::SPL_BOOLEAN],
-					self::event	=> [__const_Type::SPL_BOOLEAN],
-					self::priority	=> [__const_Type::SPL_LONG],
-					self::argsNum	=> [__const_Type::SPL_LONG],
-					self::handle	=>
-					[
-						__const_Type::SPL_CLOSURE,
-						__const_Type::SPL_FUNCTION,
-						__const_Type::SPL_METHOD
-					]
+					self::enabled		=> [__const_Type::SPL_BOOLEAN],
+					self::event		=> [__const_Type::SPL_STRING, __const_Type::SPL_ARRAY],
+					self::slot		=> [__const_Type::SPL_STRING, __const_Type::SPL_ARRAY],
+					self::priority		=> [__const_Type::SPL_LONG],
+					self::argsNum		=> [__const_Type::SPL_LONG],
+					self::handle		=> [__const_Type::SPL_CLOSURE, __const_Type::SPL_FUNCTION, __const_Type::SPL_METHOD],
+					self::arguments		=> [__const_Type::SPL_ARRAY]
 				],
 				parent::mergeOffsetValues($__setup, [
-					self::enabled	=> TRUE,
-					self::priority	=> 100,
-					self::argsNum	=> 1,
+					self::enabled		=> TRUE,
+					self::priority		=> 100,
+					self::argsNum		=> 1,
+					self::arguments		=> []
 				])
 			);
 		}
@@ -48,8 +46,12 @@
 				return NULL;
 			
 			$f = $this->get()[self::handle];
-			$a = func_get_args();
+			$a = $this->get()[self::arguments];
+			$d = func_get_args();
 			$r = NULL;
+			
+			foreach($d as $i => &$v)
+				$a[$i] = &$v;
 			
 			try
 			{	
