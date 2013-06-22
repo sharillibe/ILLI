@@ -3,6 +3,9 @@
 	USE ILLI\Core\Exception;
 	USE ILLI\Core\Std\Reflection\SplMethod;
 	
+	/**
+	 * Method Invokation.
+	 */
 	TRAIT __trait_Method
 	{
 		protected static function Core_Std_Invoke___trait_Method_emit($__Instance, $__functionName, array $__arguments = [], array $__options = [])

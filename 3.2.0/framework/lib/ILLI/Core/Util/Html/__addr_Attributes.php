@@ -1,7 +1,7 @@
 <?PHP
 	NAMESPACE ILLI\Core\Util\Html;
 	
-	CLASS __addr_Attributes
+	CLASS __addr_Attributes EXTENDS \ILLI\Core\Std\ConstantCollection
 	{
 		CONST GLOB_accessKey				= 0x00;
 		CONST GLOB_class				= 0x01;

@@ -4,11 +4,15 @@
 	USE ILLI\Core\Std\Exception\ArgumentExpectedException;
 	USE ILLI\Core\Std\Invoke;
 	USE Exception;
+	USE Closure;
 	
+	/**
+	 * Primitive Fsb
+	 */
 	CLASS Fsb EXTENDS \SplFixedArray
 	{
 		#:SplFixedArray:
-		public function __construct($__size)
+		public function __construct($__size = 0)
 		{
 			if(FALSE === is_integer($__size))
 				throw new ArgumentExpectedException
@@ -20,6 +24,30 @@
 				]);
 				
 			parent::__construct($__size);
+		}
+		
+		public function __clone()
+		{
+			static $__STATIC_map;
+			
+			isset($__STATIC_map) ? $__STATIC_map : $__STATIC_map = function($__value)
+			{
+				if(FALSE === is_object($__value))
+					return $__value;
+				
+				if($__value instanceOf Closure)
+					$__value->bindTo($this);
+				
+				return clone $__value;
+			};
+			
+			$this->rewind();
+			
+			while($this->valid())
+			{
+				$this[$this->key()] = $__STATIC_map($this->current(), $this->key());
+				$this->next();
+			}
 		}
 		
 		public static function fromArray($__array, $_ = TRUE)
@@ -169,6 +197,7 @@
 			$s = $this->getSize();
 			$this->setSize($s + 1);
 			$this[$s] = $__value;
+			return $this;
 		}
 		
 		public function end()

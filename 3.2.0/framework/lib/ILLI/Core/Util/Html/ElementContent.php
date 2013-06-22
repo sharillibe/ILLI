@@ -3,6 +3,7 @@
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Std\Exception\ArgumentExpectedException;
 	USE ILLI\Core\Std\Exception\ArgumentOutOfRangeException;
+	USE ILLI\Core\Std\Invoke;
 	USE ArrayAccess;
 	
 	CLASS ElementContent EXTENDS \ILLI\Core\Std\Def\ADVArrayStrict IMPLEMENTS ArrayAccess
@@ -33,29 +34,26 @@
 		 */
 		public function render()
 		{
-			$r = [];
-			foreach($this->__data as $e)
+			$r = $this->map(function($e)
 			{
 				switch(TRUE):
 					case $e instanceOf Element:
-						$r[] = $e->render();
+						return $e->render();
 						break;
-						/*
-					case $e->isVal($e, __const_Type::SPL_CLOSURE):
-						$r[] = Invoke::emitInvokable($e);
+					case $this->isVal(__const_Type::SPL_CLOSURE, $e):
+						return Invoke::emitInvokable($e);
 						break;
-					case $e->isVal($e, __const_Type::SPL_FUNCTION):
-						$r[] = Invoke::emitFunction($e);
+					case $this->isVal(__const_Type::SPL_FUNCTION, $e):
+						return Invoke::emitFunction($e);
 						break;
-					case $e->isVal($e, __const_Type::SPL_METHOD):
-						$r[] = Invoke::emit($e);
+					case $this->isVal(__const_Type::SPL_METHOD, $e):
+						return Invoke::emit($e);
 						break;
-						*/
 					case is_string($e):
-						$r[] = $e;
+						return $e;
 						break;
 				endswitch;
-			}
+			});
 			
 			return [] === $r
 				? NULL

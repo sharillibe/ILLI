@@ -5,24 +5,27 @@
 	USE ILLI\Core\Std\Def\ADVArrayCallable;
 	USE ILLI\Core\Std\Exception;
 	
-	CLASS __type_Observer EXTENDS \ILLI\Core\Std\Def\ADVTuple
+	CLASS __type_Observer EXTENDS \ILLI\Core\Std\Def\ADVTuple IMPLEMENTS \ILLI\Core\Std\IEmitable
 	{
 		CONST enabled		= 0x00;
 		CONST event		= 0x01;
 		CONST hook		= 0x02;
+		CONST arguments		= 0x03;
 		
 		public function __construct(array $__setup = [])
 		{
 			parent::__construct
 			(
 				[
-					self::enabled	=> [__const_Type::SPL_BOOLEAN],
-					self::event	=> [__const_Type::SPL_STRING, __const_Type::SPL_ARRAY],
-					self::hook	=> ['ILLI\Core\Std\Def\ADVArrayCallable']
+					self::enabled		=> [__const_Type::SPL_BOOLEAN],
+					self::event		=> [__const_Type::SPL_STRING, __const_Type::SPL_ARRAY],
+					self::hook		=> ['ILLI\Core\Std\Def\ADVArrayCallable'],
+					self::arguments		=> [__const_Type::SPL_ARRAY]
 				],
 				parent::mergeOffsetValues($__setup, [
-					self::enabled	=> TRUE,
-					self::hook	=> new ADVArrayCallable
+					self::enabled		=> TRUE,
+					self::hook		=> new ADVArrayCallable,
+					self::arguments		=> []
 				])
 			);
 		}
@@ -33,8 +36,11 @@
 				return NULL;
 			
 			$f = $this->get()[self::hook];
-			$a = func_get_args();
-			$r = NULL;
+			$a = $this->get()[self::arguments];
+			$d = func_get_args();
+			
+			foreach($d as $i => &$v)
+				$a[$i] = &$v;
 			
 			foreach($f->get() as $o)
 			{

@@ -30,6 +30,7 @@
 		CONST SPL_CLASS			= 'class';
 		CONST SPL_DIRECTORY		= 'directory';
 		CONST SPL_FILE			= 'file';
+		CONST SPL_FLAG			= 'flag';
 		CONST SPL_FUNCTION		= 'function';
 		CONST SPL_INTERFACE		= 'interface';
 		CONST SPL_METHOD		= 'method';

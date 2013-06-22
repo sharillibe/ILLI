@@ -17,7 +17,7 @@
 		protected static $__tContent =
 		[
 			// 'ILLI\Core\Util\Html\IContent\ITransparent',
-			'ILLI\Core\Util\Html\IContent\IContent',
+			'ILLI\Core\Util\Html\IContent',
 			'ILLI\Core\Util\Html\IContent\IFlow',
 			'ILLI\Core\Util\Html\IContent\IPhrasing',
 			__const_Type::SPL_STRING

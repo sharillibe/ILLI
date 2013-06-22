@@ -5,7 +5,7 @@
 	USE ILLI\Core\Std\Def\ADVArrayCallable;
 	USE ILLI\Core\Std\Exception;
 	
-	CLASS __type_Signal EXTENDS \ILLI\Core\Std\Def\ADVTuple
+	CLASS __type_Signal EXTENDS \ILLI\Core\Std\Def\ADVTuple IMPLEMENTS \ILLI\Core\Std\IEmitable
 	{
 		CONST enabled		= 0x00;
 		CONST event		= 0x01;
@@ -13,6 +13,7 @@
 		CONST priority		= 0x03;
 		CONST hook		= 0x04;
 		CONST collect		= 0x05;
+		CONST arguments		= 0x06;
 		
 		protected $__results	= [];
 		
@@ -21,17 +22,19 @@
 			parent::__construct
 			(
 				[
-					self::enabled	=> [__const_Type::SPL_BOOLEAN],
-					self::event	=> [__const_Type::SPL_STRING, __const_Type::SPL_ARRAY],
-					self::slot	=> [__const_Type::SPL_STRING, __const_Type::SPL_ARRAY],
-					self::priority	=> [__const_Type::SPL_DOUBLE, __const_Type::SPL_LONG, __const_Type::SPL_NULL],
-					self::hook	=> ['ILLI\Core\Std\Def\ADVArrayCallable'],
-					self::collect	=> [__const_Type::SPL_BOOLEAN]
+					self::enabled		=> [__const_Type::SPL_BOOLEAN],
+					self::event		=> [__const_Type::SPL_STRING, __const_Type::SPL_ARRAY],
+					self::slot		=> [__const_Type::SPL_STRING, __const_Type::SPL_ARRAY],
+					self::priority		=> [__const_Type::SPL_DOUBLE, __const_Type::SPL_LONG, __const_Type::SPL_NULL],
+					self::hook		=> ['ILLI\Core\Std\Def\ADVArrayCallable'],
+					self::collect		=> [__const_Type::SPL_BOOLEAN],
+					self::arguments		=> [__const_Type::SPL_ARRAY]
 				],
 				parent::mergeOffsetValues($__setup, [
-					self::enabled	=> TRUE,
-					self::collect	=> TRUE,
-					self::hook	=> new ADVArrayCallable
+					self::enabled		=> TRUE,
+					self::collect		=> TRUE,
+					self::hook		=> new ADVArrayCallable,
+					self::arguments		=> []
 				])
 			);
 		}
@@ -42,12 +45,13 @@
 				return NULL;
 			
 			$f = $this->get()[self::hook];
-			$a = func_get_args();
-			$r = NULL;
-			
+			$a = $this->get()[self::arguments];
 			$s = $this->get()[self::collect];
-			
+			$d = func_get_args();
 			$r = [];
+			
+			foreach($d as $i => &$v)
+				$a[$i] = &$v;
 			
 			foreach($f->get() as $k => $o)
 			{
