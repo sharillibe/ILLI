@@ -1,12 +1,9 @@
 <?PHP
-	NAMESPACE ILLI\Core\Std\Spl;
+	NAMESPACE ILLI\Core\Std\Def;
 	USE ILLI\Core\Std\Invoke;
-	USE Exception;
-	
-	/**
-	 * Collectable Fsb
-	 */
-	CLASS FsbCollection EXTENDS \ILLI\Core\Std\Spl\Fsb
+	USE ILLI\Core\Std\Spl\FsbCollection;
+
+	TRAIT __trait_ADVCollectable
 	{
 		public function evaluate($__method, array $__parameters, callable $__Condition = NULL)
 		{
@@ -43,7 +40,6 @@
 		{
 			$__options +=
 			[
-				'merge'		=> FALSE,
 				'collect'	=> FALSE
 			];
 			
@@ -55,9 +51,7 @@
 			{
 				$v = Invoke::emitMethod($this->current(), $__method, $__parameters);
 				
-				TRUE === $__options['merge']
-					? $r = array_merge($r, $v)
-					: $r[$this->key()] = $v;
+				$r[$this->key()] = $v;
 				
 				$this->next();
 			}
@@ -65,8 +59,7 @@
 			if(FALSE === $__options['collect'])
 				return $r;
 				
-			$c = get_called_class();
-			return $c::fromArray($r);
+			return FsbCollection::fromArray($r);
 		}
 		
 		public function find(callable $__Condition, array $__options = [])
@@ -91,8 +84,7 @@
 			if(FALSE === $__options['collect'])
 				return $r;
 				
-			$c = get_called_class();
-			return $c::fromArray($r);
+			return FsbCollection::fromArray($r);
 		}
 		
 		public function map(callable $__Action, array $__options = [])
@@ -115,8 +107,7 @@
 			if(FALSE === $__options['collect'])
 				return $r;
 				
-			$c = get_called_class();
-			return $c::fromArray($r);
+			return FsbCollection::fromArray($r);
 		}
 		
 		public function each(callable $__Action)
@@ -125,7 +116,7 @@
 			
 			while($this->valid())
 			{
-				$this[$this->key()] = $__Action($this->current(), $this->key());
+				$this->__data[$this->key()] = $__Action($this->current(), $this->key());
 				$this->next();
 			}
 			

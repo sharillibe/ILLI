@@ -8,10 +8,16 @@
 	USE ILLI\Core\Std\Spl\FsbCollection;
 	USE Exception;
 	USE ArrayAccess;
+	USE Countable;
+	USE Iterator;
 	
 	
-	CLASS ADVArrayStrict EXTENDS \ILLI\Core\Std\Def\ADV IMPLEMENTS ArrayAccess
+	CLASS ADVArrayStrict EXTENDS \ILLI\Core\Std\Def\ADV IMPLEMENTS ArrayAccess, Countable, Iterator
 	{
+		USE \ILLI\Core\Std\Def\__trait_ADVCollectable;
+		USE \ILLI\Core\Std\Def\__trait_ADVCountable;
+		USE \ILLI\Core\Std\Def\__trait_ADVIterable;
+		
 		CONST __GC	= __CLASS__;
 		
 		private static $__gc = NULL;
@@ -220,7 +226,11 @@
 				]);
 			
 			if(FALSE === isset($this->__data[$k]))
-				throw new ArgumentOutOfRangeException;
+				throw new ArgumentOutOfRangeException([
+					'target'	=> $this->getName(),
+					'offset'	=> $k,
+					'detected'	=> $t = getType($k)
+				]);
 			
 			unset($this->__data[$k]);
 			

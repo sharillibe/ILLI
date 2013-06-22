@@ -6,29 +6,33 @@
 	USE ILLI\Core\Std\Invoke;
 	
 	/**
-	 * 		class bar
-	 * 		{
-	 * 			USE ILLI\Core\Std\Exec\__trait_Call
-	 * 			{
-	 * 				Core_Std_Exec___trait_Call_register as public regCall;
-	 * 			}
+	 * Virtual Method. Typically implemented by ::__call()
+	 *
+	 * <code>
+	 * class bar
+	 * {
+	 * 	USE ILLI\Core\Std\Exec\__trait_Call
+	 * 	{
+	 * 		Core_Std_Exec___trait_Call_register as public regCall;
+	 * 	}
 	 * 			
-	 * 			function __call($__name, $__arguments)
-	 * 			{
-	 * 				return $this->Core_Std_Exec___trait_Call_emit($__name, $__arguments);
-	 * 			}
-	 * 		}
+	 * 	function __call($__name, $__arguments)
+	 * 	{
+	 * 		return $this->Core_Std_Exec___trait_Call_emit($__name, $__arguments);
+	 * 	}
+	 * }
 	 * 		
-	 * 		class foo EXTENDS bar
-	 * 		{
-	 * 		}
+	 * class foo EXTENDS bar
+	 * {
+	 * }
 	 * 		
-	 * 		$t = (new bar)->regCall(new __type_Call([__const_Type::SPL_STRING], [
-	 * 			__type_Call::handle => function($f) { return '->called '.$f; },
-	 * 			__type_Call::name => 'virt',
-	 * 		]));
+	 * $t = (new bar)->regCall(new __type_Call([__const_Type::SPL_STRING], [
+	 * 	__type_Call::handle => function($f) { return '->called '.$f; },
+	 * 	__type_Call::name => 'virt',
+	 * ]));
 	 * 		
-	 * 		print $t->virt('bar'); // called bar
+	 * print $t->virt('bar'); // called bar
+	 * </code>
 	 */
 	TRAIT __trait_Call
 	{

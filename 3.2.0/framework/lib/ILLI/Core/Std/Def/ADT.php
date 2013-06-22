@@ -26,6 +26,7 @@
 			__const_Type::SPL_DIRECTORY		=> __const_ADTClass::SPL_DIRECTORY,
 			__const_Type::SPL_DOUBLE		=> __const_ADTClass::SPL_DOUBLE,
 			__const_Type::SPL_FILE			=> __const_ADTClass::SPL_FILE,
+			__const_Type::SPL_FLAG			=> __const_ADTClass::SPL_FLAG,
 			__const_Type::SPL_FLOAT			=> __const_ADTClass::SPL_DOUBLE,
 			__const_Type::SPL_FUNCTION		=> __const_ADTClass::SPL_FUNCTION,
 			__const_Type::SPL_INTERFACE		=> __const_ADTClass::SPL_INTERFACE,

@@ -33,15 +33,16 @@
 	 *		$f->handle = function($f) { return 1; }; // note: return value is of type long
 	 *		print $t->baz('baz'); // error: result is not a string
 	 */
-	CLASS __type_Call EXTENDS \ILLI\Core\Std\Def\ADVTuple
+	CLASS __type_Call EXTENDS \ILLI\Core\Std\Def\ADVTuple IMPLEMENTS \ILLI\Core\Std\IEmitable
 	{
 		CONST enabled		= 0x00;
 		CONST name		= 0x01;
 		CONST handle		= 0x02;
+		CONST arguments		= 0x03;
 		
 		protected $__tR	= [];
 		
-		public function __construct($__eR = [], array $__setup = [])
+		public function __construct(array $__setup = [], $__eR = [])
 		{
 			$this->__tR = (array) $__eR;
 			parent::__construct
@@ -49,15 +50,12 @@
 				[
 					self::enabled		=> [__const_Type::SPL_BOOLEAN],
 					self::name		=> [__const_Type::SPL_STRING],
-					self::handle		=>
-					[
-						__const_Type::SPL_CLOSURE,
-						__const_Type::SPL_FUNCTION,
-						__const_Type::SPL_METHOD
-					]
+					self::handle		=> [__const_Type::SPL_CLOSURE, __const_Type::SPL_FUNCTION, __const_Type::SPL_METHOD],
+					self::arguments		=> [__const_Type::SPL_ARRAY]
 				],
 				parent::mergeOffsetValues($__setup, [
-					self::enabled		=> TRUE
+					self::enabled		=> TRUE,
+					self::arguments		=> []
 				])
 			);
 		}
@@ -68,8 +66,12 @@
 				return NULL;
 			
 			$f = $this->get()[self::handle];
-			$a = func_get_args();
+			$a = $this->get()[self::arguments];
+			$d = func_get_args();
 			$r = NULL;
+			
+			foreach($d as $i => &$v)
+				$a[$i] = &$v;
 			
 			try
 			{

@@ -6,55 +6,59 @@
 	USE ILLI\Core\Std\Invoke;
 	
 	/**
-	 * 		class bar
-	 * 		{
-	 * 			USE ILLI\Core\Std\Exec\__trait_CallStatic
-	 * 			{
-	 * 				Core_Std_Exec___trait_CallStatic_register as public regCallStatic;
-	 * 			}
-	 * 			
-	 * 			function __callStatic($__name, $__arguments)
-	 * 			{
-	 * 				return static::Core_Std_Exec___trait_CallStatic_emit($__name, $__arguments);
-	 * 			}
-	 * 		}
+	 * Virtual Static Method. Typically implemented by ::__callStatic()
+	 *
+	 * <code>
+	 * class bar
+	 * {
+	 * 	USE ILLI\Core\Std\Exec\__trait_CallStatic
+	 * 	{
+	 * 		Core_Std_Exec___trait_CallStatic_register as public regCallStatic;
+	 * 	}
+	 * 	
+	 * 	function __callStatic($__name, $__arguments)
+	 * 	{
+	 * 		return static::Core_Std_Exec___trait_CallStatic_emit($__name, $__arguments);
+	 * 	}
+	 * }
 	 * 		
-	 * 		class foo EXTENDS bar
-	 * 		{
-	 * 		}
-	 * 		
-	 * 		class alice EXTENDS bar
-	 * 		{
-	 * 			public static function virt($f)
-	 * 			{
-	 * 				return __METHOD__.parent::virt($f);
-	 * 			}
-	 * 		}
-	 * 		
-	 * 		class bob
-	 * 		{
-	 * 			USE ILLI\Core\Std\Exec\__trait_CallStatic
-	 * 			{
-	 * 				Core_Std_Exec___trait_CallStatic_register as public regCallStatic;
-	 * 			}
-	 * 			
-	 * 			function __callStatic($__name, $__arguments)
-	 * 			{
-	 * 				return static::Core_Std_Exec___trait_CallStatic_emit($__name, $__arguments);
-	 * 			}
-	 * 		}
-	 * 		
-	 * 		print PHP_EOL;
-	 * 		
-	 * 		bar::regCallStatic(new __type_Call([__const_Type::SPL_STRING], [
-	 * 			__type_Call::handle => function($f) { return '->called '.$f; },
-	 * 			__type_Call::name => 'virt',
-	 * 		]));
-	 * 		
-	 * 		print bar::virt('bar'); 	// called bar
-	 * 		print foo::virt('foo'); 	// called foo
-	 * 		print alice::virt('alice'); 	// alice::virt->called alice
-	 * 		print bob::virt('bob'); 	// null
+	 * class foo EXTENDS bar
+	 * {
+	 * }
+	 * 
+	 * class alice EXTENDS bar
+	 * {
+	 * 	public static function virt($f)
+	 * 	{
+	 * 		return __METHOD__.parent::virt($f);
+	 * 	}
+	 * }
+	 * 
+	 * class bob
+	 * {
+	 * 	USE ILLI\Core\Std\Exec\__trait_CallStatic
+	 * 	{
+	 * 		Core_Std_Exec___trait_CallStatic_register as public regCallStatic;
+	 * 	}
+	 * 	
+	 * 	function __callStatic($__name, $__arguments)
+	 * 	{
+	 * 		return static::Core_Std_Exec___trait_CallStatic_emit($__name, $__arguments);
+	 * 	}
+	 * }
+	 * 
+	 * print PHP_EOL;
+	 * 
+	 * bar::regCallStatic(new __type_Call([__const_Type::SPL_STRING], [
+	 * 	__type_Call::handle => function($f) { return '->called '.$f; },
+	 * 	__type_Call::name => 'virt',
+	 * ]));
+	 * 
+	 * print bar::virt('bar'); 	// called bar
+	 * print foo::virt('foo'); 	// called foo
+	 * print alice::virt('alice'); 	// alice::virt->called alice
+	 * print bob::virt('bob'); 	// null
+	 * </code>
 	 */
 	TRAIT __trait_CallStatic
 	{

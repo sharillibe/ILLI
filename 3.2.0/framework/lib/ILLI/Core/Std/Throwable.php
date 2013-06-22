@@ -31,6 +31,10 @@
 		private $__solvedBy		= [];
 		private $__Next			= NULL;
 		
+		public static function __boot()
+		{
+		}
+		
 		public function __construct()
 		{
 			$this->__addr = $this->getHashCode();
@@ -369,6 +373,16 @@
 			public static function config(array $__config = [])
 			{
 				return static::$__config = array_merge($__config, static::$__config);
+			}
+			
+			public static function handle(array $__handle = [])
+			{
+				return static::$__handle = array_merge($__handle, static::$__handle);
+			}
+			
+			public static function parser(callable $__parser = NULL)
+			{
+				return static::$__parser = $__parser;
 			}
 			
 			public static function run()

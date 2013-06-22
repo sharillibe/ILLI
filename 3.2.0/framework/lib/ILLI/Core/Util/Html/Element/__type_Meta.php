@@ -6,10 +6,10 @@
 	
 	CLASS __type_Meta EXTENDS \ILLI\Core\Util\Html\__type_Attributes
 	{
-		CONST charset		= __addr_Attributes::MENU_charset;
-		CONST content		= __addr_Attributes::MENU_content;
-		CONST httpEquiv		= __addr_Attributes::MENU_httpEquiv;
-		CONST name		= __addr_Attributes::MENU_name;
+		CONST charset		= __addr_Attributes::META_charset;
+		CONST content		= __addr_Attributes::META_content;
+		CONST httpEquiv		= __addr_Attributes::META_httpEquiv;
+		CONST name		= __addr_Attributes::META_name;
 		
 		public function __construct($__defineOffsetType = [], $__data = NULL)
 		{

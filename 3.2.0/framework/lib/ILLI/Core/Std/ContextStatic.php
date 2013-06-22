@@ -1,7 +1,7 @@
 <?PHP
 	NAMESPACE ILLI\Core\Std;
 	
-	CLASS StaticClass
+	CLASS ContextStatic
 	{
 		private function __construct()
 		{
