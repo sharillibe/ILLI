@@ -13,6 +13,7 @@
 		CONST argsNum		= 0x03;
 		CONST handle		= 0x04;
 		CONST arguments		= 0x05;
+		CONST runOnce		= 0x06;
 		
 		public function __construct(array $__setup = [])
 		{
@@ -24,13 +25,15 @@
 					self::priority		=> [__const_Type::SPL_LONG],
 					self::argsNum		=> [__const_Type::SPL_LONG],
 					self::handle		=> [__const_Type::SPL_CLOSURE, __const_Type::SPL_FUNCTION, __const_Type::SPL_METHOD],
-					self::arguments		=> [__const_Type::SPL_ARRAY]
+					self::arguments		=> [__const_Type::SPL_ARRAY],
+					self::runOnce		=> [__const_Type::SPL_BOOLEAN]
 				],
 				parent::mergeOffsetValues($__setup, [
 					self::enabled		=> TRUE,
 					self::priority		=> 100,
 					self::argsNum		=> 1,
-					self::arguments		=> []
+					self::arguments		=> [],
+					self::runOnce		=> TRUE
 				])
 			);
 		}
@@ -61,7 +64,8 @@
 						break;
 				endswitch;
 				
-				unset($this->get()[self::handle]);
+				if(TRUE === $this->get()[self::runOnce])
+					$this->get()[self::enabled] = FALSE;
 			}
 			catch(\Exception $E)
 			{

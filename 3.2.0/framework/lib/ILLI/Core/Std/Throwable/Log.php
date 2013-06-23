@@ -21,6 +21,11 @@
 			];
 		}
 		
+		public static function get()
+		{
+			return static::$__log;
+		}
+		
 		public static function getAddressStack($__addressString)
 		{
 			$r = [];

@@ -110,14 +110,27 @@
 			return FsbCollection::fromArray($r);
 		}
 		
-		public function each(callable $__Action)
+		public function each(callable $__Action, callable $__Condition = NULL)
 		{
 			$this->rewind();
 			
-			while($this->valid())
+			if(NULL === $__Condition)
 			{
-				$this->__data[$this->key()] = $__Action($this->current(), $this->key());
-				$this->next();
+				while($this->valid())
+				{
+					$this->__data[$this->key()] = $__Action($this->current(), $this->key());
+					$this->next();
+				}
+			}
+			else
+			{
+				while($this->valid())
+				{
+					if(TRUE === $__Condition($this->current(), $this->key()))
+						$this->__data[$this->key()] = $__Action($this->current(), $this->key());
+					
+					$this->next();
+				}
 			}
 			
 			return $this;
