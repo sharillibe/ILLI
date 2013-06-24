@@ -11,6 +11,7 @@
 		CONST origin		= 0x01;
 		CONST handle		= 0x02;
 		CONST arguments		= 0x03;
+		CONST lockArguments	= 0x04;
 		
 		protected $__tR	= [];
 		
@@ -24,11 +25,13 @@
 					self::enabled		=> [__const_Type::SPL_BOOLEAN],
 					self::origin		=> [__const_Type::SPL_STRING],
 					self::handle		=> [__const_Type::SPL_METHOD, __const_Type::SPL_CLOSURE],
-					self::arguments		=> [__const_Type::SPL_ARRAY]
+					self::arguments		=> [__const_Type::SPL_ARRAY],
+					self::lockArguments	=> [__const_Type::SPL_BOOLEAN]
 				],
 				parent::mergeOffsetValues($__setup, [
 					self::enabled		=> TRUE,
-					self::arguments		=> []
+					self::arguments		=> [],
+					self::lockArguments	=> FALSE
 				])
 			);
 		}
@@ -38,13 +41,16 @@
 			if(FALSE === $this->get()[self::enabled])
 				return NULL;
 			
-			$f = $this->get()[$i = self::handle];
+			$f = $this->get()[self::handle];
 			$a = $this->get()[self::arguments];
-			$d = func_get_args();
 			$r = NULL;
-			
-			foreach($d as $i => &$v)
-				$a[$i] = &$v;
+				
+			if(FALSE === $this->get()[self::lockArguments])
+			{
+				$d = func_get_args();
+				foreach($d as $i => &$v)
+					$a[$i] = &$v;
+			}
 			
 			try
 			{

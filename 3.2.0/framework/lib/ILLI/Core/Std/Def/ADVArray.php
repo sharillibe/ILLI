@@ -53,4 +53,10 @@
 		{
 			return isset($this->__data[$k]);
 		}
+		
+		public static function fromArray(array $__data)
+		{
+			$c = get_called_class();
+			return new $c($__data);
+		}
 	}
