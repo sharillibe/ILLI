@@ -5,13 +5,18 @@
 	
 	CLASS Spl
 	{
-		public static function nameWithHash($__className, $__splObjHash)
+		public static function nameWithHash($__className = NULL, $__splObjHash = NULL)
 		{
+			if(is_object($__className))
+			{
+				if(NULL === $__splObjHash)
+					$__splObjHash = spl_object_hash($__className);
+					
+				$__className = get_class($__className);
+			}
+			
 			if(is_object($__splObjHash))
 				$__splObjHash = spl_object_hash($__splObjHash);
-				
-			if(is_object($__className))
-				$__className = get_class($__className);
 				
 			return String::insert('{:__className}<{:__splObjHash}>', compact('__className', '__splObjHash'));
 		}

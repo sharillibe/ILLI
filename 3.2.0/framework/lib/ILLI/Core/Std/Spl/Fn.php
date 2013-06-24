@@ -93,8 +93,33 @@
 				$r .= $F->current();
 				$F->next();
 			}
-	
-			return String::lrepeat(substr($r, $b = strpos($r, 'function'), strrpos($r, '}') - $b + 1), "\t", 1, ['lines' => [0], 'last' => TRUE, 'inverse' => TRUE]);
+			
+			$s = substr($r, $b = strpos($r, 'function'), strrpos($r, '}') - $b + 1);
+			
+			
+			#:removeLeftTabs
+			$e = explode(PHP_EOL, $s);
+			if(isset($e[1]))
+			{
+				$t = 0;
+				foreach(str_split($e[1]) as $char)
+					if("\x09" === $char)
+						$t++;
+					
+				$i = 0;
+				foreach($e as &$l)
+				{
+					if($i > 0)
+						$l = substr($l, $t);
+					
+					$i++;
+				}
+				
+				$s = implode(PHP_EOL, $e);
+			}
+			#::
+			
+			return $s;
 		}
 	
 		protected function _fetchUse()

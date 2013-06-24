@@ -437,4 +437,28 @@
 			return isset($this->__data[$k]);
 		}
 		
+		public function toArray(array $__offsets = [], array $__options = [])
+		{
+			$__options += [
+				'keepIndexes'	=> FALSE
+			];
+			
+			if([] === $__offsets)
+				return $this->__data->get()->toArray();
+			
+			$r = [];
+			foreach($__offsets as $offset => $k)
+			{
+				if(FALSE === isset($this->__data[$k]))
+					throw new ArgumentOutOfRangeException([
+						'target'	=> $this->getName(),
+						'offset'	=> $k,
+						'detected'	=> $t = getType($k)
+					]);
+				
+				$r[TRUE === $__options['keepIndexes'] ? $k : $offset] = $this->__data[$k];
+			}
+			
+			return $r;
+		}
 	}
