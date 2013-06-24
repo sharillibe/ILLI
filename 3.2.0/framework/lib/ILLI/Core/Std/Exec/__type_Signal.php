@@ -14,6 +14,7 @@
 		CONST hook		= 0x04;
 		CONST collect		= 0x05;
 		CONST arguments		= 0x06;
+		CONST lockArguments	= 0x07;
 		
 		protected $__results	= [];
 		
@@ -28,13 +29,15 @@
 					self::priority		=> [__const_Type::SPL_DOUBLE, __const_Type::SPL_LONG, __const_Type::SPL_NULL],
 					self::hook		=> ['ILLI\Core\Std\Def\ADVArrayCallable'],
 					self::collect		=> [__const_Type::SPL_BOOLEAN],
-					self::arguments		=> [__const_Type::SPL_ARRAY]
+					self::arguments		=> [__const_Type::SPL_ARRAY],
+					self::lockArguments	=> [__const_Type::SPL_BOOLEAN]
 				],
 				parent::mergeOffsetValues($__setup, [
 					self::enabled		=> TRUE,
 					self::collect		=> TRUE,
 					self::hook		=> new ADVArrayCallable,
-					self::arguments		=> []
+					self::arguments		=> [],
+					self::lockArguments	=> FALSE
 				])
 			);
 		}
@@ -47,11 +50,14 @@
 			$f = $this->get()[self::hook];
 			$a = $this->get()[self::arguments];
 			$s = $this->get()[self::collect];
-			$d = func_get_args();
 			$r = [];
 			
-			foreach($d as $i => &$v)
-				$a[$i] = &$v;
+			if(FALSE === $this->get()[self::lockArguments])
+			{
+				$d = func_get_args();
+				foreach($d as $i => &$v)
+					$a[$i] = &$v;
+			}
 			
 			foreach($f->get() as $k => $o)
 			{

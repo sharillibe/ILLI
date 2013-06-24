@@ -23,7 +23,11 @@
 				? $__Class->get()[__type_Class::origin]
 				: $__Class->get()[__type_Class::identifier];
 			
-			$this->__Core_Std_Exec___trait_Class_hook[$__Class->get()[$ident]] = $__Class;
+			$h = &$this->__Core_Std_Exec___trait_Class_hook[$ident];
+			
+			if(FALSE === isset($h))
+				$h = $__Class;
+			
 			return $this;
 		}
 		

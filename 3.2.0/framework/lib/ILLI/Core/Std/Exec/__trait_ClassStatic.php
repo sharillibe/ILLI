@@ -22,7 +22,8 @@
 			$ident = NULL === $__Class->get()[__type_Class::identifier]
 				? $__Class->get()[__type_Class::origin]
 				: $__Class->get()[__type_Class::identifier];
-				
+			
+			
 			static::$__Core_Std_Exec___trait_ClassStatic_hook[$ident] = $__Class;
 		}
 		

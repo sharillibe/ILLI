@@ -13,7 +13,8 @@
 		CONST argsNum		= 0x03;
 		CONST handle		= 0x04;
 		CONST arguments		= 0x05;
-		CONST runOnce		= 0x06;
+		CONST lockArguments	= 0x06;
+		CONST runOnce		= 0x07;
 		
 		public function __construct(array $__setup = [])
 		{
@@ -26,6 +27,7 @@
 					self::argsNum		=> [__const_Type::SPL_LONG],
 					self::handle		=> [__const_Type::SPL_CLOSURE, __const_Type::SPL_FUNCTION, __const_Type::SPL_METHOD],
 					self::arguments		=> [__const_Type::SPL_ARRAY],
+					self::lockArguments	=> [__const_Type::SPL_BOOLEAN],
 					self::runOnce		=> [__const_Type::SPL_BOOLEAN]
 				],
 				parent::mergeOffsetValues($__setup, [
@@ -33,6 +35,7 @@
 					self::priority		=> 100,
 					self::argsNum		=> 1,
 					self::arguments		=> [],
+					self::lockArguments	=> FALSE,
 					self::runOnce		=> TRUE
 				])
 			);
@@ -45,10 +48,13 @@
 			
 			$f = $this->get()[self::handle];
 			$a = $this->get()[self::arguments];
-			$d = func_get_args();
 			
-			foreach($d as $i => &$v)
-				$a[$i] = &$v;
+			if(FALSE === $this->get()[self::lockArguments])
+			{
+				$d = func_get_args();
+				foreach($d as $i => &$v)
+					$a[$i] = &$v;
+			}
 			
 			try
 			{
